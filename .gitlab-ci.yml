@@ -10,13 +10,12 @@ cache:
 
 before_script:
   - npm install
-  - ./node_modules/.bin/git-ssh-key setup
-  - ssh-keyscan git.nativecode.net >> ~/.ssh/known_hosts
+  - npm run bootstrap
+  - npm run setup-ssh
 
 test:
   stage: test
   script:
-    - ./lerna bootstrap
     - npm test
 
 pre-publish:
@@ -24,18 +23,15 @@ pre-publish:
   only:
     - develop
   script:
-    - ./.ci/setup-git
-    - ./lerna bootstrap
-    - ./lerna run build
-    - ./lerna publish --yes --canary --dist-tag next
+    - npm run setup-git
+    - npm run build
+    - npm run prerelease
 
 publish:
   stage: publish
   only:
     - master
   script:
-    - ./.ci/setup-git
-    - ./lerna --version
-    - ./lerna bootstrap
-    - ./lerna run build
-    - ./lerna publish from-package --yes --dist-tag latest
+    - npm run setup-git
+    - npm run build
+    - npm run release

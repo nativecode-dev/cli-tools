@@ -54,6 +54,9 @@
     "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
     "test": "nyc mocha --opts mocha.opts",
-    "pretest": "lerna run build"
+    "pretest": "lerna run build",
+    "setup-git": "./.ci/setup-git",
+    "prerelease": "lerna publish --yes --canary --dist-tag next",
+    "release": "lerna publish from-package --yes --dist-tag latest"
   }
 }

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+npx git-ssh-key setup
+ssh-keyscan git.nativecode.net >> ~/.ssh/known_hosts
