@@ -1,7 +1,7 @@
 {
   "author": "opensource@nativecode.com",
   "description": "Simple SSH functions for CI builds.",
-  "homepage": "https://github.com/nativecode-dev/nofrills/tree/master/packages-cli/ssh",
+  "homepage": "https://github.com/nativecode-dev/cli-tools",
   "license": "MIT",
   "main": "./bin/index.js",
   "name": "@nofrills/ssh",
@@ -12,7 +12,7 @@
     "cli-ssh": "./bin/cli-ssh.js"
   },
   "bugs": {
-    "url": "https://github.com/nativecode-dev/nofrills/issues"
+    "url": "https://github.com/nativecode-dev/cli-tools/issues"
   },
   "dependencies": {
     "@nofrills/console": "^3.5.0",
@@ -38,7 +38,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nativecode-dev/nofrills"
+    "url": "https://github.com/nativecode-dev/cli-tools"
   },
   "scripts": {
     "build": "ts-node ../tasks/src/cli-tasks build",

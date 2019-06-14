@@ -1,7 +1,7 @@
 {
   "author": "opensource@nativecode.com",
   "description": "Simple NPM package task builder.",
-  "homepage": "https://github.com/nativecode-dev/nofrills/tree/master/packages-cli/tasks",
+  "homepage": "https://github.com/nativecode-dev/cli-tools",
   "license": "MIT",
   "main": "./src/index.ts",
   "name": "@nofrills/tasks",
@@ -13,7 +13,7 @@
     "cli-tasks": "./bin/cli-tasks.js"
   },
   "bugs": {
-    "url": "https://github.com/nativecode-dev/nofrills/issues"
+    "url": "https://github.com/nativecode-dev/cli-tools/issues"
   },
   "dependencies": {
     "@nofrills/console": "^3.5.0",
@@ -42,7 +42,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nativecode-dev/nofrills"
+    "url": "https://github.com/nativecode-dev/cli-tools"
   },
   "scripts": {
     "build": "ts-node src/cli-tasks build",

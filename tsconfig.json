@@ -5,19 +5,10 @@
   ],
   "references": [
     {
-      "path": "binaries/radarr-cli"
+      "path": "binaries/ssh"
     },
     {
-      "path": "binaries/sonarr-cli"
-    },
-    {
-      "path": "packages/radarr"
-    },
-    {
-      "path": "packages/rest-client"
-    },
-    {
-      "path": "packages/sonarr"
+      "path": "binaries/tasks"
     }
   ]
 }

@@ -2,11 +2,11 @@
   "author": "opensource@nativecode.com",
   "description": "Various CLI tools",
   "homepage": "https://github.com/nativecode-dev/cli-tools#readme",
-  "license": "ISC",
+  "license": "MIT",
   "main": "index.js",
   "name": "cli-tools",
   "private": true,
-  "version": "1.0.0",
+  "version": "0.0.0",
   "bugs": {
     "url": "https://github.com/nativecode-dev/cli-tools/issues"
   },
@@ -17,13 +17,18 @@
     "@types/node": "^12.0.8",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
+    "coveralls": "^3.0.4",
+    "cross-env": "^5.2.0",
     "git-ssh-key": "^1.1.0",
     "lerna": "^3.15.0",
     "mocha": "^6.1.4",
     "nyc": "^14.1.1",
+    "prettier": "^1.18.2",
+    "rimraf": "^2.6.3",
     "source-map-support": "^0.5.12",
     "ts-node": "^8.2.0",
     "tslint": "^5.17.0",
+    "tslint-config-standard": "^8.0.1",
     "tslint-no-unused-expression-chai": "^0.1.4",
     "typescript": "^3.5.2"
   },
@@ -57,9 +62,9 @@
     "test": "nyc mocha --opts mocha.opts",
     "pretest": "lerna run build",
     "ci-test": "nyc mocha --opts .ci/mocha.opts",
-    "setup-git": "./.ci/setup-git",
-    "setup-ssh": "./.ci/setup-ssh",
+    "setup-git": ".ci/setup-git",
+    "setup-ssh": ".ci/setup-ssh",
     "pre-release": "lerna publish --yes --canary --dist-tag next",
-    "release": "lerna publish from-package --yes --dist-tag latest"
+    "release": "lerna publish from-package --dist-tag latest"
   }
 }
