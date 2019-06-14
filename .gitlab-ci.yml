@@ -14,11 +14,15 @@ cache:
   paths:
   - node_modules
 
-test:
+continuous:
   stage: test
+  except:
+  - develop
+  - master
   script:
   - npm run build
   - npm run ci-test
+  - npm run canary
 
 prerelease:
   stage: publish
@@ -28,6 +32,7 @@ prerelease:
   - npm run setup-ssh
   - npm run setup-git
   - npm run build
+  - npm run ci-test
   - npm run pre-release
 
 release:
@@ -38,4 +43,5 @@ release:
   - npm run setup-ssh
   - npm run setup-git
   - npm run build
+  - npm run ci-test
   - npm run release

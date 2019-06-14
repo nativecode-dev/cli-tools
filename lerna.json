@@ -12,15 +12,8 @@
         "develop",
         "master"
       ],
+      "createRelease": "gitlab",
       "conventionalCommits": true,
-      "message": "chore(release): publish"
-    },
-    "version": {
-      "allowBranch": [
-        "develop",
-        "master"
-      ],
-      "conventionalPrerelease": true,
       "message": "chore(release): publish"
     }
   },
