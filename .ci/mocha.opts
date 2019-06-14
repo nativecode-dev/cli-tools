@@ -1,0 +1,8 @@
+--colors
+--extension ts
+--full-trace
+--recursive
+--reporter spec
+--require source-map-support/register
+--require ts-node/register
+**/specs/**/*.spec.ts
