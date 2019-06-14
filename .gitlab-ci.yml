@@ -13,6 +13,16 @@ cache:
   paths:
   - node_modules
 
+test:
+  stage: test
+  except:
+  - develop
+  - master
+  script:
+  - npm run build
+  - npm run ci-test
+  - npm run canary
+
 prerelease:
   stage: publish
   only:
