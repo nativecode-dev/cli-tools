@@ -1,0 +1,17 @@
+#!/bin/bash
+
+MODE=$1
+LERNA=./node_modules/.bin/lerna
+case $MODE in
+"canary")
+    ${LERNA} version --yes --canary
+    ;;
+"release")
+    ${LERNA} version --yes --dist-tag latest --create-release gitlab
+    ;;
+"prerelease")
+    ${LERNA} version --yes --dist-tag next --preid next
+    ;;
+esac
+
+${LERNA} publish from-git
