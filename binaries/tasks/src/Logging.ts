@@ -12,40 +12,40 @@ function colorize(log: Log): string[] {
   switch (log.type) {
     case 'debug':
       return [
-        chalk.dim.yellow('🠶'),
+        chalk.dim.yellow('d|'),
         chalk.bold.gray(...log.parameters.slice(0, 1)),
         chalk.dim.gray(...log.parameters.slice(1)),
       ]
     case 'error':
       return [
-        chalk.bold.red('🛇'),
+        chalk.bold.red('e|'),
         chalk.red(...log.parameters.slice(0, 1)),
         chalk.bgRed.white(...log.parameters.slice(1)),
       ]
     case 'fatal':
       return [
-        chalk.bold.red('🚭'),
+        chalk.bold.red('f|'),
         chalk.red(...log.parameters.slice(0, 1)),
         chalk.bgRed.white(...log.parameters.slice(1)),
       ]
     case 'info':
       return [
-        chalk.bold.blue('🛈'),
+        chalk.bold.blue('i|'),
         chalk.dim.green(...log.parameters.slice(0, 1)),
         chalk.dim.white(...log.parameters.slice(1)),
       ]
     case 'silly':
       return [
-        chalk.bold.blue('🆃'),
+        chalk.bold.blue('s|'),
         chalk.dim.blue(...log.parameters.slice(0, 1)),
         chalk.dim.white(...log.parameters.slice(1)),
       ]
     case 'trace':
-      return [chalk.bold.gray('🞲'), chalk.bold.gray(...log.parameters)]
+      return [chalk.bold.gray('s|'), chalk.bold.gray(...log.parameters)]
     case 'warn':
-      return [chalk.bold.yellow('🛆'), chalk.bold.yellow(...log.parameters)]
+      return [chalk.bold.yellow('w|'), chalk.bold.yellow(...log.parameters)]
     default:
-      return [chalk.bold.blue('🛈'), chalk.bold.white(...log.parameters)]
+      return [chalk.bold.blue(''), chalk.bold.white(...log.parameters)]
   }
 }
 
