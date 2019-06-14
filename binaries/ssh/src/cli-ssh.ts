@@ -1,5 +1,6 @@
 import { CLI, ConsoleOptions, ProcessArgs } from '@nofrills/console'
 
+import { fs } from '@nofrills/fs'
 import { SshParser } from './SshParser'
 
 const args = ProcessArgs.from(process.argv)
@@ -8,8 +9,12 @@ const options: ConsoleOptions = {
   initializer: async () => {
     const ssh = SshParser.from(process.cwd(), 'config.pegjs')
     const parser = await ssh.generate()
-    parser.parse('')
-    return Promise.resolve()
+    const home = fs.resolve('~')
+    const config = `${home}/.ssh/config`
+    if (await fs.exists(config)) {
+      const buffer = await fs.readFile(config)
+      parser.parse(buffer.toString())
+    }
   },
 }
 

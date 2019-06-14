@@ -45,7 +45,6 @@ const options: ConsoleOptions = {
       Logger.debug(config.tasks)
 
       if (processed.has('help') || processed.has('h')) {
-        ConsoleLog.silly(npm.name, `[${npm.version}]`, '\u00A9 2018 NativeCode')
         ConsoleLog.info('-h, --help')
         ConsoleLog.info('-ls, --list')
         ConsoleLog.info('-v, -viz, --visualize')
