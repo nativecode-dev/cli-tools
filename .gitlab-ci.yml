@@ -1,5 +1,28 @@
 image: node:latest
 
+# Anchors
+#-------------------------------------------------------------------------------
+.base:
+  before_script:
+  - git submodule sync --recursive
+  - git submodule update --init --recursive
+  - npm install
+  - npm run bootstrap
+
+.build:
+  extends: .base
+  before_script:
+  - npm run build
+
+.build-publish:
+  extends: .base
+  before_script:
+  - npm run setup-ssh
+  - npm run setup-git
+  - npm run build
+
+# Pipeline
+#-------------------------------------------------------------------------------
 stages:
 - test
 - publish
@@ -8,30 +31,14 @@ cache:
   paths:
   - node_modules
 
-before_script:
-- git submodule sync --recursive
-- git submodule update --init --recursive
-- npm install
-- npm run bootstrap
-
-.build-deploy:
-  before_script:
-  - npm run setup-ssh
-  - npm run setup-git
-  - npm run build
-
-.build-test:
-  before_script:
-  - npm run build
-
 test:
-  extends: .build-test
+  extends: .build
   stage: test
   script:
   - npm run ci-test
 
 prerelease:
-  extends: .build-deploy
+  extends: .build-publish
   stage: publish
   only:
   - develop
@@ -39,7 +46,7 @@ prerelease:
   - npm run pre-release
 
 release:
-  extends: .build-deploy
+  extends: .build-publish
   stage: publish
   only:
   - master
