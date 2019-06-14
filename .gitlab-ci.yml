@@ -15,14 +15,12 @@ cache:
   - node_modules
 
 test:
-  extends: .build
   stage: test
   script:
   - npm run build
   - npm run ci-test
 
 prerelease:
-  extends: .publish
   stage: publish
   only:
   - develop
@@ -33,7 +31,6 @@ prerelease:
   - npm run pre-release
 
 release:
-  extends: .publish
   stage: publish
   only:
   - master
