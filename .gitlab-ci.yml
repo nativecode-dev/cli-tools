@@ -8,6 +8,11 @@ cache:
   paths:
     - node_modules
 
+common-publish: &common-publish
+  script:
+    - npm run setup-git
+    - npm run build
+
 before_script:
   - npm install
   - npm run bootstrap
@@ -19,19 +24,17 @@ test:
     - npm test
 
 pre-publish:
+  <<: *common-publish
   stage: publish
   only:
     - develop
   script:
-    - npm run setup-git
-    - npm run build
     - npm run prerelease
 
 publish:
+  <<: *common-publish
   stage: publish
   only:
     - master
   script:
-    - npm run setup-git
-    - npm run build
     - npm run release
