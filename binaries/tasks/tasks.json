@@ -9,8 +9,8 @@
     "clean": [
       "rimraf bin"
     ],
-    "shabang": [
-      "cli-shabang"
+    "shebang": [
+      "cli-shebang"
     ]
   }
 }

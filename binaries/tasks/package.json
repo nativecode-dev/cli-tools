@@ -9,7 +9,7 @@
   "types": "./bin/index.d.ts",
   "version": "5.16.0-alpha.0",
   "bin": {
-    "cli-shabang": "./bin/cli-shabang.js",
+    "cli-shebang": "./bin/cli-shebang.js",
     "cli-tasks": "./bin/cli-tasks.js"
   },
   "bugs": {
@@ -47,7 +47,7 @@
   "scripts": {
     "build": "ts-node src/cli-tasks build",
     "clean": "ts-node src/cli-tasks clean",
-    "shabang": "cli-tasks shabang",
+    "shebang": "cli-tasks shebang",
     "viz": "ts-node src/cli-tasks -v"
   }
 }

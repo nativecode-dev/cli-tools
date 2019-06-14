@@ -3,8 +3,8 @@ import { Is, Npm, DictionaryOf } from '@nofrills/types'
 
 import { ConsoleLog, Lincoln, Logger } from './Logging'
 
-export class ShaBang {
-  private readonly log: Lincoln = Logger.extend('shabang')
+export class SheBang {
+  private readonly log: Lincoln = Logger.extend('shebang')
   private readonly npm: Promise<Npm>
 
   protected constructor(npm: string) {
@@ -12,16 +12,16 @@ export class ShaBang {
     this.npm = fs.json<Npm>(npm)
   }
 
-  static from(npm: string): ShaBang {
-    return new ShaBang(npm)
+  static from(npm: string): SheBang {
+    return new SheBang(npm)
   }
 
-  async shabang(): Promise<void> {
+  async shebang(): Promise<void> {
     const npm = await this.npm
 
     if (Is.string(npm.bin)) {
       this.log.debug('bin', npm.bin)
-      await ShaBang.shabangify(npm.bin as string)
+      await SheBang.shebangify(npm.bin as string)
     } else if (npm.bin) {
       const hash: DictionaryOf<string> = npm.bin as DictionaryOf<string>
 
@@ -31,7 +31,7 @@ export class ShaBang {
           const bin = hash[key]
 
           try {
-            return await ShaBang.shabangify(fs.join(process.cwd(), bin))
+            return await SheBang.shebangify(fs.join(process.cwd(), bin))
           } catch (error) {
             ConsoleLog.info(bin, error)
             return Promise.resolve()
@@ -41,13 +41,13 @@ export class ShaBang {
     }
   }
 
-  static async shabangify(filename: string): Promise<Buffer> {
+  static async shebangify(filename: string): Promise<Buffer> {
     try {
-      ConsoleLog.info('<cli-shabang>', filename)
+      ConsoleLog.info('<cli-shebang>', filename)
 
-      const shabang = Buffer.from('#!/usr/bin/env node\n')
+      const shebang = Buffer.from('#!/usr/bin/env node\n')
       const original = await fs.readFile(filename)
-      const combined = Buffer.concat([shabang, original])
+      const combined = Buffer.concat([shebang, original])
 
       await fs.writeFile(filename, combined)
 

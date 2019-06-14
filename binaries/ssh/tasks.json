@@ -2,13 +2,13 @@
   "tasks": {
     "build": [
       "tsc --project tsconfig.json",
-      "ts-node ../../binaries/tasks/src/cli-shabang"
+      "[shebang]"
     ],
     "clean": [
       "rimraf bin"
     ],
-    "shabang": [
-      "cli-shabang"
+    "shebang": [
+      "ts-node ../tasks/src/cli-shebang"
     ]
   }
 }

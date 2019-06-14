@@ -1,7 +1,7 @@
 import { CreateResolver } from '@nofrills/fs'
 import { CLI, ConsoleOptions, ProcessArgs } from '@nofrills/console'
 
-import { ShaBang } from './ShaBang'
+import { SheBang } from './SheBang'
 import { ConsoleLog, Logger } from './Logging'
 
 const args = ProcessArgs.from(process.argv)
@@ -13,14 +13,14 @@ const options: ConsoleOptions = {
       const resolver = CreateResolver(cwd)
       const resolved = await resolver.find('package.json')
 
-      Logger.debug('shabang', cwd)
+      Logger.debug('shebang', cwd)
 
       if (resolved.length > 0) {
         const filename = resolved[0]
         ConsoleLog.trace('package-json', 'bin', filename)
 
-        const shabang = ShaBang.from(filename)
-        await shabang.shabang()
+        const shebang = SheBang.from(filename)
+        await shebang.shebang()
         return
       }
 

@@ -16,7 +16,7 @@ before_script:
 test:
   stage: test
   script:
-    - ./lerna run build
+    - ./lerna bootstrap
     - npm test
 
 pre-publish:

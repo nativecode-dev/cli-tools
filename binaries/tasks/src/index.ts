@@ -1,6 +1,6 @@
 export * from './errors/index'
 
-export * from './ShaBang'
+export * from './SheBang'
 export * from './Task'
 export * from './TaskBuilder'
 export * from './TaskConfig'
