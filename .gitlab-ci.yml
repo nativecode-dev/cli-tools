@@ -2,20 +2,11 @@ image: node:latest
 
 # Anchors
 #-------------------------------------------------------------------------------
-.default:
-  before_script:
-  - git submodule sync --recursive
-  - git submodule update --init --recursive
-  - npm install
-  - npm run bootstrap
-
 .build:
-  extends: .default
   before_script:
   - npm run build
 
 .publish:
-  extends: .default
   before_script:
   - npm run setup-ssh
   - npm run setup-git
@@ -26,6 +17,12 @@ image: node:latest
 stages:
 - test
 - publish
+
+before_script:
+- git submodule sync --recursive
+- git submodule update --init --recursive
+- npm install
+- npm run bootstrap
 
 cache:
   paths:
