@@ -30,6 +30,13 @@
     "@types/node": "*",
     "ts-node": "^7.0.0"
   },
+  "directories": {
+    "lib": "bin",
+    "test": "specs"
+  },
+  "files": [
+    "bin"
+  ],
   "publishConfig": {
     "access": "public"
   },

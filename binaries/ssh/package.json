@@ -25,6 +25,13 @@
     "@types/node": "*",
     "@types/pegjs": "^0.10.1"
   },
+  "directories": {
+    "lib": "bin",
+    "test": "specs"
+  },
+  "files": [
+    "bin"
+  ],
   "publishConfig": {
     "access": "public"
   },
