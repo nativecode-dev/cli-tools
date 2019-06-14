@@ -3,6 +3,9 @@
 MODE=$1
 LERNA=./node_modules/.bin/lerna
 
+git add -A .
+git commit -m "chore: version package"
+
 case $MODE in
 "canary")
     ${LERNA} version --yes --canary
