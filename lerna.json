@@ -19,6 +19,19 @@
       ],
       "message": "chore(release): publish",
       "yes": true
+    },
+    "version": {
+      "allowBranch": [
+        "develop",
+        "master"
+      ],
+      "conventionalCommits": true,
+      "ignoreChanges": [
+        "*.md",
+        "LICENSE"
+      ],
+      "message": "chore(release): publish",
+      "yes": true
     }
   },
   "packages": [
