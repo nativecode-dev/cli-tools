@@ -3,11 +3,11 @@ image: node:latest
 # Anchors
 #-------------------------------------------------------------------------------
 .build:
-  before_script:
+  script:
   - npm run build
 
 .publish:
-  before_script:
+  script:
   - npm run setup-ssh
   - npm run setup-git
   - npm run build
