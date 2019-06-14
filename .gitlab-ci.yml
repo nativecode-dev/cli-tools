@@ -33,7 +33,7 @@ prerelease:
   - npm run setup-git
   - npm run build
   - npm run ci-test
-  - npx lerna publish
+  - npx lerna publish --yes
 
 release:
   stage: publish
