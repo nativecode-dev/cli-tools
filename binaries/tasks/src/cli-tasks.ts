@@ -71,7 +71,7 @@ const options: ConsoleOptions = {
       ConsoleLog.error(error)
       console.log(error)
       process.exitCode = ErrorCode.UncaughtException
-      ConsoleLog.error('☢', process.exitCode)
+      ConsoleLog.error(process.exitCode)
     }
   },
 }

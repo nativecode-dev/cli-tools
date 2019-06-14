@@ -13,7 +13,8 @@ const options: ConsoleOptions = {
     const config = `${home}/.ssh/config`
     if (await fs.exists(config)) {
       const buffer = await fs.readFile(config)
-      parser.parse(buffer.toString())
+      const sshconfig = parser.parse(buffer.toString())
+      console.log(sshconfig)
     }
   },
 }
