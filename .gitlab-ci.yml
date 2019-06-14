@@ -35,6 +35,7 @@ publish:
     - master
   script:
     - ./.ci/setup-git
+    - ./lerna --version
     - ./lerna bootstrap
     - ./lerna run build
     - ./lerna publish from-package --yes --dist-tag latest
