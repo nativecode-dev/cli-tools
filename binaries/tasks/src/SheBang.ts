@@ -22,7 +22,9 @@ export class SheBang {
     if (Is.string(npm.bin)) {
       this.log.debug('bin', npm.bin)
       await SheBang.shebangify(npm.bin as string)
-    } else if (npm.bin) {
+    }
+
+    if (npm.bin) {
       const hash: DictionaryOf<string> = npm.bin as DictionaryOf<string>
 
       await Promise.all(
@@ -34,7 +36,6 @@ export class SheBang {
             return await SheBang.shebangify(fs.join(process.cwd(), bin))
           } catch (error) {
             ConsoleLog.info(bin, error)
-            return Promise.resolve()
           }
         }),
       )
@@ -44,14 +45,16 @@ export class SheBang {
   static async shebangify(filename: string): Promise<Buffer> {
     try {
       ConsoleLog.info('<cli-shebang>', filename)
-
-      const shebang = Buffer.from('#!/usr/bin/env node\n')
       const original = await fs.readFile(filename)
-      const combined = Buffer.concat([shebang, original])
 
-      await fs.writeFile(filename, combined)
+      if (original.toString().startsWith('#!') === false) {
+        const shebang = Buffer.from('#!/usr/bin/env node\n')
+        const combined = Buffer.concat([shebang, original])
+        await fs.writeFile(filename, combined)
+        return combined
+      }
 
-      return combined
+      return original
     } catch (e) {
       ConsoleLog.error(`failed to write file: ${filename}`)
       throw e
