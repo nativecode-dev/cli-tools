@@ -65,6 +65,6 @@
     "setup-git": ".citools/setup-git ${CI_COMMIT_REF_NAME} git@git.nativecode.net:nativecode/cli-tools.git automaton@nativecode.com",
     "setup-ssh": ".citools/setup-ssh git.nativecode.net",
     "pre-release": "lerna publish --yes --canary --dist-tag next",
-    "release": "lerna publish from-package --dist-tag latest"
+    "release": "lerna publish from-package --yes --dist-tag latest"
   }
 }
