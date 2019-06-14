@@ -13,16 +13,25 @@ before_script:
 - git submodule update --init --recursive
 - npm install
 - npm run bootstrap
-- npm run setup-ssh
-- npm run setup-git
-- npm run build
+
+.build-deploy:
+  before_script:
+  - npm run setup-ssh
+  - npm run setup-git
+  - npm run build
+
+.build-test:
+  before_script:
+  - npm run build
 
 test:
+  extends: .build-test
   stage: test
   script:
   - npm run ci-test
 
 prerelease:
+  extends: .build-deploy
   stage: publish
   only:
   - develop
@@ -30,6 +39,7 @@ prerelease:
   - npm run pre-release
 
 release:
+  extends: .build-deploy
   stage: publish
   only:
   - master
