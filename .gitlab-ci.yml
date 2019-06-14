@@ -14,7 +14,7 @@ cache:
   paths:
   - node_modules
 
-test:
+continuous:
   stage: test
   except:
   - develop
