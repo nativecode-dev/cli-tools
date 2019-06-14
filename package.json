@@ -1,0 +1,57 @@
+{
+  "author": "opensource@nativecode.com",
+  "description": "Various CLI tools",
+  "homepage": "https://github.com/nativecode-dev/cli-tools#readme",
+  "license": "ISC",
+  "main": "index.js",
+  "name": "cli-tools",
+  "private": true,
+  "version": "1.0.0",
+  "bugs": {
+    "url": "https://github.com/nativecode-dev/cli-tools/issues"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/chai-as-promised": "^7.1.0",
+    "@types/mocha": "^5.2.7",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "lerna": "^3.15.0",
+    "mocha": "^6.1.4",
+    "nyc": "^14.1.1",
+    "source-map-support": "^0.5.12",
+    "ts-node": "^8.2.0",
+    "tslint-no-unused-expression-chai": "^0.1.4",
+    "typescript": "^3.5.2"
+  },
+  "keywords": [],
+  "nyc": {
+    "all": true,
+    "exclude": [
+      "node_modules",
+      "**/specs/**/*.spec.ts",
+      "**/index.ts"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "include": [
+      "**/src/**/*.ts"
+    ],
+    "instrument": true,
+    "report-dir": ".cache/coverage",
+    "reporter": "text",
+    "sourceMap": true,
+    "temp-directory": ".cache/nyc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nativecode-dev/cli-tools.git"
+  },
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "build": "lerna run build",
+    "test": "nyc mocha --opts ./mocha.opts",
+    "pretest": "lerna run build"
+  }
+}

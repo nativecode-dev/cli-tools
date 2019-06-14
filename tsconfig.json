@@ -1,0 +1,23 @@
+{
+  "extends": "./tsconfig.settings.json",
+  "include": [
+    "**/src/**/*.ts"
+  ],
+  "references": [
+    {
+      "path": "binaries/radarr-cli"
+    },
+    {
+      "path": "binaries/sonarr-cli"
+    },
+    {
+      "path": "packages/radarr"
+    },
+    {
+      "path": "packages/rest-client"
+    },
+    {
+      "path": "packages/sonarr"
+    }
+  ]
+}
