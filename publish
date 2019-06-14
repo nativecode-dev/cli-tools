@@ -8,13 +8,13 @@ git commit -m "chore: version package"
 
 case $MODE in
 "canary")
-    ${LERNA} version --canary
+    ${LERNA} version --canary --conventional-commits --yes
     ;;
 "release")
-    ${LERNA} version --dist-tag latest --create-release gitlab
+    ${LERNA} version --conventional-commits --create-release gitlab --dist-tag latest --yes
     ;;
 "prerelease")
-    ${LERNA} version --dist-tag next --preid next
+    ${LERNA} version --conventional-commits --dist-tag next --preid next --yes
     ;;
 esac
 
