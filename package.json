@@ -10,6 +10,11 @@
   "bugs": {
     "url": "https://github.com/nativecode-dev/cli-tools/issues"
   },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
   "devDependencies": {
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "^7.1.0",
@@ -61,7 +66,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
-    "commit": "npx git cz",
+    "commit": "git add -A . && npx git cz",
     "test": "nyc mocha --opts mocha.opts",
     "pretest": "lerna run build",
     "ci-test": "nyc mocha --opts .citools/mocha.opts",
@@ -70,10 +75,5 @@
     "pre-release": "lerna publish from-package --yes --preid next --dist-tag next",
     "release": "lerna publish from-package --yes --dist-tag latest --create-release gitlab",
     "canary": "lerna publish --yes --canary"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
   }
 }
