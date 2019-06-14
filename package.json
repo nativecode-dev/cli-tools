@@ -14,6 +14,7 @@
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "^7.1.0",
     "@types/mocha": "^5.2.7",
+    "@types/node": "^12.0.8",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "git-ssh-key": "^1.1.0",
@@ -53,6 +54,6 @@
     "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
     "test": "nyc mocha --opts mocha.opts",
-    "pretest": "./lerna run build"
+    "pretest": "lerna run build"
   }
 }
