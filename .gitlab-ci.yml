@@ -9,6 +9,8 @@ cache:
   - node_modules
 
 before_script:
+- git submodule sync --recursive
+- git submodule update --init --recursive
 - npm install
 - npm run bootstrap
 - npm run setup-ssh
