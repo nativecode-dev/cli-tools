@@ -25,6 +25,7 @@ pre-publish:
     - develop
   script:
     - ./.ci/setup-git
+    - ./lerna bootstrap
     - ./lerna run build
     - ./lerna publish --yes --canary --dist-tag next
 
@@ -34,5 +35,6 @@ publish:
     - master
   script:
     - ./.ci/setup-git
+    - ./lerna bootstrap
     - ./lerna run build
     - ./lerna publish from-package --yes --dist-tag latest
