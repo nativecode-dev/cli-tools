@@ -12,6 +12,7 @@
         "develop",
         "master"
       ],
+      "createRelease": "gitlab",
       "conventionalCommits": true,
       "message": "chore(release): publish"
     },
