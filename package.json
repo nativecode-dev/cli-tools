@@ -56,6 +56,7 @@
     "test": "nyc mocha --opts mocha.opts",
     "pretest": "lerna run build",
     "setup-git": "./.ci/setup-git",
+    "setup-ssh": "./.ci/setup-ssh",
     "prerelease": "lerna publish --yes --canary --dist-tag next",
     "release": "lerna publish from-package --yes --dist-tag latest"
   }
