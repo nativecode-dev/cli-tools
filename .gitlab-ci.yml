@@ -1,7 +1,6 @@
 image: node:latest
 
 stages:
-- test
 - publish
 
 before_script:
@@ -14,12 +13,6 @@ cache:
   paths:
   - node_modules
 
-test:
-  stage: test
-  script:
-  - npm run build
-  - npm run ci-test
-
 prerelease:
   stage: publish
   only:
@@ -28,6 +21,7 @@ prerelease:
   - npm run setup-ssh
   - npm run setup-git
   - npm run build
+  - npm run ci-test
   - npm run pre-release
 
 release:
@@ -38,4 +32,5 @@ release:
   - npm run setup-ssh
   - npm run setup-git
   - npm run build
+  - npm run ci-test
   - npm run release

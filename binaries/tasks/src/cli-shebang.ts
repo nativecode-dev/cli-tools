@@ -15,16 +15,13 @@ const options: ConsoleOptions = {
 
       Logger.debug('shebang', cwd)
 
-      if (resolved.length > 0) {
-        const filename = resolved[0]
-        ConsoleLog.trace('package-json', 'bin', filename)
-
-        const shebang = SheBang.from(filename)
-        await shebang.shebang()
-        return
-      }
-
-      throw new Error('could not find package.json')
+      await Promise.all(
+        resolved.map(async filename => {
+          ConsoleLog.trace('package-json', 'bin', filename)
+          const shebang = SheBang.from(filename)
+          await shebang.shebang()
+        }),
+      )
     } catch (error) {
       ConsoleLog.error(error)
     }
