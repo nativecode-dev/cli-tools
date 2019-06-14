@@ -21,7 +21,7 @@ before_script:
 test:
   stage: test
   script:
-    - npm test
+    - npm ci-test
 
 prerelease:
   <<: *publish
