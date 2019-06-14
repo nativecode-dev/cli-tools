@@ -2,6 +2,7 @@
 
 MODE=$1
 LERNA=./node_modules/.bin/lerna
+
 case $MODE in
 "canary")
     ${LERNA} version --yes --canary
