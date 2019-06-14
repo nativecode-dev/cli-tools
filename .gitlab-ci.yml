@@ -1,19 +1,5 @@
 image: node:latest
 
-# Anchors
-#-------------------------------------------------------------------------------
-.build:
-  script:
-  - npm run build
-
-.publish:
-  script:
-  - npm run setup-ssh
-  - npm run setup-git
-  - npm run build
-
-# Pipeline
-#-------------------------------------------------------------------------------
 stages:
 - test
 - publish
@@ -32,6 +18,7 @@ test:
   extends: .build
   stage: test
   script:
+  - npm run build
   - npm run ci-test
 
 prerelease:
@@ -40,6 +27,9 @@ prerelease:
   only:
   - develop
   script:
+  - npm run setup-ssh
+  - npm run setup-git
+  - npm run build
   - npm run pre-release
 
 release:
@@ -48,4 +38,7 @@ release:
   only:
   - master
   script:
+  - npm run setup-ssh
+  - npm run setup-git
+  - npm run build
   - npm run release
