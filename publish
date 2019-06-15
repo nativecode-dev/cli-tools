@@ -3,10 +3,6 @@
 MODE=$1
 LERNA=./node_modules/.bin/lerna
 
-echo $(git diff package.json)
-git checkout package.json
-git status
-
 case $MODE in
 "canary")
     ${LERNA} publish --canary
