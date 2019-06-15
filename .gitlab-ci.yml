@@ -5,13 +5,13 @@ stages:
 - publish
 
 before_script:
-- echo $GIT_SSH_KEY_GITLAB
 - git submodule sync --recursive
 - git submodule update --init --recursive
 - npm run setup-ssh
 - npm run setup-git
 - npm install
 - npm run bootstrap
+- git pull
 - ls -lahR ~/.ssh
 
 cache:
