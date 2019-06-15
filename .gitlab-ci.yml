@@ -5,6 +5,7 @@ stages:
 - publish
 
 before_script:
+- echo $GIT_SSH_KEY_GITLAB
 - git submodule sync --recursive
 - git submodule update --init --recursive
 - npm run setup-ssh
