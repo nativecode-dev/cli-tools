@@ -9,7 +9,7 @@ before_script:
 - git submodule update --init --recursive
 - npm install
 - npm run bootstrap
-- git remote get-url origin
+- git checkout ${CI_COMMIT_REF_NAME}
 
 cache:
   paths:
