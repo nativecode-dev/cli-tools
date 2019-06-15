@@ -70,7 +70,7 @@
     "test": "nyc mocha --opts mocha.opts",
     "pretest": "lerna run build",
     "ci-test": "nyc mocha --opts .citools/mocha.opts",
-    "setup-git": ".citools/setup-git ${CI_COMMIT_REF_NAME} none automaton@nativecode.com",
+    "setup-git": ".citools/setup-git ${CI_COMMIT_REF_NAME} git@git.nativecode.net:nativecode/cli-tools.git automaton@nativecode.com",
     "setup-ssh": ".citools/setup-ssh git.nativecode.net",
     "pre-release": "./publish prerelease",
     "release": "./publish release",
