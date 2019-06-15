@@ -3,8 +3,7 @@
 MODE=$1
 LERNA=./node_modules/.bin/lerna
 
-git add package.json
-git commit -m "chore: version package"
+git checkout package.json
 git status
 
 export DEBUG=*
