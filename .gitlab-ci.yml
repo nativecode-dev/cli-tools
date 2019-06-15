@@ -5,6 +5,8 @@ stages:
 - publish
 
 before_script:
+- git submodule sync --recursive
+- git submodule update --init --recursive
 - npm run setup-ssh
 - npm run setup-git
 - npm install
