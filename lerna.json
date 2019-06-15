@@ -8,10 +8,6 @@
       "stream": false
     },
     "publish": {
-      "allowBranch": [
-        "develop",
-        "master"
-      ],
       "conventionalCommits": true,
       "ignoreChanges": [
         "*.md",
@@ -22,10 +18,6 @@
       "yes": true
     },
     "version": {
-      "allowBranch": [
-        "develop",
-        "master"
-      ],
       "conventionalCommits": true,
       "ignoreChanges": [
         "*.md",

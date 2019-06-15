@@ -7,16 +7,14 @@ echo $(git diff package.json)
 git checkout package.json
 git status
 
-export DEBUG=*
-
 case $MODE in
 "canary")
-    ${LERNA} publish --canary --conventional-commits --yes
+    ${LERNA} publish --canary
     ;;
 "release")
-    ${LERNA} publish --conventional-commits --create-release gitlab --dist-tag latest --yes
+    ${LERNA} publish from-package --create-release gitlab --dist-tag latest
     ;;
 "prerelease")
-    ${LERNA} publish -c --conventional-commits --dist-tag next --preid next --yes
+    ${LERNA} publish --dist-tag next --preid next
     ;;
 esac
