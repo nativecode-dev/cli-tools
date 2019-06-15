@@ -12,8 +12,8 @@ before_script:
 - npm run setup-ssh
 - npm run setup-git
 - cat ~/.ssh/config
-- cat ~/.ssh/git_ssh_keys
 - cat ~/.ssh/known_hosts
+- ls -lahR ~/.ssh/git_ssh_keys
 
 cache:
   paths:
