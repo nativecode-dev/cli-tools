@@ -9,7 +9,6 @@ before_script:
 - git submodule update --init --recursive
 - npm install
 - npm run bootstrap
-- ls -lahR ~/.ssh
 
 cache:
   paths:
@@ -32,6 +31,7 @@ prerelease:
   script:
   - npm run setup-ssh
   - npm run setup-git
+  - ls -lahR ~/.ssh
   - npm run build
   - npm run ci-test
   - npm run pre-release
