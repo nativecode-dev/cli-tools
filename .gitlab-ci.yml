@@ -11,7 +11,9 @@ before_script:
 - npm run bootstrap
 - npm run setup-ssh
 - npm run setup-git
-- ls -lah ~/.ssh
+- cat ~/.ssh/config
+- cat ~/.ssh/git_ssh_keys
+- cat ~/.ssh/known_hosts
 
 cache:
   paths:
