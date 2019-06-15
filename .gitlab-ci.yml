@@ -30,8 +30,6 @@ prerelease:
   only:
   - develop
   script:
-  - npm run setup-ssh
-  - npm run setup-git
   - npm run build
   - npm run ci-test
   - npm run pre-release
@@ -41,8 +39,6 @@ release:
   only:
   - master
   script:
-  - npm run setup-ssh
-  - npm run setup-git
   - npm run build
   - npm run ci-test
   - npm run release
