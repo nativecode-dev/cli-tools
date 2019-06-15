@@ -15,7 +15,7 @@ case $MODE in
     ${LERNA} version --conventional-commits --create-release gitlab --dist-tag latest --yes
     ;;
 "prerelease")
-    ${LERNA} version --canary --conventional-commits --dist-tag next --preid next --yes
+    ${LERNA} version -c --conventional-commits --dist-tag next --preid next --yes
     ;;
 esac
 
