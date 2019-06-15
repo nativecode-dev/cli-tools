@@ -5,8 +5,8 @@ stages:
 - publish
 
 before_script:
-- git submodule sync --recursive
-- git submodule update --init --recursive
+- npm run setup-ssh
+- npm run setup-git
 - npm install
 - npm run bootstrap
 
@@ -29,8 +29,6 @@ prerelease:
   only:
   - develop
   script:
-  - npm run setup-ssh
-  - npm run setup-git
   - npm run build
   - npm run ci-test
   - npm run pre-release
@@ -40,8 +38,6 @@ release:
   only:
   - master
   script:
-  - npm run setup-ssh
-  - npm run setup-git
   - npm run build
   - npm run ci-test
   - npm run release
