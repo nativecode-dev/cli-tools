@@ -11,8 +11,8 @@ before_script:
 - npm run setup-git
 - npm install
 - npm run bootstrap
-- git pull
 - ls -lahR ~/.ssh
+- git pull
 
 cache:
   paths:
