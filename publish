@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -ex
+
 MODE=$1
 LERNA=./node_modules/.bin/lerna
 
@@ -11,7 +13,7 @@ case $MODE in
     ${LERNA} publish from-package --create-release gitlab --dist-tag latest
     ;;
 "prerelease")
-    ${LERNA} version prerelease --dist-tag next --preid next --yes
+    ${LERNA} version prerelease --dist-tag next --preid next
     ${LERNA} publish from-package --dist-tag next
     ;;
 esac
