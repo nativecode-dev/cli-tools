@@ -12,6 +12,6 @@ case $MODE in
     ;;
 "prerelease")
     ${LERNA} version prerelease --dist-tag next --preid next --yes
-    ${LERNA} publish from-package
+    ${LERNA} publish from-package --dist-tag next
     ;;
 esac

@@ -13,7 +13,7 @@
         "*.md",
         "LICENSE"
       ],
-      "loglevel": "verbose",
+      "loglevel": "error",
       "message": "chore(release): publish",
       "yes": true
     },
@@ -23,7 +23,7 @@
         "*.md",
         "LICENSE"
       ],
-      "loglevel": "verbose",
+      "loglevel": "error",
       "message": "chore(release): publish",
       "yes": true
     }
