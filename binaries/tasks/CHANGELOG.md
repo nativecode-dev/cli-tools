@@ -3,9 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [5.18.0-next.6](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@5.18.0-next.0...@nofrills/tasks@5.18.0-next.6) (2019-06-16)
+# [5.20.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@5.18.0-next.5...@nofrills/tasks@5.20.0) (2019-06-16)
 
-**Note:** Version bump only for package @nofrills/tasks
+
+### Features
+
+* **fixing versioning:** fixing versioning ([4cc5c61](https://github.com/nativecode-dev/cli-tools/commit/4cc5c61))
 
 
 
