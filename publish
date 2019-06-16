@@ -5,9 +5,14 @@ set -e
 MODE=$1
 LERNA=./node_modules/.bin/lerna
 
+if [ "$($LERNA changed)" = "" ]; then
+    echo "No changes from commits, skipping publish"
+    exit
+fi
+
 case $MODE in
 "canary")
-    ${LERNA} publish --canary --preid canary
+    ${LERNA} publish --conventional-commits --canary --preid canary --no-changelog
     ;;
 "release")
     ${LERNA} version --conventional-commits --conventional-graduate

@@ -42,6 +42,7 @@ release:
   stage: publish
   except:
   - tags
+  - triggers
   only:
   - master
   script:
