@@ -10,7 +10,7 @@ case $MODE in
     ${LERNA} publish --canary
     ;;
 "release")
-    ${LERNA} publish  --conventional-commits --create-release gitlab --dist-tag latest
+    ${LERNA} publish  --conventional-commits --create-release gitlab
     ;;
 "prerelease")
     ${LERNA} publish  --conventional-commits --dist-tag next --preid next
