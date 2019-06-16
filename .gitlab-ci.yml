@@ -31,10 +31,9 @@ prerelease:
   script:
   - npm run setup-ssh
   - npm run setup-git
-  - ssh-keyscan -H git.nativecode.net >> ~/.ssh/known_hosts
-  - ls -lahR ~/.ssh
   - cat ~/.ssh/config
   - cat ~/.ssh/known_hosts
+  - git pull
   - npm run build
   - npm run ci-test
   - npm run pre-release
