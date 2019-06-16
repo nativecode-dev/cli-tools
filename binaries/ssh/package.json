@@ -7,7 +7,7 @@
   "name": "@nofrills/ssh",
   "private": false,
   "types": "./bin/index.d.ts",
-  "version": "0.7.1-next.4",
+  "version": "0.7.1-next.5",
   "bin": {
     "cli-ssh": "./bin/cli-ssh.js"
   },
@@ -18,7 +18,7 @@
     "@nofrills/console": "^3.5.0",
     "@nofrills/fs": "^3.5.1",
     "@nofrills/lincoln-debug": "^3.6.0",
-    "@nofrills/tasks": "^5.17.1-next.4",
+    "@nofrills/tasks": "^5.17.1-next.5",
     "pegjs": "^0.10.0",
     "ts-pegjs": "^0.2.2"
   },
