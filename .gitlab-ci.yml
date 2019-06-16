@@ -9,6 +9,7 @@ before_script:
 - git submodule update --init --recursive
 - npm install
 - npm run bootstrap
+- apt-get install -y openssh-client
 
 cache:
   paths:
