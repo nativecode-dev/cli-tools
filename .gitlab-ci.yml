@@ -33,7 +33,6 @@ prerelease:
   - npm run setup-git
   - ls -lahR ~/.ssh
   - cat ~/.ssh/config
-  - cat ~/.ssh/known_hosts
   - git pull
   - npm run build
   - npm run ci-test
