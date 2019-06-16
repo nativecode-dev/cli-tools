@@ -1,4 +1,3 @@
-import { fs } from '@nofrills/fs'
 import { Returns } from '@nofrills/patterns'
 import { DictionaryOf } from '@nofrills/types'
 import { CLI, ConsoleOptions, ProcessArgs } from '@nofrills/console'
@@ -39,7 +38,6 @@ async function execute(builder: TaskBuilder, config: TaskConfig) {
 const options: ConsoleOptions = {
   initializer: async () => {
     try {
-      const npm = await fs.json<NPM>(fs.join(__dirname, '..', 'package.json'))
       const builder = TaskBuilder.file(process.cwd())
       const config = await builder.build()
       Logger.debug(config.tasks)

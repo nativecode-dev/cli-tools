@@ -13,6 +13,7 @@ case $MODE in
     ${LERNA} publish  --conventional-commits --create-release gitlab
     ;;
 "prerelease")
-    ${LERNA} publish  --conventional-commits --dist-tag next --preid next
+    ${LERNA} version prerelease --conventional-commits --dist-tag next --preid next
+    ${LERNA} publish  --conventional-commits --dist-tag next
     ;;
 esac
