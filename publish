@@ -10,7 +10,7 @@ case $MODE in
     ${LERNA} publish --canary --preid canary
     ;;
 "release")
-    ${LERNA} version --conventional-commits
+    ${LERNA} version --conventional-commits --conventional-graduate
     ${LERNA} publish  --conventional-commits --create-release gitlab
     ;;
 "prerelease")
