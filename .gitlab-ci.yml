@@ -19,6 +19,7 @@ continuous:
   except:
   - develop
   - master
+  - tags
   script:
   - npm run build
   - npm run ci-test
@@ -26,6 +27,8 @@ continuous:
 
 prerelease:
   stage: publish
+  except:
+  - tags
   only:
   - develop
   script:
@@ -37,6 +40,8 @@ prerelease:
 
 release:
   stage: publish
+  except:
+  - tags
   only:
   - master
   script:
