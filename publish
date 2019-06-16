@@ -7,14 +7,14 @@ LERNA=./node_modules/.bin/lerna
 
 case $MODE in
 "canary")
-    ${LERNA} publish --conventional-commits --canary --preid canary --no-changelog
+    ${LERNA} publish --canary --preid canary --no-changelog
     ;;
 "release")
     if [ "$($LERNA changed)" = "" ]; then
         echo "No changes from commits, skipping publish"
         exit
     fi
-    ${LERNA} version --conventional-commits --conventional-graduate
+    ${LERNA} version --conventional-graduate
     ${LERNA} publish from-git --create-release gitlab
     ;;
 "prerelease")
@@ -22,7 +22,7 @@ case $MODE in
         echo "No changes from commits, skipping publish"
         exit
     fi
-    ${LERNA} version prerelease --conventional-commits --dist-tag next --preid next --no-changelog
+    ${LERNA} version prerelease --dist-tag next --preid next --no-changelog
     ${LERNA} publish  from-git --dist-tag next
     ;;
 esac
