@@ -1,6 +1,5 @@
-export { Lincoln } from '@nofrills/lincoln-debug'
-
 import chalk from 'chalk'
+export { Lincoln } from '@nofrills/lincoln-debug'
 import { ScrubsInterceptor } from '@nofrills/scrubs'
 import { CreateLogger, CreateOptions, Lincoln, Log, Options } from '@nofrills/lincoln-debug'
 
