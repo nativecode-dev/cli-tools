@@ -65,6 +65,7 @@
   },
   "scripts": {
     "bootstrap": "lerna bootstrap",
+    "prebootstrap": "npm install",
     "build": "lerna run build",
     "commit": "git add -A . && npx git cz",
     "test": "nyc mocha --opts mocha.opts",

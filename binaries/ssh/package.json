@@ -41,8 +41,8 @@
     "url": "https://github.com/nativecode-dev/cli-tools.git"
   },
   "scripts": {
-    "build": "ts-node ../tasks/src/cli-tasks build",
-    "clean": "ts-node ../tasks/src/cli-tasks clean",
-    "shebang": "cli-shebang"
+    "build": "cli-tasks build",
+    "clean": "cli-tasks clean",
+    "shebang": "cli-tasks shebang"
   }
 }
