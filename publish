@@ -7,13 +7,14 @@ LERNA=./node_modules/.bin/lerna
 
 case $MODE in
 "canary")
-    ${LERNA} publish --canary
+    ${LERNA} publish --canary --preid canary
     ;;
 "release")
+    ${LERNA} version --conventional-commits
     ${LERNA} publish  --conventional-commits --create-release gitlab
     ;;
 "prerelease")
-    ${LERNA} version prerelease --conventional-commits --dist-tag next --preid next
+    ${LERNA} version prerelease --conventional-commits --dist-tag next --preid next --no-changelog
     ${LERNA} publish  --conventional-commits --dist-tag next
     ;;
 esac
