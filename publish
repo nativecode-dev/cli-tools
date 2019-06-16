@@ -1,20 +1,18 @@
 #!/bin/bash
 
+set -e
+
 MODE=$1
 LERNA=./node_modules/.bin/lerna
-
-echo $(git diff package.json)
-git checkout package.json
-git status
 
 case $MODE in
 "canary")
     ${LERNA} publish --canary
     ;;
 "release")
-    ${LERNA} publish from-package --create-release gitlab --dist-tag latest
+    ${LERNA} publish --create-release gitlab --dist-tag latest
     ;;
 "prerelease")
-    ${LERNA} publish from-git --dist-tag next --preid next
+    ${LERNA} publish --dist-tag next --preid next
     ;;
 esac
