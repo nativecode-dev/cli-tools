@@ -1,10 +1,6 @@
 {
   "command": {
-    "bootstrap": {
-      "loglevel": "silent"
-    },
     "run": {
-      "loglevel": "silent",
       "stream": false
     },
     "publish": {
