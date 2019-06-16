@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.20.1-next.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@5.20.0...@nofrills/tasks@5.20.1-next.0) (2019-06-16)
+
+
+### Bug Fixes
+
+* **tasks:** removing unused code ([32bc13d](https://github.com/nativecode-dev/cli-tools/commit/32bc13d))
+
+
+
+
+
 # [5.20.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@5.18.0-next.5...@nofrills/tasks@5.20.0) (2019-06-16)
 
 
