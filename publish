@@ -5,7 +5,7 @@ set -e
 MODE=$1
 LERNA=./node_modules/.bin/lerna
 
-if [ $($LERNA changed) = "" ]; then
+if [ "$($LERNA changed)" = "" ]; then
     echo "No changes from commits, skipping publish"
     exit
 fi
