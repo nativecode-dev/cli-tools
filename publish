@@ -5,21 +5,24 @@ set -e
 MODE=$1
 LERNA=./node_modules/.bin/lerna
 
-if [ "$($LERNA changed)" = "" ]; then
-    echo "No changes from commits, skipping publish"
-    exit
-fi
-
 case $MODE in
 "canary")
-    ${LERNA} publish --conventional-commits --canary --preid canary --no-changelog
+    ${LERNA} publish --canary --preid canary --no-changelog
     ;;
 "release")
-    ${LERNA} version --conventional-commits --conventional-graduate
+    if [ "$($LERNA changed)" = "" ]; then
+        echo "No changes from commits, skipping publish"
+        exit
+    fi
+    ${LERNA} version --conventional-graduate
     ${LERNA} publish from-git --create-release gitlab
     ;;
 "prerelease")
-    ${LERNA} version prerelease --conventional-commits --dist-tag next --preid next --no-changelog
+    if [ "$($LERNA changed)" = "" ]; then
+        echo "No changes from commits, skipping publish"
+        exit
+    fi
+    ${LERNA} version prerelease --dist-tag next --preid next --no-changelog
     ${LERNA} publish  from-git --dist-tag next
     ;;
 esac
