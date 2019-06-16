@@ -71,7 +71,7 @@
     "pretest": "lerna run build",
     "ci-test": "nyc mocha --opts .citools/mocha.opts",
     "setup-git": ".citools/setup-git ${CI_COMMIT_REF_NAME} git@git.nativecode.net:nativecode/cli-tools.git automaton@nativecode.com",
-    "setup-ssh": ".citools/setup-ssh git.nativecode.net ${SSH_PRIVATE_KEY}",
+    "setup-ssh": ".citools/setup-ssh git.nativecode.net ${SSH_PRIVATE_KEY} gitssh.nativecode.net",
     "pre-release": "./publish prerelease",
     "release": "./publish release",
     "canary": "./publish canary"
