@@ -14,6 +14,7 @@ const options: ConsoleOptions = {
     if (await fs.exists(config)) {
       const buffer = await fs.readFile(config)
       const sshconfig = parser.parse(buffer.toString())
+      // TODO: Remove
       console.log(sshconfig)
     }
   },
