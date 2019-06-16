@@ -10,7 +10,7 @@ case $MODE in
     ${LERNA} publish --canary
     ;;
 "release")
-    ${LERNA} publish from-package --create-release gitlab --dist-tag latest
+    ${LERNA} publish from-git --create-release gitlab --dist-tag latest
     ;;
 "prerelease")
     ${LERNA} version prerelease --dist-tag next --preid next
