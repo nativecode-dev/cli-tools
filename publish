@@ -13,6 +13,7 @@ case $MODE in
     ${LERNA} publish --create-release gitlab --dist-tag latest
     ;;
 "prerelease")
+    ${LERNA} version
     ${LERNA} publish --dist-tag next --preid next
     ;;
 esac
