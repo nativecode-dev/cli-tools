@@ -26,6 +26,8 @@ continuous:
 
 prerelease:
   stage: publish
+  except:
+  - tags
   only:
   - develop
   script:
@@ -37,6 +39,8 @@ prerelease:
 
 release:
   stage: publish
+  except:
+  - tags
   only:
   - master
   script:
