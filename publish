@@ -7,7 +7,7 @@ LERNA=./node_modules/.bin/lerna
 
 case $MODE in
 "canary")
-    ${LERNA} publish --canary --preid canary
+    ${LERNA} publish --conventional-commits --canary --preid canary
     ;;
 "release")
     ${LERNA} version --conventional-commits --conventional-graduate
