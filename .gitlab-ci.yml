@@ -19,6 +19,7 @@ continuous:
   except:
   - develop
   - master
+  - tags
   script:
   - npm run build
   - npm run ci-test
