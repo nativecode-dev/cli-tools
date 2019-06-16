@@ -26,6 +26,7 @@
       "yes": true
     }
   },
+  "loglevel": "silent",
   "packages": [
     "binaries/*"
   ],

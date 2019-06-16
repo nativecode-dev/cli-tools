@@ -10,11 +10,6 @@ import { Logger, ConsoleLog } from './Logging'
 
 const processed = ProcessArgs.from(process.argv)
 
-interface NPM {
-  name: string
-  version: string
-}
-
 async function execute(builder: TaskBuilder, config: TaskConfig) {
   const args = processed.argsOnly
   const results = await builder.run(args, config)
