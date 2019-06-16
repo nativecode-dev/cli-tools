@@ -31,7 +31,6 @@ prerelease:
   script:
   - npm run setup-ssh
   - npm run setup-git
-  - git pull
   - npm run build
   - npm run ci-test
   - npm run pre-release
