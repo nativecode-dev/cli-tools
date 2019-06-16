@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.4](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/ssh@0.10.3...@nofrills/ssh@0.10.4) (2019-06-16)
+
+**Note:** Version bump only for package @nofrills/ssh
+
+
+
+
+
+## [0.10.3](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/ssh@0.10.2...@nofrills/ssh@0.10.3) (2019-06-16)
+
+
+### Bug Fixes
+
+* **bump:** version bump ([9812038](https://github.com/nativecode-dev/cli-tools/commit/9812038))
+
+
+
+
+
+## [0.10.2](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/ssh@0.10.1-next.10...@nofrills/ssh@0.10.2) (2019-06-16)
+
+**Note:** Version bump only for package @nofrills/ssh
+
+
+
+
+
+## [0.10.1](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/ssh@0.10.1-next.10...@nofrills/ssh@0.10.1) (2019-06-16)
+
+**Note:** Version bump only for package @nofrills/ssh
+
+
+
+
+
 ## [0.10.1-next.6](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/ssh@0.10.1-next.5...@nofrills/ssh@0.10.1-next.6) (2019-06-16)
 
 **Note:** Version bump only for package @nofrills/ssh

@@ -16,10 +16,10 @@ case $MODE in
     ;;
 "release")
     ${LERNA} version --conventional-commits --conventional-graduate
-    ${LERNA} publish  --conventional-commits --create-release gitlab
+    ${LERNA} publish from-git --create-release gitlab
     ;;
 "prerelease")
     ${LERNA} version prerelease --conventional-commits --dist-tag next --preid next --no-changelog
-    ${LERNA} publish  --conventional-commits --dist-tag next
+    ${LERNA} publish  from-git --dist-tag next
     ;;
 esac
