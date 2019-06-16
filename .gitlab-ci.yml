@@ -31,8 +31,6 @@ prerelease:
   script:
   - npm run setup-ssh
   - npm run setup-git
-  - cat ~/.ssh/config
-  - cat ~/.ssh/known_hosts
   - git pull
   - npm run build
   - npm run ci-test
