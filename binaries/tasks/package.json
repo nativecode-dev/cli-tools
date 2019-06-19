@@ -7,7 +7,7 @@
   "name": "@nofrills/tasks",
   "private": false,
   "types": "./bin/index.d.ts",
-  "version": "5.20.5",
+  "version": "5.20.6-next.1",
   "bin": {
     "cli-shebang": "./bin/cli-shebang.js",
     "cli-tasks": "./bin/cli-tasks.js"
@@ -47,7 +47,6 @@
   "scripts": {
     "build": "ts-node src/cli-tasks build",
     "clean": "ts-node src/cli-tasks clean",
-    "shebang": "cli-tasks shebang",
-    "viz": "ts-node src/cli-tasks -v"
+    "shebang": "ts-node src/cli-shebang"
   }
 }

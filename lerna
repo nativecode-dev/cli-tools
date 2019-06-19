@@ -1,8 +1,12 @@
 #!/bin/bash
 
+export PATH=./node_modules/.bin:$PATH
+
+LERNA=$(which lerna)
+
 if [ ! -d node_modules ]; then
   npm install
-  ./node_modules/.bin/lerna bootstrap
+  ${LERNA} bootstrap
 fi
 
-./node_modules/.bin/lerna "$@"
+${LERNA} "$@"
