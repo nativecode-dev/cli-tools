@@ -23,12 +23,18 @@ export interface Interpolated {
 }
 
 async function files(cwd: string, filenames: string[]): Promise<string[]> {
-  const normalized = filenames.map(filename => fs.join(cwd, filename))
+  const filepaths = filenames.map(filename => {
+    const dirname = fs.resolve(fs.dirname(filename))
+    if (dirname !== fs.resolve(cwd)) {
+      return filename
+    }
+    return fs.join(cwd, filename)
+  })
 
   const filtered = await Promise.all(
-    normalized.map(async filename => {
-      if (await fs.exists(filename)) {
-        return filename
+    filepaths.map(async filepath => {
+      if (await fs.exists(filepath)) {
+        return filepath
       }
       return null
     }),
