@@ -3,10 +3,23 @@ import yargs from 'yargs'
 import { fs } from '@nofrills/fs'
 import { DictionaryOf } from '@nofrills/collections'
 
+export enum DataType {
+  Json = 'json',
+  Raw = 'raw',
+}
+
 export interface Interpolate {
   cwd: string
   destination: string
   filenames: string[]
+  json: boolean
+  output: DataType
+  save: boolean
+}
+
+export interface Interpolated {
+  filename: string
+  rendered: string
 }
 
 async function files(cwd: string, filenames: string[]): Promise<string[]> {
@@ -32,7 +45,7 @@ async function files(cwd: string, filenames: string[]): Promise<string[]> {
 function interpolate(env: DictionaryOf<string | undefined>, content: string): string {
   return Object.keys(env)
     .map(name => {
-      const expression = `$\{${name}\}`
+      const expression = `\\$\{${name}\}`
       return (text: string) => {
         const regex = new RegExp(expression, 'g')
         const value = process.env[name]
@@ -44,40 +57,71 @@ function interpolate(env: DictionaryOf<string | undefined>, content: string): st
     }, content)
 }
 
-const args = yargs
+yargs
   .help()
   .scriptName(fs.basename(__filename, false))
-  .command<Interpolate>('interpolate [filenames..]', 'replaces environment variables in a file(s)', {
-    aliases: ['replace'],
+  .command<Interpolate>('replace [filenames..]', 'replaces environment variables in a file(s)', {
     builder: {
       cwd: {
-        alias: 'cwd',
         default: process.cwd(),
       },
       destination: {
-        alias: 'dest',
         default: process.cwd(),
       },
       lineEndings: {
-        alias: 'eol',
         choices: ['crlf', 'lf', 'ignore'],
         default: 'ignore',
       },
+      json: {
+        boolean: true,
+        default: false,
+      },
+      save: {
+        boolean: true,
+        default: false,
+      },
+      output: {
+        choices: [DataType.Json, DataType.Raw],
+        default: DataType.Raw,
+      },
     },
     handler: async args => {
+      const datatype = () => (args.json ? DataType.Json : args.output)
+
       const filenames = await files(args.cwd, args.filenames)
 
-      return Promise.all(
+      const renderers = await Promise.all(
         filenames
           .map(filepath => ({ filepath, buffer: fs.readFile(filepath) }))
-          .map(async fileinfo => {
+          .map<Promise<Interpolated>>(async fileinfo => {
             const buffer = await fileinfo.buffer
-            const destination = fs.join(args.destination, fs.basename(fileinfo.filepath))
-            console.log(`interpolating ${fileinfo.filepath} -> ${destination}`)
-            return interpolate(process.env, buffer.toString())
+            const interpolated = interpolate(process.env, buffer.toString())
+            if (args.save) {
+              const destination = fs.join(args.destination, fs.basename(fileinfo.filepath))
+              await fs.writeFile(destination, interpolated)
+            }
+
+            return {
+              filename: fileinfo.filepath,
+              rendered: interpolated,
+            }
           }),
       )
-    },
-  }).argv
 
-console.debug('arguments', args)
+      renderers.map(renderer => {
+        const dt = datatype()
+        switch (dt) {
+          case DataType.Json:
+            process.stdout.write(JSON.stringify(renderer))
+            process.stdout.write('\n')
+            break
+
+          default:
+            process.stdout.write(renderer.rendered)
+            process.stdout.write('\n')
+            break
+        }
+      })
+    },
+  })
+  .parse()
