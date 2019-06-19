@@ -2,27 +2,7 @@
 
 set -e
 
-MODE=$1
-LERNA=./node_modules/.bin/lerna
+export PATH=./node_modules/.bin:$PATH
 
-case $MODE in
-"canary")
-    ${LERNA} publish --canary --preid canary --no-changelog
-    ;;
-"release")
-    if [ "$($LERNA changed)" = "" ]; then
-        echo "No changes from commits, skipping publish"
-        exit
-    fi
-    ${LERNA} version --conventional-graduate
-    ${LERNA} publish from-git --create-release gitlab
-    ;;
-"prerelease")
-    if [ "$($LERNA changed)" = "" ]; then
-        echo "No changes from commits, skipping publish"
-        exit
-    fi
-    ${LERNA} version prerelease --dist-tag next --preid next --no-changelog
-    ${LERNA} publish  from-git --dist-tag next
-    ;;
-esac
+MODE=$1
+source .citools/lerna-publish ${MODE}
