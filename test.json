@@ -1,3 +1,0 @@
-{
-    "test": "${DRONE_SERVER}",
-    "test2": "${DRONE_SERVER}"}
