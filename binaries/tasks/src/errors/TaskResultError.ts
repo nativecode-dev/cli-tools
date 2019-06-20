@@ -1,4 +1,4 @@
-import { TaskJobResult } from '../TaskJobResult'
+import { TaskJobResult } from '../models/TaskJobResult'
 
 export class TaskResultError extends Error {
   public readonly errors: string[]

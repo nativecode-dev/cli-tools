@@ -1,7 +1,7 @@
 import { fs } from '@nofrills/fs'
 import { Is, Npm, DictionaryOf } from '@nofrills/types'
 
-import { ConsoleLog, Lincoln, Logger } from './Logging'
+import { Lincoln, Logger } from './Logging'
 
 export class SheBang {
   private readonly log: Lincoln = Logger.extend('shebang')
@@ -35,7 +35,7 @@ export class SheBang {
           try {
             return await SheBang.shebangify(fs.join(process.cwd(), bin))
           } catch (error) {
-            ConsoleLog.info(bin, error)
+            Logger.error(error)
           }
         }),
       )
@@ -44,7 +44,6 @@ export class SheBang {
 
   static async shebangify(filename: string): Promise<Buffer> {
     try {
-      ConsoleLog.info('<cli-shebang>', filename)
       const original = await fs.readFile(filename)
 
       if (original.toString().startsWith('#!') === false) {
@@ -56,7 +55,7 @@ export class SheBang {
 
       return original
     } catch (e) {
-      ConsoleLog.error(`failed to write file: ${filename}`)
+      Logger.error(`failed to write file: ${filename}`)
       throw e
     }
   }

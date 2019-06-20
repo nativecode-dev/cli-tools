@@ -14,7 +14,7 @@
       "ts-node src/cli-env"
     ],
     "shebang": [
-      "cli-shebang"
+      "ts-node ../tasks/src/cli-shebang"
     ]
   }
 }

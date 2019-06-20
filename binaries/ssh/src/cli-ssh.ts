@@ -1,6 +1,6 @@
+import { fs } from '@nofrills/fs'
 import { CLI, ConsoleOptions, ProcessArgs } from '@nofrills/console'
 
-import { fs } from '@nofrills/fs'
 import { SshParser } from './SshParser'
 
 const args = ProcessArgs.from(process.argv)
@@ -15,9 +15,9 @@ const options: ConsoleOptions = {
       const buffer = await fs.readFile(config)
       const sshconfig = parser.parse(buffer.toString())
       // TODO: Remove
-      console.log(sshconfig)
+      process.stdout.write(Buffer.from(sshconfig))
     }
   },
 }
 
-CLI.run(options, args).catch(console.log)
+CLI.run(options, args).catch(console.error)

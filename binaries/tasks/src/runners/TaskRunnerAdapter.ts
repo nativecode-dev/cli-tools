@@ -1,5 +1,5 @@
-import { TaskJob } from './TaskJob'
-import { TaskJobResult } from './TaskJobResult'
+import { TaskJob } from '../models/TaskJob'
+import { TaskJobResult } from '../models/TaskJobResult'
 
 export interface TaskRunnerAdapter {
   readonly stdin: NodeJS.ReadStream
