@@ -75,6 +75,8 @@ export class SerialTaskRunner implements TaskRunnerAdapter {
       uid: context.entry.uid,
     }
 
+    console.log('[exec]', entry.command, (entry.arguments || []).join(' '))
+
     const command = execa(entry.command, entry.arguments, options)
 
     if (!command.stderr || !command.stdout) {

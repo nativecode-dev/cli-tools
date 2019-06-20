@@ -58,7 +58,7 @@ booty
       const tasks = args.tasks || []
 
       if (tasks.length) {
-        return exec(args)
+        return exec(args, ...args.tasks)
       }
 
       const showInteractive = (args.interactive || tasks.length === 0) && !args.list
