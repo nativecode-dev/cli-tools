@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/cli-env@0.4.0...@nofrills/cli-env@0.5.0) (2019-06-20)
+
+
+### Features
+
+* support substitution in arguments ([d9db7ff](https://github.com/nativecode-dev/cli-tools/commit/d9db7ff))
+
+
+
+
+
 ## [0.4.3](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/cli-env@0.4.2...@nofrills/cli-env@0.4.3) (2019-06-20)
 
 **Note:** Version bump only for package @nofrills/cli-env
