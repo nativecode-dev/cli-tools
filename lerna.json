@@ -34,7 +34,7 @@
       "yes": true
     }
   },
-  "loglevel": "warn",
+  "loglevel": "silent",
   "npmClient": "npm",
   "npmClientArgs": [
     "--silent"

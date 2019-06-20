@@ -27,7 +27,12 @@ export class SerialTaskRunner implements TaskRunnerAdapter {
   private readonly log: Lincoln = Logger.extend('serial')
 
   execute(job: TaskJob): Promise<TaskJobResult[]> {
-    const createTask = (entry: TaskEntry) => this.run({ entry, env: job.env, job })
+    const createTask = (entry: TaskEntry) => {
+      const args = entry.arguments || []
+      this.log.debug('> ', entry.command, args.join(' '))
+      return this.run({ entry, env: job.env, job })
+    }
+
     const initiator = () => Promise.resolve([])
 
     if (job && job.task && job.task.entries) {
