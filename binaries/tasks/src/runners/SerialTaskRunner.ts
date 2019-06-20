@@ -65,11 +65,9 @@ export class SerialTaskRunner implements TaskRunnerAdapter {
   protected async exec(context: TaskContext): Promise<TaskJobResult> {
     const regex = /\${?([^$|^}]+)}?/g
     const entry = context.entry
-    entry.arguments = (entry.arguments || []).map(arg => {
-      // If argument contains environment variables, we have to expand
-      // the variable first.
-      return arg.replace(regex, (_, name) => (context.env[name] ? String(context.env[name]) : ''))
-    })
+    entry.arguments = (entry.arguments || []).map(arg =>
+      arg.replace(regex, (_, key) => (context.env[key] ? String(context.env[key]) : '')),
+    )
 
     const options: execa.Options = {
       cwd: context.job.cwd,
