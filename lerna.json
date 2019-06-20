@@ -35,6 +35,10 @@
     }
   },
   "loglevel": "silent",
+  "npmClient": "npm",
+  "npmClientArgs": [
+    "--silent"
+  ],
   "packages": [
     "binaries/*"
   ],

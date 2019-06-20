@@ -1,74 +1,100 @@
-import { Returns } from '@nofrills/patterns'
-import { DictionaryOf } from '@nofrills/types'
+import yargs from 'yargs'
+import yargsInteractive, { Option } from 'yargs-interactive'
+
+import { fs } from '@nofrills/fs'
 import { CLI, ConsoleOptions, ProcessArgs } from '@nofrills/console'
 
-import { Task } from './Task'
-import { TaskConfig } from './TaskConfig'
+import exec from './commands/exec'
+
+import { Logger } from './Logging'
 import { TaskBuilder } from './TaskBuilder'
 import { ErrorCode } from './errors/ErrorCode'
-import { Logger, ConsoleLog } from './Logging'
 
-const processed = ProcessArgs.from(process.argv)
+const log = Logger.extend('console')
 
-async function execute(builder: TaskBuilder, config: TaskConfig) {
-  const args = processed.argsOnly
-  const results = await builder.run(args, config)
+interface GlobalOptions {
+  json: boolean
+}
 
-  Logger.debug(results)
-
-  const code: number = Math.max(
-    ...results
-      .map(result => ({ code: result.code, errors: result.errors, messages: result.messages, job: result.entry }))
-      .map(result =>
-        Returns(result).after(() => (result.errors.length > 0 ? ConsoleLog.error(...result.errors) : void 0)),
-      )
-      .map(result => result.code),
-  )
-
-  Logger.debug(code)
-
-  return code
+interface RunTaskOptions extends GlobalOptions {
+  tasks: string[]
 }
 
 const options: ConsoleOptions = {
   initializer: async () => {
     try {
       const builder = TaskBuilder.file(process.cwd())
-      const config = await builder.build()
-      Logger.debug(config.tasks)
+      const $config = await builder.build()
+      log.debug('configuration', $config.tasks)
 
-      if (processed.has('help') || processed.has('h')) {
-        ConsoleLog.info('-h, --help')
-        ConsoleLog.info('-ls, --list')
-        ConsoleLog.info('-v, -viz, --visualize')
-      } else if (processed.has('list') || processed.has('ls')) {
-        ConsoleLog.info('[list]')
-        Object.keys(config.tasks)
-          .sort()
-          .map(name => ConsoleLog.trace(' :', name))
-      } else if (processed.has('visualize') || processed.has('viz') || processed.has('v')) {
-        ConsoleLog.info('[visualize]')
-        if (processed.argsOnly.length > 0) {
-          const collected = processed.argsOnly.reduce<DictionaryOf<Task>>(
-            (results, name) => Returns(results).after(() => (results[name] = config.tasks[name] as Task)),
-            {},
-          )
-          ConsoleLog.info(JSON.stringify(collected, null, 2))
-        } else {
-          ConsoleLog.info(JSON.stringify(config, null, 2))
-        }
-      } else {
-        process.exitCode = await execute(builder, config)
-      }
+      const booty = Object.keys($config.tasks).reduce((build, name) => {
+        return build.command<GlobalOptions>(name, name, {
+          builder: {},
+          handler: () => {
+            try {
+              return exec(builder, $config, name)
+            } catch {
+              booty.showHelp()
+            }
+          },
+        })
+      }, yargs)
+
+      booty
+        .command<RunTaskOptions>('$0 [tasks..]', 'run a set of tasks', {
+          aliases: ['run-tasks'],
+          builder: {},
+          handler: async args => {
+            if (args.tasks) {
+              if (args.tasks.length === 1) {
+                booty.showHelp()
+              } else {
+                await exec(builder, $config, ...args.tasks.slice(1))
+              }
+              return
+            }
+
+            // NOTE:
+            // The currenty @types library does not properly model
+            // how yargs-interactive works, so this hack gets around
+            // the fact that "options" is now "choices".
+            const tasks: Option = {
+              tasks: {
+                choices: Object.keys($config.tasks),
+                default: Object.keys($config.tasks).shift(),
+                describe: 'select tasks',
+                options: Object.keys($config.tasks),
+                prompt: 'if-no-arg',
+                type: 'list',
+              },
+            } as Option
+
+            const result = await yargsInteractive()
+              .usage('$0 <command> [args]')
+              .interactive({
+                interactive: {
+                  default: true,
+                },
+                ...tasks,
+              })
+
+            exec(builder, $config, result.tasks)
+          },
+        })
+        .completion()
+        .option('json', {
+          boolean: true,
+          default: false,
+        })
+        .scriptName(fs.basename(__filename, false))
+        .help()
+        .parse()
     } catch (error) {
-      ConsoleLog.error(error)
-      console.log(error)
+      log.error(error)
       process.exitCode = ErrorCode.UncaughtException
-      ConsoleLog.error(process.exitCode)
+      log.error(process.exitCode)
     }
   },
 }
 
-Logger.debug(...process.argv)
-Logger.debug(...Object.keys(process.env).map(key => ({ name: key, value: process.env[key] })))
-CLI.run(options, processed).catch(ConsoleLog.info)
+CLI.run(options, ProcessArgs.from(process.argv)).catch(log.error)
