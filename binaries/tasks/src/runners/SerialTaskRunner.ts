@@ -63,9 +63,10 @@ export class SerialTaskRunner implements TaskRunnerAdapter {
   }
 
   protected async exec(context: TaskContext): Promise<TaskJobResult> {
-    const regex = /\${([A-Za-z,0-9,_]+[^$])}/g
     const entry = context.entry
-    entry.arguments = (entry.arguments || []).map(arg =>
+
+    const regex = /\${([A-Za-z,0-9,_]+[^$])}/g
+    const substitutions = (entry.arguments || []).map(arg =>
       arg.replace(regex, (_, key) => (context.env[key] ? String(context.env[key]) : '')),
     )
 
@@ -79,9 +80,9 @@ export class SerialTaskRunner implements TaskRunnerAdapter {
       uid: context.entry.uid,
     }
 
-    console.log('[exec]', entry.command, entry.arguments.join(' '))
+    console.log('[exec]', entry.command, substitutions.join(' '))
 
-    const command = execa(entry.command, entry.arguments, options)
+    const command = execa(entry.command, substitutions, options)
 
     if (!command.stderr || !command.stdout) {
       throw new Error('could not access stdout or stderr')
