@@ -8,13 +8,13 @@ import { Task, TaskBuilder, TaskConfig, TaskEntryType } from '../src/index'
 const assets = fs.join(__dirname, 'assets')
 
 describe('when using TaskBuilder', () => {
-  it('should create builder', () => expect(() => TaskBuilder.file(assets)).to.not.throw)
+  it('should create builder', () => expect(() => TaskBuilder.dir(assets)).to.not.throw)
 
   it('should fail to create when tasks not found', () =>
     expect(() => new TaskBuilder(assets, ['undefined.json'])).to.throw)
 
   describe('to compile tasks', () => {
-    const builder = TaskBuilder.file(assets)
+    const builder = TaskBuilder.dir(assets)
 
     it('should compile tasks', async () => {
       const config = await builder.build()

@@ -7,7 +7,7 @@
   "name": "@nofrills/tasks",
   "private": false,
   "types": "./bin/index.d.ts",
-  "version": "6.0.2",
+  "version": "6.1.0",
   "bin": {
     "cli-shebang": "./bin/cli-shebang.js",
     "cli-tasks": "./bin/cli-tasks.js"
@@ -16,10 +16,10 @@
     "url": "https://github.com/nativecode-dev/cli-tools/issues"
   },
   "dependencies": {
-    "@nofrills/console": "^3.5.0",
     "@nofrills/fs": "^3.5.1",
     "@nofrills/lincoln-debug": "^3.6.0",
     "@nofrills/patterns": "^1.5.0",
+    "@nofrills/scrubs": "^3.6.0",
     "@nofrills/types": "^3.4.3",
     "deepmerge": "^3.2.1",
     "execa": "^1.0.0",

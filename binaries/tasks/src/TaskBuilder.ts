@@ -33,7 +33,7 @@ export class TaskBuilder {
     this.resolver = CreateResolver(cwd)
   }
 
-  static file(cwd: string, definitions: string[] = ['tasks.json', 'package.json']): TaskBuilder {
+  static dir(cwd: string, definitions: string[] = ['tasks.json', 'package.json']): TaskBuilder {
     return new TaskBuilder(cwd, definitions)
   }
 
@@ -48,7 +48,7 @@ export class TaskBuilder {
       filenames.map(async filename => {
         try {
           const config = await fs.json<TaskConfig>(filename)
-          const transformed = this.transform(config)
+          const transformed = this.transform({ tasks: config.tasks })
           this.log.debug('task-config', transformed.tasks)
           return transformed
         } catch (error) {
