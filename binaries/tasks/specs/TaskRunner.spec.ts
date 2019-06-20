@@ -14,7 +14,7 @@ import { TaskRunnerAdapter } from '../src/runners/TaskRunnerAdapter'
 const assets = fs.join(__dirname, 'assets')
 
 describe('when using TaskRunner', () => {
-  const builder = TaskBuilder.file(assets)
+  const builder = TaskBuilder.dir(assets)
 
   class TestAdapter implements TaskRunnerAdapter {
     readonly stdin: NodeJS.ReadStream = process.stdin

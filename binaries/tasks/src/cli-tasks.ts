@@ -1,100 +1,120 @@
-import yargs from 'yargs'
-import yargsInteractive, { Option } from 'yargs-interactive'
+import $yargs, { Arguments } from 'yargs'
+import interactive, { OptionData } from 'yargs-interactive'
 
 import { fs } from '@nofrills/fs'
-import { CLI, ConsoleOptions, ProcessArgs } from '@nofrills/console'
+import { Returns } from '@nofrills/patterns'
 
-import exec from './commands/exec'
-
-import { Logger } from './Logging'
 import { TaskBuilder } from './TaskBuilder'
-import { ErrorCode } from './errors/ErrorCode'
+import { TaskConfig } from './models/TaskConfig'
 
-const log = Logger.extend('console')
+const booty = $yargs
 
-interface GlobalOptions {
-  json: boolean
-}
-
-interface RunTaskOptions extends GlobalOptions {
+export interface RootArguments {
+  bail: boolean
+  builder: TaskBuilder
+  config: TaskConfig
+  cwd: string
+  help: boolean
+  interactive: boolean
+  list: boolean
   tasks: string[]
 }
 
-const options: ConsoleOptions = {
-  initializer: async () => {
-    try {
-      const builder = TaskBuilder.file(process.cwd())
-      const $config = await builder.build()
-      log.debug('configuration', $config.tasks)
+async function execute(builder: TaskBuilder, config: TaskConfig, ...tasks: string[]): Promise<number> {
+  const results = await builder.run(tasks, config)
 
-      const booty = Object.keys($config.tasks).reduce((build, name) => {
-        return build.command<GlobalOptions>(name, name, {
-          builder: {},
-          handler: () => {
-            try {
-              return exec(builder, $config, name)
-            } catch {
-              booty.showHelp()
-            }
-          },
-        })
-      }, yargs)
+  const code: number = Math.max(
+    ...results
+      .map(result => ({ code: result.code, errors: result.errors, messages: result.messages, job: result.entry }))
+      .map(result => Returns(result).after(() => (result.errors.length > 0 ? console.error(...result.errors) : void 0)))
+      .map(result => result.code),
+  )
 
-      booty
-        .command<RunTaskOptions>('$0 [tasks..]', 'run a set of tasks', {
-          aliases: ['run-tasks'],
-          builder: {},
-          handler: async args => {
-            if (args.tasks) {
-              if (args.tasks.length === 1) {
-                booty.showHelp()
-              } else {
-                await exec(builder, $config, ...args.tasks.slice(1))
-              }
-              return
-            }
-
-            // NOTE:
-            // The currenty @types library does not properly model
-            // how yargs-interactive works, so this hack gets around
-            // the fact that "options" is now "choices".
-            const tasks: Option = {
-              tasks: {
-                choices: Object.keys($config.tasks),
-                default: Object.keys($config.tasks).shift(),
-                describe: 'select tasks',
-                options: Object.keys($config.tasks),
-                prompt: 'if-no-arg',
-                type: 'list',
-              },
-            } as Option
-
-            const result = await yargsInteractive()
-              .usage('$0 <command> [args]')
-              .interactive({
-                interactive: {
-                  default: true,
-                },
-                ...tasks,
-              })
-
-            exec(builder, $config, result.tasks)
-          },
-        })
-        .completion()
-        .option('json', {
-          boolean: true,
-          default: false,
-        })
-        .scriptName(fs.basename(__filename, false))
-        .help()
-        .parse()
-    } catch (error) {
-      log.error(error)
-      process.exitCode = ErrorCode.UncaughtException
-      log.error(process.exitCode)
-    }
-  },
+  return code === 0 ? 0 : code
 }
 
-CLI.run(options, ProcessArgs.from(process.argv)).catch(log.error)
+async function load(cwd: string): Promise<[TaskBuilder, TaskConfig]> {
+  const exists = await fs.exists(cwd, false)
+  const dirname = exists ? cwd : process.cwd()
+  const builder = TaskBuilder.dir(dirname)
+  return [builder, await builder.build()]
+}
+
+async function exec(args: Arguments<RootArguments>, ...tasks: string[]) {
+  const code = await execute(args.builder, args.config, ...tasks)
+
+  if (code !== 0 && args.bail) {
+    throw new Error(`bailed with exit code: ${code}`)
+  }
+
+  return args
+}
+
+booty
+  .command<RootArguments>('$0 [tasks..]', '', {
+    aliases: ['@execute', '@exec', '@run', 'run-script', 'run-task'],
+    builder: {},
+    handler: async (args: Arguments<RootArguments>) => {
+      const tasks = args.tasks || []
+
+      if (tasks.length) {
+        return exec(args)
+      }
+
+      const showInteractive = (args.interactive || tasks.length === 0) && !args.list
+
+      if (showInteractive) {
+        const tasks: OptionData = {
+          choices: Object.keys(args.config.tasks),
+          describe: 'select tasks',
+          options: Object.keys(args.config.tasks),
+          prompt: 'always',
+          type: 'list',
+        } as OptionData
+
+        const answers = await interactive().interactive({
+          interactive: { default: true },
+          tasks,
+        })
+
+        return exec(args, answers.tasks)
+      }
+
+      if (args.list) {
+        console.log('[tasks]')
+        Object.keys(args.config.tasks).forEach(name => console.log(`  * ${name}`))
+      }
+
+      return args
+    },
+  })
+  .middleware(async args => {
+    const [builder, config] = await load(args.cwd)
+    args.builder = builder
+    args.config = config
+  })
+  .option('bail', {
+    alias: 'b',
+    boolean: true,
+    default: false,
+    describe: 'stops on first error',
+  })
+  .option('cwd', {
+    alias: 'c',
+    default: process.cwd(),
+    describe: 'sets the current working directory',
+  })
+  .option('interactive', {
+    alias: 'i',
+    boolean: true,
+    default: true,
+    describe: 'interactive',
+  })
+  .option('list', {
+    alias: 'l',
+    boolean: true,
+    default: false,
+    describe: 'list available tasks',
+  })
+  .help()
+  .parse()
