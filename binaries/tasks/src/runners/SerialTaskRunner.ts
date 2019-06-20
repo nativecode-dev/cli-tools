@@ -63,7 +63,11 @@ export class SerialTaskRunner implements TaskRunnerAdapter {
   }
 
   protected async exec(context: TaskContext): Promise<TaskJobResult> {
+    const regex = /\${([A-Za-z,0-9,_]+[^$])}/g
     const entry = context.entry
+    entry.arguments = (entry.arguments || []).map(arg =>
+      arg.replace(regex, (_, key) => (context.env[key] ? String(context.env[key]) : '')),
+    )
 
     const options: execa.Options = {
       cwd: context.job.cwd,
@@ -75,7 +79,7 @@ export class SerialTaskRunner implements TaskRunnerAdapter {
       uid: context.entry.uid,
     }
 
-    console.log('[exec]', entry.command, (entry.arguments || []).join(' '))
+    console.log('[exec]', entry.command, entry.arguments.join(' '))
 
     const command = execa(entry.command, entry.arguments, options)
 

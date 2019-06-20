@@ -1,6 +1,7 @@
 {
   "tasks": {
     "build": [
+      "echo ${DRONE_SERVER}",
       "[build:ts]",
       "[shebang]"
     ],
