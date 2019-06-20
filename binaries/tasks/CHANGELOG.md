@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.6.1](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@6.6.0...@nofrills/tasks@6.6.1) (2019-06-20)
+
+
+### Bug Fixes
+
+* minor changes to arg subs ([8418170](https://github.com/nativecode-dev/cli-tools/commit/8418170))
+
+
+
+
+
 # [6.6.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@6.4.0...@nofrills/tasks@6.6.0) (2019-06-20)
 
 
