@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.1](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@6.3.0...@nofrills/tasks@6.3.1) (2019-06-20)
+
+**Note:** Version bump only for package @nofrills/tasks
+
+
+
+
+
 # [6.3.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@6.2.1...@nofrills/tasks@6.3.0) (2019-06-20)
 
 
