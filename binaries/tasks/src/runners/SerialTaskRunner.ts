@@ -63,7 +63,7 @@ export class SerialTaskRunner implements TaskRunnerAdapter {
   }
 
   protected async exec(context: TaskContext): Promise<TaskJobResult> {
-    const regex = /\${?([^$|^}]+)}?/g
+    const regex = /\${([A-Za-z,0-9,_]+[^$])}/g
     const entry = context.entry
     entry.arguments = (entry.arguments || []).map(arg =>
       arg.replace(regex, (_, key) => (context.env[key] ? String(context.env[key]) : '')),
