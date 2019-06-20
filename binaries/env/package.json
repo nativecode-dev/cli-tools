@@ -15,7 +15,7 @@
     "url": "https://github.com/nativecode-dev/cli-tools/issues"
   },
   "dependencies": {
-    "@nofrills/console": "^3.5.0",
+    "@nofrills/console": "^3.6.0",
     "@nofrills/fs": "^3.5.1",
     "@nofrills/lincoln-debug": "^3.6.0",
     "@nofrills/tasks": "^6.3.0",
