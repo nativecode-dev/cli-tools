@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-next.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@5.20.9-next.0...@nofrills/tasks@6.0.0-next.0) (2019-06-20)
+
+
+### Features
+
+* **tasks:** removing CliArguments, TaskArguments, and RunArguments ([60a630b](https://github.com/nativecode-dev/cli-tools/commit/60a630b))
+
+
+### BREAKING CHANGES
+
+* **tasks:** removed interfaces
+
+
+
+
+
 ## [5.20.8](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@5.20.7...@nofrills/tasks@5.20.8) (2019-06-20)
 
 **Note:** Version bump only for package @nofrills/tasks
