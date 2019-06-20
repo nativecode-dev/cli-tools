@@ -48,12 +48,21 @@ async function files(cwd: string, filenames: string[]): Promise<string[]> {
   }, [])
 }
 
+const cachebag: DictionaryOf<RegExp> = {}
+
+function cache(expression: string): RegExp {
+  if (cachebag[expression]) {
+    return cachebag[expression]
+  }
+  return new RegExp(expression, 'g')
+}
+
 function interpolate(env: DictionaryOf<string | undefined>, content: string): string {
   return Object.keys(env)
     .map(name => {
       const expression = `\\$\{${name}\}`
       return (text: string) => {
-        const regex = new RegExp(expression, 'g')
+        const regex = cache(expression)
         const value = process.env[name]
         return value ? text.replace(regex, value) : text
       }
