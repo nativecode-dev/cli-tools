@@ -7,7 +7,7 @@
   "name": "@nofrills/tasks",
   "private": false,
   "types": "./bin/index.d.ts",
-  "version": "6.0.3",
+  "version": "6.0.4",
   "bin": {
     "cli-shebang": "./bin/cli-shebang.js",
     "cli-tasks": "./bin/cli-tasks.js"
