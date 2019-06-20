@@ -70,7 +70,7 @@
     "prebuild": "npm run bootstrap",
     "commit": "git add -A . && npx git cz",
     "test": "nyc mocha --opts mocha.opts",
-    "pretest": "lerna run build",
+    "pretest": "npx lerna run build",
     "ci-test": "nyc mocha --opts .citools/mocha.opts",
     "setup-git": ".citools/setup-git ${CI_COMMIT_REF_NAME} git@git.nativecode.net:nativecode/cli-tools.git automaton@nativecode.com",
     "setup-ssh": ".citools/setup-ssh git.nativecode.net ${SSH_PRIVATE_KEY} gitssh.nativecode.net",
