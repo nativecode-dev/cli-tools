@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/cli-env@0.2.0...@nofrills/cli-env@0.4.0) (2019-06-20)
+
+
+### Features
+
+* adding compat for lower versions ([afb4d40](https://github.com/nativecode-dev/cli-tools/commit/afb4d40))
+
+
+
+
+
 ## [0.3.1](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/cli-env@0.3.0...@nofrills/cli-env@0.3.1) (2019-06-20)
 
 **Note:** Version bump only for package @nofrills/cli-env
