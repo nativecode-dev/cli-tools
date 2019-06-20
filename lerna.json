@@ -12,6 +12,7 @@
       "conventionalCommits": true,
       "ignoreChanges": [
         "*.md",
+        "CHANGELOG.md",
         "LICENSE"
       ],
       "loglevel": "verbose",
@@ -27,6 +28,7 @@
       "conventionalCommits": true,
       "ignoreChanges": [
         "*.md",
+        "CHANGELOG.md",
         "LICENSE"
       ],
       "loglevel": "verbose",
