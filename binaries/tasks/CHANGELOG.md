@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.5.1](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@6.5.0...@nofrills/tasks@6.5.1) (2019-06-20)
+
+
+### Bug Fixes
+
+* changing regex to only look for ${} ([c1ec6ef](https://github.com/nativecode-dev/cli-tools/commit/c1ec6ef))
+* regex for substitution ([43ab92e](https://github.com/nativecode-dev/cli-tools/commit/43ab92e))
+
+
+
+
+
 # [6.5.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@6.4.1...@nofrills/tasks@6.5.0) (2019-06-20)
 
 
