@@ -3,12 +3,9 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.1.0-next.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/cli-env@0.0.4-next.3...@nofrills/cli-env@0.1.0-next.0) (2019-06-20)
+## [0.0.4](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/cli-env@0.0.4-next.2...@nofrills/cli-env@0.0.4) (2019-06-20)
 
-
-### Features
-
-* **tasks:** cache regular expressions ([ce07475](https://github.com/nativecode-dev/cli-tools/commit/ce07475))
+**Note:** Version bump only for package @nofrills/cli-env
 
 
 
