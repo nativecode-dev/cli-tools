@@ -2,13 +2,14 @@ import execa from 'execa'
 
 import { serial } from '@nofrills/patterns'
 
-import { ConsoleLog, Lincoln, Logger } from './Logging'
+import { Lincoln, Logger } from '../Logging'
 
-import { TaskJob } from './TaskJob'
-import { TaskEntry } from './TaskEntry'
-import { TaskEntryType } from './TaskEntryType'
+import { TaskJob } from '../models/TaskJob'
+import { TaskEntry } from '../models/TaskEntry'
+import { TaskEntryType } from '../models/TaskEntryType'
 import { TaskRunnerAdapter } from './TaskRunnerAdapter'
-import { TaskJobResult, EmptyTaskJobResult } from './TaskJobResult'
+import { TaskJobResult, EmptyTaskJobResult } from '../models/TaskJobResult'
+import { TaskConfigError } from '../errors'
 
 export type TaskJobExec = () => Promise<TaskJobResult>
 
@@ -26,12 +27,19 @@ export class SerialTaskRunner implements TaskRunnerAdapter {
   private readonly log: Lincoln = Logger.extend('serial')
 
   execute(job: TaskJob): Promise<TaskJobResult[]> {
-    ConsoleLog.info('[task]', job.name)
+    const createTask = (entry: TaskEntry) => {
+      const args = entry.arguments || []
+      this.log.debug('> ', entry.command, args.join(' '))
+      return this.run({ entry, env: job.env, job })
+    }
 
-    const createTask = (entry: TaskEntry) => this.run({ entry, env: job.env, job })
     const initiator = () => Promise.resolve([])
 
-    return serial(job.task.entries.map(createTask), initiator)
+    if (job && job.task && job.task.entries) {
+      return serial(job.task.entries.map(createTask), initiator)
+    }
+
+    return Promise.reject(new TaskConfigError('could not execute an invalid configuration'))
   }
 
   protected run(context: TaskContext): TaskJobExec {
@@ -50,11 +58,7 @@ export class SerialTaskRunner implements TaskRunnerAdapter {
         }
 
       default:
-        return () => {
-          const args = entry.arguments ? entry.arguments.join(' ') : entry.arguments
-          ConsoleLog.info(`<${entry.type}${entry.command}>`, args)
-          return this.exec(context)
-        }
+        return () => this.exec(context)
     }
   }
 
@@ -74,7 +78,7 @@ export class SerialTaskRunner implements TaskRunnerAdapter {
     const command = execa(entry.command, entry.arguments, options)
 
     if (!command.stderr || !command.stdout) {
-      throw new Error('could not access stdout stderr')
+      throw new Error('could not access stdout or stderr')
     }
 
     command.stderr.pipe(process.stderr)
@@ -90,7 +94,7 @@ export class SerialTaskRunner implements TaskRunnerAdapter {
       signal,
     }
 
-    this.log.debug(entry.command, result)
+    this.log.debug('command', entry.command, result)
 
     return result
   }

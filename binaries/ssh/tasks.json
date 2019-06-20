@@ -11,7 +11,7 @@
       "rimraf bin"
     ],
     "shebang": [
-      "cli-shebang"
+      "ts-node ../tasks/src/cli-shebang"
     ]
   }
 }

@@ -2,7 +2,7 @@ import { CreateResolver } from '@nofrills/fs'
 import { CLI, ConsoleOptions, ProcessArgs } from '@nofrills/console'
 
 import { SheBang } from './SheBang'
-import { ConsoleLog, Logger } from './Logging'
+import { Logger } from './Logging'
 
 const args = ProcessArgs.from(process.argv)
 
@@ -17,15 +17,14 @@ const options: ConsoleOptions = {
 
       await Promise.all(
         resolved.map(async filename => {
-          ConsoleLog.trace('package-json', 'bin', filename)
           const shebang = SheBang.from(filename)
           await shebang.shebang()
         }),
       )
     } catch (error) {
-      ConsoleLog.error(error)
+      Logger.error(error)
     }
   },
 }
 
-CLI.run(options, args).catch(ConsoleLog.info)
+CLI.run(options, args).catch(Logger.error)

@@ -12,6 +12,9 @@
     ],
     "shebang": [
       "ts-node ./src/cli-shebang"
+    ],
+    "run": [
+      "ts-node ./src/cli-tasks"
     ]
   }
 }
