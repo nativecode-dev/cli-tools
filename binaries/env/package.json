@@ -7,7 +7,7 @@
   "name": "@nofrills/cli-env",
   "private": false,
   "types": "./bin/index.d.ts",
-  "version": "0.2.0",
+  "version": "0.3.1",
   "bin": {
     "cli-env": "./bin/cli-env.js"
   },
@@ -15,10 +15,10 @@
     "url": "https://github.com/nativecode-dev/cli-tools/issues"
   },
   "dependencies": {
-    "@nofrills/console": "^3.5.0",
+    "@nofrills/console": "^3.6.0",
     "@nofrills/fs": "^3.5.1",
     "@nofrills/lincoln-debug": "^3.6.0",
-    "@nofrills/tasks": "^6.2.0",
+    "@nofrills/tasks": "^6.3.1",
     "yargs": "^13.2.4",
     "yargs-interactive": "^2.1.0"
   },
@@ -26,7 +26,8 @@
     "@types/node": "*",
     "@types/pegjs": "^0.10.1",
     "@types/yargs": "^13.0.0",
-    "@types/yargs-interactive": "^2.0.0"
+    "@types/yargs-interactive": "^2.0.0",
+    "ts-node": "^8.3.0"
   },
   "directories": {
     "lib": "bin",

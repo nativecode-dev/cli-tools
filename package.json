@@ -28,6 +28,7 @@
     "cz-conventional-changelog": "^2.1.0",
     "git-ssh-key": "^1.1.0",
     "lerna": "^3.15.0",
+    "lerna-update-wizard": "^0.14.0",
     "mocha": "^6.1.4",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
