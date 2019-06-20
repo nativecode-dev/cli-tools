@@ -1,4 +1,4 @@
-import yargs, { Argv } from 'yargs'
+import yargs from 'yargs'
 import yargsInteractive, { Option } from 'yargs-interactive'
 
 import { fs } from '@nofrills/fs'
