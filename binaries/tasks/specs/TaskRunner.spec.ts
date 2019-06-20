@@ -4,12 +4,12 @@ import { fs } from '@nofrills/fs'
 
 import expect from './expect'
 
-import { TaskJob } from '../src/TaskJob'
-import { TaskRunner } from '../src/TaskRunner'
-import { TaskConfig } from '../src/TaskConfig'
+import { TaskJob } from '../src/models/TaskJob'
 import { TaskBuilder } from '../src/TaskBuilder'
-import { TaskJobResult } from '../src/TaskJobResult'
-import { TaskRunnerAdapter } from '../src/TaskRunnerAdapter'
+import { TaskConfig } from '../src/models/TaskConfig'
+import { TaskRunner } from '../src/runners/TaskRunner'
+import { TaskJobResult } from '../src/models/TaskJobResult'
+import { TaskRunnerAdapter } from '../src/runners/TaskRunnerAdapter'
 
 const assets = fs.join(__dirname, 'assets')
 
@@ -111,7 +111,7 @@ describe('when using TaskRunner', () => {
     const env: NodeJS.ProcessEnv = { PATH: '' }
     const runner = new TaskRunner(EnvTask, new TestAdapter())
     await runner.run(['env'], undefined, env)
-    console.log(env)
+
     expect(env.SIMPLE).to.equal('test')
   })
 })

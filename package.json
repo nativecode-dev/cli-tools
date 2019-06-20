@@ -67,6 +67,7 @@
     "bootstrap": "lerna bootstrap",
     "prebootstrap": "npm install",
     "build": "lerna run build",
+    "prebuild": "npm run bootstrap",
     "commit": "git add -A . && npx git cz",
     "test": "nyc mocha --opts mocha.opts",
     "pretest": "lerna run build",
@@ -76,5 +77,10 @@
     "pre-release": "./publish prerelease",
     "release": "./publish release",
     "canary": "./publish canary"
+  },
+  "tasks": {
+    "build": [
+      "lerna run build"
+    ]
   }
 }

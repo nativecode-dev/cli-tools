@@ -34,7 +34,11 @@
       "yes": true
     }
   },
-  "loglevel": "silent",
+  "loglevel": "warn",
+  "npmClient": "npm",
+  "npmClientArgs": [
+    "--silent"
+  ],
   "packages": [
     "binaries/*"
   ],

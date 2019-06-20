@@ -19,12 +19,14 @@
     "@nofrills/fs": "^3.5.1",
     "@nofrills/lincoln-debug": "^3.6.0",
     "@nofrills/tasks": "^5.20.8-next.0",
-    "yargs": "^13.2.4"
+    "yargs": "^13.2.4",
+    "yargs-interactive": "^2.1.0"
   },
   "devDependencies": {
     "@types/node": "*",
     "@types/pegjs": "^0.10.1",
-    "@types/yargs": "^13.0.0"
+    "@types/yargs": "^13.0.0",
+    "@types/yargs-interactive": "^2.0.0"
   },
   "directories": {
     "lib": "bin",
@@ -41,9 +43,9 @@
     "url": "https://github.com/nativecode-dev/cli-tools.git"
   },
   "scripts": {
-    "build": "cli-tasks build",
-    "clean": "cli-tasks clean",
-    "exec": "cli-tasks exec",
-    "shebang": "cli-tasks shebang"
+    "build": "ts-node ../tasks/src/cli-tasks build",
+    "clean": "ts-node ../tasks/src/cli-tasks clean",
+    "exec": "ts-node ../tasks/src/cli-tasks exec",
+    "shebang": "ts-node ../tasks/src/cli-tasks shebang"
   }
 }

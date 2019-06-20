@@ -1,18 +1,18 @@
+import deepmerge from 'deepmerge'
+
 import { Is } from '@nofrills/types'
 import { Returns } from '@nofrills/patterns'
 import { fs, CreateResolver, FileResolver } from '@nofrills/fs'
 
-import { Task } from './Task'
-import { TaskConfig } from './TaskConfig'
-import { TaskDefinition } from './TaskDefinitions'
-
-import { Lincoln, Logger, ConsoleLog } from './Logging'
-import { TaskRunner } from './TaskRunner'
-import { TaskJobResult } from './TaskJobResult'
-import { TaskConfigError } from './errors/TaskConfigError'
-import { TaskEntry } from './TaskEntry'
-import { TaskEntryType } from './TaskEntryType'
-import { SerialTaskRunner } from './SerialTaskRunner'
+import { Task } from './models/Task'
+import { Lincoln, Logger } from './Logging'
+import { TaskEntry } from './models/TaskEntry'
+import { TaskConfig } from './models/TaskConfig'
+import { TaskRunner } from './runners/TaskRunner'
+import { TaskEntryType } from './models/TaskEntryType'
+import { TaskJobResult } from './models/TaskJobResult'
+import { TaskDefinition } from './models/TaskDefinitions'
+import { SerialTaskRunner } from './runners/SerialTaskRunner'
 
 export interface TaskContext {
   config: TaskConfig
@@ -27,8 +27,9 @@ export class TaskBuilder {
   constructor(
     public readonly cwd: string,
     private readonly definitions: string[],
-    private readonly config?: TaskConfig,
+    private readonly config: TaskConfig = { tasks: {} },
   ) {
+    this.config = this.transform(config)
     this.resolver = CreateResolver(cwd)
   }
 
@@ -41,24 +42,23 @@ export class TaskBuilder {
   }
 
   async build(): Promise<TaskConfig> {
-    if (this.config) {
-      const transformed = this.transform(this.config)
-      this.log.debug('task-config', JSON.stringify(transformed.tasks, null, 2))
-      return transformed
-    }
+    const filenames = await this.resolve()
 
-    const configs = await this.resolve()
+    const configs = await Promise.all(
+      filenames.map(async filename => {
+        try {
+          const config = await fs.json<TaskConfig>(filename)
+          const transformed = this.transform(config)
+          this.log.debug('task-config', transformed.tasks)
+          return transformed
+        } catch (error) {
+          this.log.error(error)
+          return this.config
+        }
+      }),
+    )
 
-    if (configs.length > 0) {
-      const filename = configs[0]
-      const config = await fs.json<TaskConfig>(filename)
-      ConsoleLog.trace('task-config', filename)
-      const transformed = this.transform(config)
-      this.log.debug('task-config', JSON.stringify(transformed.tasks, null, 2))
-      return transformed
-    }
-
-    throw new TaskConfigError(`failed to find configuration: ${this.definitions} in ${this.cwd}`)
+    return configs.reduce((config, current) => deepmerge(config, current), this.config)
   }
 
   async run(names: string[], config?: TaskConfig): Promise<TaskJobResult[]> {
@@ -149,7 +149,8 @@ export class TaskBuilder {
 
   protected async resolve(): Promise<string[]> {
     const resolved = await Promise.all(this.definitions.map(definition => this.resolver.find(definition)))
-    this.log.debug('resolve', ...resolved)
+    const filtered = resolved.filter(files => files.length)
+    this.log.debug('resolve', ...filtered)
     return resolved.reduce((results, current) => results.concat(...current), [])
   }
 
@@ -160,7 +161,7 @@ export class TaskBuilder {
         if (context.task) {
           return true
         }
-        ConsoleLog.error(`failed to find task: ${context.name}`)
+        this.log.error(`failed to find task: ${context.name}`)
         return false
       })
       .map(context => {
