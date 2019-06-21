@@ -12,7 +12,7 @@ export interface State {
   config: TaskConfig
   cwd: string
   startup: Date
-  elapsed(date: Date): [number, number, number, number]
+  elapsed(date: Date): number
   format<T>(instance: T, formatted: boolean): string
   merge<T>(...source: T[]): T
 }
@@ -26,16 +26,16 @@ const $GLOBAL: Partial<State> = {
   elapsed: date => {
     const now = new Date().getTime()
     const difference = now - date.getTime()
-
-    const daysDifference = Math.floor(difference / 1000 / 60 / 60 / 24)
-    const hoursDifference = Math.floor(difference / 1000 / 60 / 60)
-    const minutesDifference = Math.floor(difference / 1000 / 60)
-    const secondsDifference = Math.floor(difference / 1000)
-
-    return [daysDifference, hoursDifference, minutesDifference, secondsDifference]
+    return Math.floor(difference / 1000)
   },
   format: (instance, formatted) => (formatted ? JSON.stringify(instance, null, 2) : JSON.stringify(instance)),
-  merge: (...sources) => deepmerge.all(sources),
+  merge: (...sources) =>
+    deepmerge.all(sources, {
+      arrayMerge: (target, source) => {
+        const src = new Set([...target, ...source])
+        return Array.from(src.values())
+      },
+    }),
 }
 
 // NOTE: This is a hack. Because we want the types

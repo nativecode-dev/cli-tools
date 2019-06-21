@@ -27,9 +27,8 @@ export class TaskRunner {
     const jobs = this.createTaskJobs(cwd, env, names)
     const tasks = jobs.map(job => () => this.adapter.execute(job))
 
-    return serial(tasks, () => Promise.resolve([])).then(results =>
-      results.reduce((previous, current) => previous.concat(current), []),
-    )
+    const results = await serial(tasks, async () => [])
+    return results.reduce((previous, current) => previous.concat(current), [])
   }
 
   protected createTaskJobs(cwd: string, env: NodeJS.ProcessEnv, names: string[]): TaskJob[] {

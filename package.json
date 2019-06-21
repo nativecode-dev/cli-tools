@@ -69,6 +69,7 @@
     "build": "lerna run build",
     "prebuild": "npm run bootstrap",
     "commit": "git add -A . && npx git cz",
+    "cli-tasks": "ts-node binaries/tasks/src/cli-tasks",
     "test": "nyc mocha --opts mocha.opts",
     "pretest": "npx lerna run build",
     "ci-test": "nyc mocha --opts .citools/mocha.opts",
@@ -84,7 +85,10 @@
       "lerna run build"
     ],
     "clean": [
-      "lerna run clean"
+      "rimraf binaries/*/bin",
+      "rimraf binaries/*/dist",
+      "rimraf binaries/*/lib",
+      "rimraf **/*.tsbuildinfo"
     ],
     "install": [
       "npm install",

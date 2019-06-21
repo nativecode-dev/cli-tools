@@ -1,4 +1,4 @@
-import $yargs, { Argv, Arguments } from 'yargs'
+import $yargs, { Arguments } from 'yargs'
 import interactive, { OptionData } from 'yargs-interactive'
 
 import { fs } from '@nofrills/fs'
@@ -18,6 +18,29 @@ import ViewCommand from './commands/view'
 
 const booty = $yargs
 const log = Logger.extend('cli-tasks')
+
+async function exec(args: Arguments<Options>, ...tasks: string[]): Promise<Arguments<Options>> {
+  const code = await execute(GLOBAL.builder, GLOBAL.config, ...tasks)
+
+  if (code !== 0 && args.bail) {
+    throw new Error(`bailed with exit code: ${code}`)
+  }
+
+  return args
+}
+
+async function execute(builder: TaskBuilder, config: TaskConfig, ...tasks: string[]): Promise<number> {
+  const results = await builder.run(tasks, config)
+
+  const code: number = Math.max(
+    ...results
+      .map(result => ({ code: result.code, errors: result.errors, messages: result.messages, job: result.entry }))
+      .map(result => Returns(result).after(() => (result.errors.length > 0 ? console.error(...result.errors) : void 0)))
+      .map(result => result.code),
+  )
+
+  return code === 0 ? 0 : code
+}
 
 async function load(args: Arguments<Options>): Promise<[TaskBuilder, TaskConfig]> {
   const exists = await fs.exists(args.cwd, false)
@@ -47,113 +70,102 @@ async function load(args: Arguments<Options>): Promise<[TaskBuilder, TaskConfig]
   return [builder, await builder.build()]
 }
 
-async function exec(args: Arguments<Options>, ...tasks: string[]): Promise<Arguments<Options>> {
-  const code = await execute(GLOBAL.builder, GLOBAL.config, ...tasks)
-
-  if (code !== 0 && args.bail) {
-    throw new Error(`bailed with exit code: ${code}`)
-  }
-
-  return args
+function timing(): void {
+  const seconds = GLOBAL.elapsed(GLOBAL.startup)
+  log.trace(`[@${GLOBAL.cwd}] took ${seconds} seconds to execute`)
 }
 
-async function execute(builder: TaskBuilder, config: TaskConfig, ...tasks: string[]): Promise<number> {
-  const results = await builder.run(tasks, config)
+booty
+  .command<Options>('$0 [tasks..]', 'execute a given set of tasks', {
+    aliases: ['@execute', '@exec', '@run', 'run-script', 'run-task'],
+    builder: {},
+    handler: async args => {
+      const tasks = args.tasks || []
 
-  const code: number = Math.max(
-    ...results
-      .map(result => ({ code: result.code, errors: result.errors, messages: result.messages, job: result.entry }))
-      .map(result => Returns(result).after(() => (result.errors.length > 0 ? console.error(...result.errors) : void 0)))
-      .map(result => result.code),
-  )
+      if (tasks.length || args.json) {
+        return exec(args, ...tasks)
+      }
 
-  return code === 0 ? 0 : code
-}
+      const selectables = Object.keys(GLOBAL.config.tasks)
 
-async function main(): Promise<any> {
-  process.on('beforeExit', () => {
-    const [days, hours, minutes, seconds] = GLOBAL.elapsed(GLOBAL.startup)
-    console.log(seconds)
-  })
-
-  return booty
-    .command<Options>('$0 [tasks..]', 'execute a given set of tasks', {
-      aliases: ['@execute', '@exec', '@run', 'run-script', 'run-task'],
-      builder: {},
-      handler: async args => {
-        const tasks = args.tasks || []
-
-        if (tasks.length || args.json) {
-          return exec(args, ...tasks)
-        }
-
-        const selectables = Object.keys(GLOBAL.config.tasks)
-
-        const data: OptionData = {
+      const answers = await interactive().interactive({
+        interactive: { default: true },
+        tasks: {
           choices: selectables,
           describe: 'select tasks',
           options: selectables,
           prompt: 'always',
           type: 'list',
-        } as OptionData
+        } as OptionData,
+      })
 
-        const answers = await interactive().interactive({
-          interactive: { default: true },
-          tasks: data,
-        })
+      await exec(args, answers.tasks)
+    },
+  })
+  .command(ViewCommand)
+  .middleware(async args => {
+    GLOBAL.arguments = args
+    GLOBAL.cwd = process.env.NOFRILLS_CWD ? process.env.NOFRILLS_CWD : GLOBAL.arguments.cwd
 
-        return exec(args, answers.tasks)
-      },
+    process.on('beforeExit', () => {
+      if (GLOBAL.arguments.timings) timing()
     })
-    .command(ViewCommand)
-    .middleware(async args => {
-      GLOBAL.arguments = args
-      GLOBAL.cwd = process.env.NOFRILLS_CWD ? process.env.NOFRILLS_CWD : GLOBAL.arguments.cwd
 
-      if (process.env.NOFRILLS_TASKS_YARGS) {
-        const content = String(process.env.NOFRILLS_TASKS_YARGS)
-        const buffer = Buffer.from(content, 'base64')
-        const json = JSON.parse(buffer.toString())
-        GLOBAL.arguments = GLOBAL.merge(json, args, GLOBAL.arguments)
-      } else {
-        // NOTE: Setup an environment variable to store our arguments as base64 encoded JSON
-        // so we can retrieve later. This is specifically for passing arguments to child
-        // processes that we spawned from our instance.
-        GLOBAL.arguments.info = GLOBAL.arguments.json ? false : true
-        const json = JSON.stringify(GLOBAL.arguments)
-        const buffer = Buffer.from(json)
-        const encoded = buffer.toString('base64')
-        process.env.NOFRILLS_TASKS_YARGS = encoded
-      }
+    if (process.env.NOFRILLS_TASKS_YARGS) {
+      const content = String(process.env.NOFRILLS_TASKS_YARGS)
+      const buffer = Buffer.from(content, 'base64')
+      const json = JSON.parse(buffer.toString())
+      GLOBAL.arguments = GLOBAL.merge(json, args, GLOBAL.arguments)
+    } else {
+      // NOTE: Setup an environment variable to store our arguments as base64 encoded JSON
+      // so we can retrieve later. This is specifically for passing arguments to child
+      // processes that we spawned from our instance.
+      GLOBAL.arguments.info = GLOBAL.arguments.json ? false : true
+      GLOBAL.arguments.timings = GLOBAL.arguments.json ? false : GLOBAL.arguments.timings
+      const json = JSON.stringify(GLOBAL.arguments)
+      const buffer = Buffer.from(json)
+      const encoded = buffer.toString('base64')
+      process.env.NOFRILLS_TASKS_YARGS = encoded
+    }
 
-      const [builder, config] = await load(GLOBAL.arguments)
-      GLOBAL.builder = builder
-      GLOBAL.config = config
+    if (GLOBAL.arguments.info) {
+      log.trace('[:args]', process.argv.join(' '))
+      log.trace('[:cwd]', process.cwd())
+    }
 
-      return GLOBAL.arguments
-    })
-    .option('bail', {
-      alias: 'b',
-      boolean: true,
-      default: false,
-      describe: 'stops on first error',
-    })
-    .option('cwd', {
-      default: process.cwd(),
-      describe: 'sets the current working directory',
-    })
-    .option('formatted', {
-      boolean: true,
-      default: false,
-      describe: 'formats output',
-    })
-    .option('json', {
-      boolean: true,
-      describe: 'json output',
-    })
-    .conflicts('info', 'json')
-    .help()
-    .parse()
-}
+    const [builder, config] = await load(GLOBAL.arguments)
+    GLOBAL.builder = builder
+    GLOBAL.config = config
 
-main().catch(log.error)
+    return GLOBAL.arguments
+  })
+  .option('bail', {
+    alias: 'b',
+    boolean: true,
+    default: false,
+    describe: 'stops on first error',
+  })
+  .option('cwd', {
+    default: process.cwd(),
+    describe: 'sets the current working directory',
+  })
+  .option('formatted', {
+    alias: 'f',
+    boolean: true,
+    default: false,
+    describe: 'formats output',
+  })
+  .option('json', {
+    alias: 'j',
+    boolean: true,
+    default: false,
+    describe: 'json output',
+  })
+  .option('timings', {
+    alias: 't',
+    boolean: true,
+    default: false,
+    describe: 'show timings',
+  })
+  .help()
+  .parse()
