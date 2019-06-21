@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.7.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@6.6.4...@nofrills/tasks@6.7.0) (2019-06-21)
+
+
+### Features
+
+* **tasks:** colorize trace output ([1c3a654](https://github.com/nativecode-dev/cli-tools/commit/1c3a654))
+
+
+
+
+
+## [6.6.4](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@6.6.3...@nofrills/tasks@6.6.4) (2019-06-20)
+
+**Note:** Version bump only for package @nofrills/tasks
+
+
+
+
+
 ## [6.6.3](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@6.6.0...@nofrills/tasks@6.6.3) (2019-06-20)
 
 **Note:** Version bump only for package @nofrills/tasks
