@@ -8,7 +8,8 @@
       "tsc --project tsconfig.json"
     ],
     "clean": [
-      "rimraf bin"
+      "rimraf bin",
+      "rimraf *.tsbuildinfo"
     ],
     "exec": [
       "ts-node src/cli-env"

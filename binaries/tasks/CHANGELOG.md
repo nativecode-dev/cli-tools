@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.8.1](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@6.8.0...@nofrills/tasks@6.8.1) (2019-06-21)
+
+**Note:** Version bump only for package @nofrills/tasks
+
+
+
+
+
+# [6.8.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@6.7.4...@nofrills/tasks@6.8.0) (2019-06-21)
+
+
+### Features
+
+* adding timing ([20c31a2](https://github.com/nativecode-dev/cli-tools/commit/20c31a2))
+
+
+
+
+
+## [6.7.4](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@6.7.3...@nofrills/tasks@6.7.4) (2019-06-21)
+
+**Note:** Version bump only for package @nofrills/tasks
+
+
+
+
+
+## [6.7.3](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@6.7.2...@nofrills/tasks@6.7.3) (2019-06-21)
+
+**Note:** Version bump only for package @nofrills/tasks
+
+
+
+
+
+## [6.7.2](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@6.7.1...@nofrills/tasks@6.7.2) (2019-06-21)
+
+**Note:** Version bump only for package @nofrills/tasks
+
+
+
+
+
 ## [6.7.1](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@6.6.3...@nofrills/tasks@6.7.1) (2019-06-21)
 
 **Note:** Version bump only for package @nofrills/tasks

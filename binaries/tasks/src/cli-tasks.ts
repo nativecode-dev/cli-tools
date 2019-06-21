@@ -19,25 +19,6 @@ import ViewCommand from './commands/view'
 const booty = $yargs
 const log = Logger.extend('cli-tasks')
 
-async function load(args: Arguments<Options>): Promise<[TaskBuilder, TaskConfig]> {
-  const exists = await fs.exists(args.cwd, false)
-  const dirname = exists ? args.cwd : process.cwd()
-  const builder = TaskBuilder.dir(dirname)
-
-  builder.on(TaskEvent.Execute, (entry: TaskEntry) => {
-    if (args.json === false) {
-      const normalized = entry.arguments || []
-      log.trace(`[${entry.command}]`, normalized.join(' '))
-    }
-  })
-
-  builder.on(TaskEvent.Results, (result: TaskJobResult) => {
-    if (args.json) log.trace(JSON.stringify(result, null, 2))
-  })
-
-  return [builder, await builder.build()]
-}
-
 async function exec(args: Arguments<Options>, ...tasks: string[]): Promise<Arguments<Options>> {
   const code = await execute(GLOBAL.builder, GLOBAL.config, ...tasks)
 
@@ -61,6 +42,39 @@ async function execute(builder: TaskBuilder, config: TaskConfig, ...tasks: strin
   return code === 0 ? 0 : code
 }
 
+async function load(args: Arguments<Options>): Promise<[TaskBuilder, TaskConfig]> {
+  const exists = await fs.exists(args.cwd, false)
+  const dirname = exists ? args.cwd : process.cwd()
+  const builder = TaskBuilder.dir(dirname)
+
+  builder.on(TaskEvent.ConfigFile, (filename: string) => {
+    if (args.info) {
+      log.trace('[:merge]', filename)
+    }
+  })
+
+  builder.on(TaskEvent.Execute, (entry: TaskEntry) => {
+    if (args.info) {
+      const normalized = entry.arguments || []
+      log.trace(`[${entry.command}]`, normalized.join(' '))
+    }
+  })
+
+  builder.on(TaskEvent.Results, (result: TaskJobResult) => {
+    if (args.json) {
+      result.messages = result.messages.reduce<string[]>((output, message) => output.concat(message.split('\n')), [])
+      log.trace(GLOBAL.format(result, args.formatted))
+    }
+  })
+
+  return [builder, await builder.build()]
+}
+
+function timing(): void {
+  const seconds = GLOBAL.elapsed(GLOBAL.startup)
+  log.trace(`[@${GLOBAL.cwd}] took ${seconds} seconds to execute`)
+}
+
 booty
   .command<Options>('$0 [tasks..]', 'execute a given set of tasks', {
     aliases: ['@execute', '@exec', '@run', 'run-script', 'run-task'],
@@ -72,27 +86,58 @@ booty
         return exec(args, ...tasks)
       }
 
-      const data: OptionData = {
-        choices: Object.keys(GLOBAL.config.tasks),
-        describe: 'select tasks',
-        options: Object.keys(GLOBAL.config.tasks),
-        prompt: 'always',
-        type: 'list',
-      } as OptionData
+      const selectables = Object.keys(GLOBAL.config.tasks)
 
       const answers = await interactive().interactive({
         interactive: { default: true },
-        tasks: data,
+        tasks: {
+          choices: selectables,
+          describe: 'select tasks',
+          options: selectables,
+          prompt: 'always',
+          type: 'list',
+        } as OptionData,
       })
 
-      return exec(args, answers.tasks)
+      await exec(args, answers.tasks)
     },
   })
   .command(ViewCommand)
   .middleware(async args => {
-    const [builder, config] = await load(args)
+    GLOBAL.arguments = args
+    GLOBAL.cwd = process.env.NOFRILLS_CWD ? process.env.NOFRILLS_CWD : GLOBAL.arguments.cwd
+
+    process.on('beforeExit', () => {
+      if (GLOBAL.arguments.timings) timing()
+    })
+
+    if (process.env.NOFRILLS_TASKS_YARGS) {
+      const content = String(process.env.NOFRILLS_TASKS_YARGS)
+      const buffer = Buffer.from(content, 'base64')
+      const json = JSON.parse(buffer.toString())
+      GLOBAL.arguments = GLOBAL.merge(json, args, GLOBAL.arguments)
+    } else {
+      // NOTE: Setup an environment variable to store our arguments as base64 encoded JSON
+      // so we can retrieve later. This is specifically for passing arguments to child
+      // processes that we spawned from our instance.
+      GLOBAL.arguments.info = GLOBAL.arguments.json ? false : true
+      GLOBAL.arguments.timings = GLOBAL.arguments.json ? false : GLOBAL.arguments.timings
+      const json = JSON.stringify(GLOBAL.arguments)
+      const buffer = Buffer.from(json)
+      const encoded = buffer.toString('base64')
+      process.env.NOFRILLS_TASKS_YARGS = encoded
+    }
+
+    if (GLOBAL.arguments.info) {
+      log.trace('[:args]', process.argv.join(' '))
+      log.trace('[:cwd]', process.cwd())
+    }
+
+    const [builder, config] = await load(GLOBAL.arguments)
     GLOBAL.builder = builder
     GLOBAL.config = config
+
+    return GLOBAL.arguments
   })
   .option('bail', {
     alias: 'b',
@@ -104,10 +149,23 @@ booty
     default: process.cwd(),
     describe: 'sets the current working directory',
   })
-  .option('json', {
+  .option('formatted', {
+    alias: 'f',
     boolean: true,
     default: false,
-    describe: 'returns output as json',
+    describe: 'formats output',
+  })
+  .option('json', {
+    alias: 'j',
+    boolean: true,
+    default: false,
+    describe: 'json output',
+  })
+  .option('timings', {
+    alias: 't',
+    boolean: true,
+    default: false,
+    describe: 'show timings',
   })
   .help()
   .parse()

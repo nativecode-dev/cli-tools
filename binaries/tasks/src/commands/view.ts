@@ -1,6 +1,7 @@
 import yargs, { CommandModule } from 'yargs'
 
 import Logger from '../Logging'
+import GLOBAL from '../Globals'
 
 import { Options } from '../Options'
 import { fs } from '@nofrills/fs'
@@ -16,23 +17,28 @@ export interface ViewOptions extends Options {
 const command: CommandModule<{}, ViewOptions> = {
   aliases: [':config'],
   builder: {},
-  command: ':view <filename>',
+  command: ':view [filename]',
   describe: 'view a configuration file',
   handler: async args => {
-    const name = fs.basename(args.filename)
+    if (args.filename) {
+      const name = fs.basename(args.filename)
 
-    if (configurations.includes(name) === false) {
-      await yargs.showHelp()
+      if (configurations.includes(name) === false) {
+        await yargs.showHelp()
+        return args
+      }
+
+      const exists = await fs.exists(args.filename)
+
+      if (exists) {
+        const buffer = await fs.readFile(args.filename)
+        log.silly(buffer.toString())
+      }
+
       return args
     }
 
-    const exists = await fs.exists(args.filename)
-
-    if (exists) {
-      const buffer = await fs.readFile(args.filename)
-      log.silly(buffer.toString())
-    }
-
+    log.trace(GLOBAL.format(GLOBAL.config, args.formatted))
     return args
   },
 }
