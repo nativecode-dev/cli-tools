@@ -24,6 +24,12 @@ async function load(args: Arguments<Options>): Promise<[TaskBuilder, TaskConfig]
   const dirname = exists ? args.cwd : process.cwd()
   const builder = TaskBuilder.dir(dirname)
 
+  builder.on(TaskEvent.ConfigFile, (filename: string) => {
+    if (args.json === false) {
+      log.trace('[:merge]', filename)
+    }
+  })
+
   builder.on(TaskEvent.Execute, (entry: TaskEntry) => {
     if (args.json === false) {
       const normalized = entry.arguments || []
