@@ -4,6 +4,8 @@ import { Is, DictionaryOf } from '@nofrills/types'
 import { ScrubsInterceptor } from '@nofrills/scrubs'
 import { CreateLogger, CreateOptions, Lincoln, Options, Log, LogMessageType } from '@nofrills/lincoln-debug'
 
+import GLOBAL from './Globals'
+
 const LoggerOptions: Options = CreateOptions('nofrills:tasks')
 
 export type Colorizer = (text: string) => string
@@ -16,8 +18,8 @@ export interface Expressions extends DictionaryOf<RegExp> {
 
 export const REGEX: Expressions = {
   braces: new RegExp(/[^$]\{[\w\d_]+\}/g),
-  brackets: new RegExp(/\[[\w\d_-]+\]/g),
-  cwd: new RegExp(`${process.cwd()}/?`, 'g'),
+  brackets: new RegExp(/\$\[[\w\d_-]+\]/g),
+  cwd: new RegExp(`${GLOBAL.cwd}/?`, 'g'),
   env: new RegExp(/\$\{?[\w\d_]+\}?/g),
 }
 
