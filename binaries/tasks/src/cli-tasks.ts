@@ -71,6 +71,11 @@ async function execute(builder: TaskBuilder, config: TaskConfig, ...tasks: strin
 }
 
 async function main(): Promise<any> {
+  process.on('beforeExit', () => {
+    const [days, hours, minutes, seconds] = GLOBAL.elapsed(GLOBAL.startup)
+    console.log(seconds)
+  })
+
   return booty
     .command<Options>('$0 [tasks..]', 'execute a given set of tasks', {
       aliases: ['@execute', '@exec', '@run', 'run-script', 'run-task'],
