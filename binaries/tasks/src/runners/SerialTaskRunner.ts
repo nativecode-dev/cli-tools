@@ -1,15 +1,18 @@
 import execa from 'execa'
 
+import { EventEmitter } from 'events'
 import { serial } from '@nofrills/patterns'
 
-import { Lincoln, Logger } from '../Logging'
+import Logger from '../Logging'
 
 import { TaskJob } from '../models/TaskJob'
+import { TaskConfigError } from '../errors'
 import { TaskEntry } from '../models/TaskEntry'
+import { TaskEvent } from '../TaskEvent'
 import { TaskEntryType } from '../models/TaskEntryType'
 import { TaskRunnerAdapter } from './TaskRunnerAdapter'
 import { TaskJobResult, EmptyTaskJobResult } from '../models/TaskJobResult'
-import { TaskConfigError } from '../errors'
+import { Is } from '@nofrills/types'
 
 export type TaskJobExec = () => Promise<TaskJobResult>
 
@@ -19,12 +22,12 @@ export interface TaskContext {
   job: TaskJob
 }
 
-export class SerialTaskRunner implements TaskRunnerAdapter {
+export class SerialTaskRunner extends EventEmitter implements TaskRunnerAdapter {
   readonly stdin: NodeJS.ReadStream = process.stdin
   readonly stdout: NodeJS.WriteStream = process.stdout
   readonly stderr: NodeJS.WriteStream = process.stderr
 
-  private readonly log: Lincoln = Logger.extend('serial')
+  private readonly log = Logger.extend('serial')
 
   execute(job: TaskJob): Promise<TaskJobResult[]> {
     const createTask = (entry: TaskEntry) => {
@@ -39,7 +42,8 @@ export class SerialTaskRunner implements TaskRunnerAdapter {
       return serial(job.task.entries.map(createTask), initiator)
     }
 
-    return Promise.reject(new TaskConfigError('could not execute an invalid configuration'))
+    const error = new TaskConfigError('could not execute an invalid configuration')
+    return Promise.reject(error)
   }
 
   protected run(context: TaskContext): TaskJobExec {
@@ -63,7 +67,7 @@ export class SerialTaskRunner implements TaskRunnerAdapter {
   }
 
   protected async exec(context: TaskContext): Promise<TaskJobResult> {
-    const entry = context.entry
+    const entry = Is.string(context.entry) ? this.entryify(String(context.entry)) : context.entry
 
     const regex = /\${([A-Za-z,0-9,_]+[^$])}/g
     const substitutions = (entry.arguments || []).map(arg =>
@@ -75,23 +79,20 @@ export class SerialTaskRunner implements TaskRunnerAdapter {
       detached: context.entry.type === TaskEntryType.exec,
       env: context.env,
       gid: context.entry.gid,
-      shell: context.job.task.shell,
+      shell: context.job.task.shell || true,
       stdio: ['inherit', 'pipe', 'pipe'],
       uid: context.entry.uid,
     }
 
-    console.log('[exec]', entry.command, substitutions.join(' '))
+    this.emit(TaskEvent.Execute, entry)
+    const cmdproc = execa(entry.command, substitutions, options)
 
-    const command = execa(entry.command, substitutions, options)
-
-    if (!command.stderr || !command.stdout) {
-      throw new Error('could not access stdout or stderr')
+    if (cmdproc.stderr && cmdproc.stdout) {
+      cmdproc.stderr.pipe(process.stderr)
+      cmdproc.stdout.pipe(process.stdout)
     }
 
-    command.stderr.pipe(process.stderr)
-    command.stdout.pipe(process.stdout)
-
-    const { code, signal, stderr, stdout } = await command
+    const { code, signal, stderr, stdout } = await cmdproc
 
     const result: TaskJobResult = {
       code,
@@ -101,6 +102,8 @@ export class SerialTaskRunner implements TaskRunnerAdapter {
       signal,
     }
 
+    this.emit(TaskEvent.Results, result)
+
     this.log.debug('command', entry.command, result)
 
     return result
@@ -108,5 +111,14 @@ export class SerialTaskRunner implements TaskRunnerAdapter {
 
   private convertString(value: string): string[] {
     return value && value !== '' ? [value] : []
+  }
+
+  private entryify(command: string): TaskEntry {
+    const parts = command.split(' ')
+
+    return {
+      arguments: parts.slice(1),
+      command: parts[0],
+    }
   }
 }

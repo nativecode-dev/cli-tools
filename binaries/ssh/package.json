@@ -18,7 +18,6 @@
     "@nofrills/console": "^3.6.0",
     "@nofrills/fs": "^3.5.1",
     "@nofrills/lincoln-debug": "^3.6.0",
-    "@nofrills/tasks": "^6.6.4",
     "pegjs": "^0.10.0",
     "ts-pegjs": "^0.2.2",
     "yargs": "^13.2.4"
