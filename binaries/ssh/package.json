@@ -7,7 +7,7 @@
   "name": "@nofrills/ssh",
   "private": false,
   "types": "./bin/index.d.ts",
-  "version": "0.17.3",
+  "version": "0.17.4",
   "bin": {
     "cli-ssh": "./bin/cli-ssh.js"
   },
