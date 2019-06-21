@@ -6,4 +6,5 @@ export interface Options {
   info: boolean
   json: boolean
   tasks: string[]
+  timings: boolean
 }

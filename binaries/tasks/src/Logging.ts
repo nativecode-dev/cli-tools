@@ -11,24 +11,29 @@ const LoggerOptions: Options = CreateOptions('nofrills:tasks')
 export type Colorizer = (text: string) => string
 
 export interface Expressions extends DictionaryOf<RegExp> {
-  braces: RegExp
-  brackets: RegExp
+  cwd: RegExp
   env: RegExp
+  info: RegExp
+  taskexec: RegExp
+  timing: RegExp
 }
 
 export const REGEX: Expressions = {
-  braces: new RegExp(/[^$]\{[\w\d_]+\}/g),
-  brackets: new RegExp(/\$\[[\w\d_-]+\]/g),
-  cwd: new RegExp(`${GLOBAL.cwd}/?`, 'g'),
+  cwd: new RegExp(`${GLOBAL.cwd}//?`, 'g'),
   env: new RegExp(/\$\{?[\w\d_]+\}?/g),
+  info: new RegExp(/^\[:[\w\d_]+\]/g),
+  taskexec: new RegExp(/^\[[\w\d_-]+\]/g),
+  timing: new RegExp(/^\[@[^\]]+\]/g),
 }
 
 const COLORIZERS: Colorizer[] = [
-  (text: string) => chalk.grey(text),
-  (text: string) => text.replace(REGEX.brackets, part => chalk.blue(part)),
-  (text: string) => text.replace(REGEX.braces, part => chalk.bold.yellow(part)),
+  (text: string) => text.replace(REGEX.info, part => chalk.bold.yellow(part)),
   (text: string) => text.replace(REGEX.cwd, _ => ''),
   (text: string) => text.replace(REGEX.env, part => chalk.cyan(part)),
+  (text: string) => text.replace(REGEX.taskexec, part => chalk.blue(part)),
+  (text: string) => text.replace(REGEX.timing, part => chalk.green(part)),
+  // NOTE: Default color should always be last in the list.
+  (text: string) => text,
 ]
 
 function colorize(parameters: any[]): string {
