@@ -168,4 +168,5 @@ booty
     describe: 'show timings',
   })
   .help()
+  .showHelpOnFail(false)
   .parse()
