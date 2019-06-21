@@ -1,10 +1,10 @@
 import { fs } from '@nofrills/fs'
 import { Is, Npm, DictionaryOf } from '@nofrills/types'
 
-import { Lincoln, Logger } from './Logging'
+import Logger from './Logging'
 
-export class SheBang {
-  private readonly log: Lincoln = Logger.extend('shebang')
+export class Shebang {
+  private readonly log = Logger.extend('shebang')
   private readonly npm: Promise<Npm>
 
   protected constructor(npm: string) {
@@ -12,8 +12,8 @@ export class SheBang {
     this.npm = fs.json<Npm>(npm)
   }
 
-  static from(npm: string): SheBang {
-    return new SheBang(npm)
+  static from(npm: string): Shebang {
+    return new Shebang(npm)
   }
 
   async shebang(): Promise<void> {
@@ -21,7 +21,7 @@ export class SheBang {
 
     if (Is.string(npm.bin)) {
       this.log.debug('bin', npm.bin)
-      await SheBang.shebangify(npm.bin as string)
+      await Shebang.shebangify(npm.bin as string)
     }
 
     if (npm.bin) {
@@ -33,7 +33,7 @@ export class SheBang {
           const bin = hash[key]
 
           try {
-            return await SheBang.shebangify(fs.join(process.cwd(), bin))
+            return await Shebang.shebangify(fs.join(process.cwd(), bin))
           } catch (error) {
             Logger.error(error)
           }

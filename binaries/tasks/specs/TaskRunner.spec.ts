@@ -9,6 +9,7 @@ import { TaskBuilder } from '../src/TaskBuilder'
 import { TaskConfig } from '../src/models/TaskConfig'
 import { TaskRunner } from '../src/runners/TaskRunner'
 import { TaskJobResult } from '../src/models/TaskJobResult'
+import { SerialTaskRunner } from '../src/runners/SerialTaskRunner'
 import { TaskRunnerAdapter } from '../src/runners/TaskRunnerAdapter'
 
 const assets = fs.join(__dirname, 'assets')
@@ -43,7 +44,7 @@ describe('when using TaskRunner', () => {
   })
 
   it('should execute real tasks', async () => {
-    const TestTask: TaskConfig = {
+    const config: TaskConfig = {
       tasks: {
         which: [
           {
@@ -55,13 +56,13 @@ describe('when using TaskRunner', () => {
       },
     }
 
-    const runner = new TaskRunner(TestTask, new TestAdapter())
+    const runner = new TaskRunner(config, new TestAdapter())
     const results = await runner.run(['which'])
     expect(results).to.be.lengthOf(1)
   })
 
   it.skip('should change shell to bash', async () => {
-    const ShTask: TaskConfig = {
+    const config: TaskConfig = {
       tasks: {
         echo: {
           entries: [
@@ -75,13 +76,13 @@ describe('when using TaskRunner', () => {
       },
     }
 
-    const runner = new TaskRunner(ShTask, new TestAdapter())
+    const runner = new TaskRunner(config, new TestAdapter())
     const results = await runner.run(['echo'])
     expect(results[0].messages).to.contain('/bin/sh')
   })
 
   it.skip('should change shell to bash', async () => {
-    const BashTask: TaskConfig = {
+    const config: TaskConfig = {
       tasks: {
         echo: {
           entries: [
@@ -96,22 +97,45 @@ describe('when using TaskRunner', () => {
       },
     }
 
-    const runner = new TaskRunner(BashTask, new TestAdapter())
+    const runner = new TaskRunner(config, new TestAdapter())
     const results = await runner.run(['echo'])
     expect(results[0].messages).to.contain('/bin/bash')
   })
 
   it.skip('should set environment variable', async () => {
-    const EnvTask: TaskConfig = {
+    const config: TaskConfig = {
       tasks: {
         env: ['$SIMPLE test'],
       },
     }
 
     const env: NodeJS.ProcessEnv = { PATH: '' }
-    const runner = new TaskRunner(EnvTask, new TestAdapter())
+    const runner = new TaskRunner(config, new TestAdapter())
     await runner.run(['env'], undefined, env)
 
     expect(env.SIMPLE).to.equal('test')
+  })
+
+  describe('variable expansion', () => {
+    it('should expand environment variables', async () => {
+      const config: TaskConfig = {
+        tasks: {
+          env: ['echo ${SIMPLE}'],
+        },
+      }
+
+      const env: NodeJS.ProcessEnv = {
+        SIMPLE: 'test',
+      }
+
+      const runner = new TaskRunner(config, new SerialTaskRunner())
+      const results = await runner.run(['env'], process.cwd(), env)
+
+      const splat = results
+        .filter(result => result.messages)
+        .reduce<string[]>((collection, messages) => collection.concat(messages.messages), [])
+
+      expect(splat).to.includes('test')
+    })
   })
 })

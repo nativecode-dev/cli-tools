@@ -1,15 +1,16 @@
 import { Is } from '@nofrills/types'
 import { serial } from '@nofrills/patterns'
 
+import Logger from '../Logging'
+
 import { Task } from '../models/Task'
 import { TaskJob } from '../models/TaskJob'
-import { Lincoln, Logger } from '../Logging'
 import { TaskConfig } from '../models/TaskConfig'
 import { TaskJobResult } from '../models/TaskJobResult'
 import { TaskRunnerAdapter } from './TaskRunnerAdapter'
 
 export class TaskRunner {
-  private readonly log: Lincoln = Logger.extend('task-runner')
+  private readonly log = Logger.extend('task-runner')
 
   constructor(private readonly config: TaskConfig, private readonly adapter: TaskRunnerAdapter) {}
 
@@ -36,8 +37,8 @@ export class TaskRunner {
       const collection = this.config.tasks[name]
 
       if (Is.array(collection)) {
-        const result = { entries: this.config.tasks[name] } as Task
-        return result
+        const result = { entries: this.config.tasks[name] }
+        return result as Task
       }
 
       return this.config.tasks[name] as Task
