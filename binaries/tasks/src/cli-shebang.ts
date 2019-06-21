@@ -1,8 +1,8 @@
 import { CreateResolver } from '@nofrills/fs'
 import { CLI, ConsoleOptions, ProcessArgs } from '@nofrills/console'
 
-import { SheBang } from './SheBang'
-import { Logger } from './Logging'
+import { Shebang } from './Shebang'
+import Logger from './Logging'
 
 const args = ProcessArgs.from(process.argv)
 
@@ -17,7 +17,7 @@ const options: ConsoleOptions = {
 
       await Promise.all(
         resolved.map(async filename => {
-          const shebang = SheBang.from(filename)
+          const shebang = Shebang.from(filename)
           await shebang.shebang()
         }),
       )

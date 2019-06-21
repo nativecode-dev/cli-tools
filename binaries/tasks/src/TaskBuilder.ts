@@ -4,8 +4,9 @@ import { Is } from '@nofrills/types'
 import { Returns } from '@nofrills/patterns'
 import { fs, CreateResolver, FileResolver } from '@nofrills/fs'
 
+import Logger from './Logging'
+
 import { Task } from './models/Task'
-import { Lincoln, Logger } from './Logging'
 import { TaskEntry } from './models/TaskEntry'
 import { TaskConfig } from './models/TaskConfig'
 import { TaskRunner } from './runners/TaskRunner'
@@ -13,6 +14,8 @@ import { TaskEntryType } from './models/TaskEntryType'
 import { TaskJobResult } from './models/TaskJobResult'
 import { TaskDefinition } from './models/TaskDefinitions'
 import { SerialTaskRunner } from './runners/SerialTaskRunner'
+import { TaskEvent } from './TaskEvent'
+import { EventEmitter } from 'events'
 
 export interface TaskContext {
   config: TaskConfig
@@ -20,8 +23,8 @@ export interface TaskContext {
   task: Task
 }
 
-export class TaskBuilder {
-  private readonly log: Lincoln = Logger.extend('builder')
+export class TaskBuilder extends EventEmitter {
+  private readonly log = Logger.extend('builder')
   private readonly resolver: FileResolver
 
   constructor(
@@ -29,6 +32,7 @@ export class TaskBuilder {
     private readonly definitions: string[],
     private readonly config: TaskConfig = { tasks: {} },
   ) {
+    super()
     this.config = this.transform(config)
     this.resolver = CreateResolver(cwd)
   }
@@ -45,27 +49,46 @@ export class TaskBuilder {
     const filenames = await this.resolve()
 
     const configs = await Promise.all(
-      filenames.map(async filename => {
-        try {
-          const config = await fs.json<TaskConfig>(filename)
-          const transformed = this.transform({ tasks: config.tasks })
-          this.log.debug('task-config', transformed.tasks)
-          return transformed
-        } catch (error) {
-          this.log.error(error)
-          return this.config
-        }
-      }),
+      filenames
+        .map(filename => {
+          this.emit(TaskEvent.ConfigFile, filename)
+          return filename
+        })
+        .map(async filename => {
+          try {
+            const config = await fs.json<TaskConfig>(filename)
+            const transformed = this.transform({ tasks: config.tasks })
+            this.emit(TaskEvent.Transform, transformed)
+            this.log.debug('task-config', transformed.tasks)
+            return transformed
+          } catch (error) {
+            this.log.error(error)
+            return this.config
+          }
+        }),
     )
 
     return configs.reduce((config, current) => deepmerge(config, current), this.config)
   }
 
   async run(names: string[], config?: TaskConfig): Promise<TaskJobResult[]> {
-    config = config || (await this.build())
-    const runner = new TaskRunner(config, new SerialTaskRunner())
-    this.log.debug('run', names, config)
-    return runner.run(names, this.cwd)
+    const serial = new SerialTaskRunner()
+    const executeHandler = (entry: TaskEntry) => this.emit(TaskEvent.Execute, entry)
+    const resultsHandler = (results: TaskJobResult[]) => this.emit(TaskEvent.Results, results)
+    serial.on(TaskEvent.Execute, executeHandler)
+    serial.on(TaskEvent.Results, resultsHandler)
+
+    try {
+      config = config || (await this.build())
+      const runner = new TaskRunner(config, serial)
+      this.log.debug('run', names, config)
+      const results = await runner.run(names, this.cwd)
+      this.log.debug('run-results', ...results)
+      return results
+    } finally {
+      serial.off(TaskEvent.Execute, resultsHandler)
+      serial.off(TaskEvent.Execute, executeHandler)
+    }
   }
 
   protected expand(config: TaskConfig, value: Task | TaskDefinition[]): Task {
@@ -73,6 +96,8 @@ export class TaskBuilder {
 
     if (Is.array(value)) {
       return { entries: this.fromArray(config, value as TaskDefinition[]) }
+    } else if (Is.string(value)) {
+      return { entries: [this.createEntry(String(value))] }
     } else if (Is.object(value)) {
       const task = value as Task
       return Object.assign({}, task, this.expand(config, task.entries))

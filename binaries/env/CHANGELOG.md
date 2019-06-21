@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/cli-env@0.5.4...@nofrills/cli-env@0.6.0) (2019-06-21)
+
+
+### Features
+
+* **tasks:** colorize trace output ([1c3a654](https://github.com/nativecode-dev/cli-tools/commit/1c3a654))
+
+
+
+
+
+## [0.5.4](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/cli-env@0.5.3...@nofrills/cli-env@0.5.4) (2019-06-20)
+
+**Note:** Version bump only for package @nofrills/cli-env
+
+
+
+
+
 ## [0.5.3](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/cli-env@0.5.0...@nofrills/cli-env@0.5.3) (2019-06-20)
 
 **Note:** Version bump only for package @nofrills/cli-env

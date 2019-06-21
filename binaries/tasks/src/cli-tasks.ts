@@ -4,20 +4,48 @@ import interactive, { OptionData } from 'yargs-interactive'
 import { fs } from '@nofrills/fs'
 import { Returns } from '@nofrills/patterns'
 
+import GLOBAL from './Globals'
+import Logger from './Logging'
+
+import { Options } from './Options'
+import { TaskEvent } from './TaskEvent'
 import { TaskBuilder } from './TaskBuilder'
+import { TaskEntry } from './models/TaskEntry'
 import { TaskConfig } from './models/TaskConfig'
+import { TaskJobResult } from './models/TaskJobResult'
+
+import ViewCommand from './commands/view'
 
 const booty = $yargs
+const log = Logger.extend('cli-tasks')
 
-export interface RootArguments {
-  bail: boolean
-  builder: TaskBuilder
-  config: TaskConfig
-  cwd: string
-  help: boolean
-  interactive: boolean
-  list: boolean
-  tasks: string[]
+async function load(args: Arguments<Options>): Promise<[TaskBuilder, TaskConfig]> {
+  const exists = await fs.exists(args.cwd, false)
+  const dirname = exists ? args.cwd : process.cwd()
+  const builder = TaskBuilder.dir(dirname)
+
+  builder.on(TaskEvent.Execute, (entry: TaskEntry) => {
+    if (args.json === false) {
+      const normalized = entry.arguments || []
+      log.trace(`[${entry.command}]`, normalized.join(' '))
+    }
+  })
+
+  builder.on(TaskEvent.Results, (result: TaskJobResult) => {
+    if (args.json) log.trace(JSON.stringify(result, null, 2))
+  })
+
+  return [builder, await builder.build()]
+}
+
+async function exec(args: Arguments<Options>, ...tasks: string[]): Promise<Arguments<Options>> {
+  const code = await execute(GLOBAL.builder, GLOBAL.config, ...tasks)
+
+  if (code !== 0 && args.bail) {
+    throw new Error(`bailed with exit code: ${code}`)
+  }
+
+  return args
 }
 
 async function execute(builder: TaskBuilder, config: TaskConfig, ...tasks: string[]): Promise<number> {
@@ -33,65 +61,38 @@ async function execute(builder: TaskBuilder, config: TaskConfig, ...tasks: strin
   return code === 0 ? 0 : code
 }
 
-async function load(cwd: string): Promise<[TaskBuilder, TaskConfig]> {
-  const exists = await fs.exists(cwd, false)
-  const dirname = exists ? cwd : process.cwd()
-  const builder = TaskBuilder.dir(dirname)
-  return [builder, await builder.build()]
-}
-
-async function exec(args: Arguments<RootArguments>, ...tasks: string[]) {
-  const code = await execute(args.builder, args.config, ...tasks)
-
-  if (code !== 0 && args.bail) {
-    throw new Error(`bailed with exit code: ${code}`)
-  }
-
-  return args
-}
-
 booty
-  .command<RootArguments>('$0 [tasks..]', '', {
+  .command<Options>('$0 [tasks..]', 'execute a given set of tasks', {
     aliases: ['@execute', '@exec', '@run', 'run-script', 'run-task'],
     builder: {},
-    handler: async (args: Arguments<RootArguments>) => {
+    handler: async args => {
       const tasks = args.tasks || []
 
-      if (tasks.length) {
-        return exec(args, ...args.tasks)
+      if (tasks.length || args.json) {
+        return exec(args, ...tasks)
       }
 
-      const showInteractive = (args.interactive || tasks.length === 0) && !args.list
+      const data: OptionData = {
+        choices: Object.keys(GLOBAL.config.tasks),
+        describe: 'select tasks',
+        options: Object.keys(GLOBAL.config.tasks),
+        prompt: 'always',
+        type: 'list',
+      } as OptionData
 
-      if (showInteractive) {
-        const tasks: OptionData = {
-          choices: Object.keys(args.config.tasks),
-          describe: 'select tasks',
-          options: Object.keys(args.config.tasks),
-          prompt: 'always',
-          type: 'list',
-        } as OptionData
+      const answers = await interactive().interactive({
+        interactive: { default: true },
+        tasks: data,
+      })
 
-        const answers = await interactive().interactive({
-          interactive: { default: true },
-          tasks,
-        })
-
-        return exec(args, answers.tasks)
-      }
-
-      if (args.list) {
-        console.log('[tasks]')
-        Object.keys(args.config.tasks).forEach(name => console.log(`  * ${name}`))
-      }
-
-      return args
+      return exec(args, answers.tasks)
     },
   })
+  .command(ViewCommand)
   .middleware(async args => {
-    const [builder, config] = await load(args.cwd)
-    args.builder = builder
-    args.config = config
+    const [builder, config] = await load(args)
+    GLOBAL.builder = builder
+    GLOBAL.config = config
   })
   .option('bail', {
     alias: 'b',
@@ -100,21 +101,13 @@ booty
     describe: 'stops on first error',
   })
   .option('cwd', {
-    alias: 'c',
     default: process.cwd(),
     describe: 'sets the current working directory',
   })
-  .option('interactive', {
-    alias: 'i',
-    boolean: true,
-    default: true,
-    describe: 'interactive',
-  })
-  .option('list', {
-    alias: 'l',
+  .option('json', {
     boolean: true,
     default: false,
-    describe: 'list available tasks',
+    describe: 'returns output as json',
   })
   .help()
   .parse()

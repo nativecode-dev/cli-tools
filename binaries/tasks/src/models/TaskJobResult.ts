@@ -1,4 +1,5 @@
 import { TaskEntry } from './TaskEntry'
+import { TaskContext } from '../runners/SerialTaskRunner'
 
 export interface TaskJobResult {
   code: number
