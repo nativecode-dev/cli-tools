@@ -80,7 +80,15 @@
   },
   "tasks": {
     "build": [
+      "[clean]",
       "lerna run build"
+    ],
+    "clean": [
+      "lerna run clean"
+    ],
+    "install": [
+      "npm install",
+      "lerna bootstrap"
     ]
   }
 }
