@@ -33,9 +33,9 @@ export class TaskRunner {
 
   protected createTaskJobs(cwd: string, env: NodeJS.ProcessEnv, names: string[]): TaskJob[] {
     const task = (name: string) => {
-      const collection = this.config.tasks[name]
+      const definitions = this.config.tasks[name]
 
-      if (Is.array(collection)) {
+      if (Is.array(definitions)) {
         const result = { entries: this.config.tasks[name] }
         return result as Task
       }
