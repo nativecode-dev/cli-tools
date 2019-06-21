@@ -80,19 +80,27 @@
     "canary": "./publish canary"
   },
   "tasks": {
+    "bootstrap": "leran bootstrap",
     "build": [
       "[clean]",
       "lerna run build"
     ],
     "clean": [
+      "[clean:cache]",
+      "[clean:output]"
+    ],
+    "clean:cache": [
+      "rimraf .cache",
+      "rimraf **/*.tsbuildinfo"
+    ],
+    "clean:output": [
       "rimraf binaries/*/bin",
       "rimraf binaries/*/dist",
-      "rimraf binaries/*/lib",
-      "rimraf **/*.tsbuildinfo"
+      "rimraf binaries/*/lib"
     ],
     "install": [
       "npm install",
-      "lerna bootstrap"
+      "[bootstrap"
     ]
   }
 }
