@@ -20,6 +20,7 @@ export interface Expressions extends DictionaryOf<RegExp> {
 
 export const REGEX: Expressions = {
   cwd: new RegExp(`${GLOBAL.cwd}//?`, 'g'),
+  debug: new RegExp(/^\[#[\w\d_\-\:>]+\]/g),
   env: new RegExp(/\$\{?[\w\d_]+\}?/g),
   error: new RegExp(/^\[\![\w\d_\-\:]+\]/g),
   info: new RegExp(/^\[\:[\w\d_\-\:]+\]/g),
@@ -30,6 +31,7 @@ export const REGEX: Expressions = {
 const COLORIZERS: Colorizer[] = [
   (text: string) => text.replace(REGEX.info, part => chalk.bold.yellow(part)),
   (text: string) => text.replace(REGEX.cwd, _ => ''),
+  (text: string) => text.replace(REGEX.debug, part => chalk.bold.yellow(part)),
   (text: string) => text.replace(REGEX.env, part => chalk.cyan(part)),
   (text: string) => text.replace(REGEX.error, part => chalk.bold.red(part)),
   (text: string) => text.replace(REGEX.taskexec, part => chalk.blue(part)),
@@ -56,19 +58,35 @@ function colorize(parameters: any[]): string {
     .join(' ')
 }
 
-function stdout(log: Log): void {
-  process.stdout.write(colorize(log.parameters))
+function write(stream: NodeJS.WriteStream, log: Log): void {
+  stream.write(colorize(log.parameters))
 
   if (log.parameters.length) {
-    process.stdout.write('\n')
+    stream.write('\n')
   }
 }
 
 LoggerOptions.interceptors.register('colorize', async (log: Log) => {
   switch (log.type) {
+    case LogMessageType.debug:
+    case LogMessageType.error:
+      if (GLOBAL.arguments.debug) {
+        if (log.parameters.length) {
+          const category = log.parameters.slice(1, 1).map(value => `[#${value}]`)
+          const values = log.parameters
+            .slice(1)
+            .map(value => (Is.object(value) ? JSON.stringify(value, null, 2) : value))
+          const relog = { ...log, ...{ parameters: [category, ...values] } }
+          write(process.stderr, relog)
+        } else {
+          write(process.stderr, log)
+        }
+      }
+      break
+
     case LogMessageType.silly:
     case LogMessageType.trace:
-      stdout(log)
+      write(process.stdout, log)
       break
   }
 
