@@ -21,8 +21,9 @@ export interface Expressions extends DictionaryOf<RegExp> {
 export const REGEX: Expressions = {
   cwd: new RegExp(`${GLOBAL.cwd}//?`, 'g'),
   env: new RegExp(/\$\{?[\w\d_]+\}?/g),
-  info: new RegExp(/^\[:[\w\d_]+\]/g),
-  taskexec: new RegExp(/^\[[\w\d_-]+\]/g),
+  error: new RegExp(/^\[\![\w\d_\-\:]+\]/g),
+  info: new RegExp(/^\[\:[\w\d_\-\:]+\]/g),
+  taskexec: new RegExp(/^\[[\w\d_\-\:]+\]/g),
   timing: new RegExp(/^\[@[^\]]+\]/g),
 }
 
@@ -30,6 +31,7 @@ const COLORIZERS: Colorizer[] = [
   (text: string) => text.replace(REGEX.info, part => chalk.bold.yellow(part)),
   (text: string) => text.replace(REGEX.cwd, _ => ''),
   (text: string) => text.replace(REGEX.env, part => chalk.cyan(part)),
+  (text: string) => text.replace(REGEX.error, part => chalk.bold.red(part)),
   (text: string) => text.replace(REGEX.taskexec, part => chalk.blue(part)),
   (text: string) => text.replace(REGEX.timing, part => chalk.green(part)),
   // NOTE: Default color should always be last in the list.

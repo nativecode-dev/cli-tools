@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.1](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@7.0.0...@nofrills/tasks@7.0.1) (2019-06-22)
+
+**Note:** Version bump only for package @nofrills/tasks
+
+
+
+
+
+# [7.0.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@6.8.7...@nofrills/tasks@7.0.0) (2019-06-22)
+
+
+### Features
+
+* **tasks:** removing stdio properties ([9ac4c38](https://github.com/nativecode-dev/cli-tools/commit/9ac4c38))
+
+
+### BREAKING CHANGES
+
+* **tasks:** Removes stdio properties as they are no longer needed.
+
+
+
+
+
+## [6.8.7](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@6.8.6...@nofrills/tasks@6.8.7) (2019-06-21)
+
+**Note:** Version bump only for package @nofrills/tasks
+
+
+
+
+
 ## [6.8.6](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@6.8.2...@nofrills/tasks@6.8.6) (2019-06-21)
 
 **Note:** Version bump only for package @nofrills/tasks

@@ -13,7 +13,12 @@
       "ignoreChanges": [
         "*.md",
         "CHANGELOG.md",
-        "LICENSE"
+        "LICENSE",
+        "README.md",
+        ".npmignore",
+        "package-lock.json",
+        "tasks.json",
+        "tsconfig.json"
       ],
       "loglevel": "verbose",
       "message": "chore(release): publish",
@@ -29,7 +34,12 @@
       "ignoreChanges": [
         "*.md",
         "CHANGELOG.md",
-        "LICENSE"
+        "LICENSE",
+        "README.md",
+        ".npmignore",
+        "package-lock.json",
+        "tasks.json",
+        "tsconfig.json"
       ],
       "loglevel": "verbose",
       "message": "chore(release): publish",
