@@ -81,7 +81,7 @@ booty
   .command<Options>('$0 [tasks..]', 'execute a given set of tasks', {
     aliases: ['@execute', '@exec', '@run', 'run-script', 'run-task'],
     builder: {},
-    handler: async args => {
+    handler: async (args: Arguments<Options>) => {
       const tasks = args.tasks || []
 
       if (tasks.length || args.json) {
@@ -104,7 +104,7 @@ booty
       await exec(args, answers.tasks)
     },
   })
-  .middleware(async args => {
+  .middleware(async (args: Arguments<Options>) => {
     GLOBAL.arguments = args
     GLOBAL.cwd = process.env.NOFRILLS_CWD ? process.env.NOFRILLS_CWD : GLOBAL.arguments.cwd
 
