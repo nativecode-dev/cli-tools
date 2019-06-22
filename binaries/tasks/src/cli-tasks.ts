@@ -1,5 +1,5 @@
 import $yargs, { Arguments } from 'yargs'
-import ui, { OptionData } from 'yargs-interactive'
+import $ui, { OptionData } from 'yargs-interactive'
 
 import { fs } from '@nofrills/fs'
 import { Returns } from '@nofrills/patterns'
@@ -100,7 +100,7 @@ booty
         } as OptionData,
       }
 
-      const answers = await Promise.resolve(ui().interactive(options))
+      const answers = await Promise.resolve($ui().interactive(options))
       await exec(args, answers.tasks)
     },
   })
@@ -149,6 +149,12 @@ booty
   .option('cwd', {
     default: process.cwd(),
     describe: 'sets the current working directory',
+  })
+  .option('debug', {
+    alias: 'd',
+    boolean: true,
+    default: false,
+    describe: 'enable debug messages',
   })
   .option('formatted', {
     alias: 'f',
