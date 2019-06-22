@@ -5,14 +5,13 @@ import { serial } from '@nofrills/patterns'
 
 import Logger from '../Logging'
 
-import { TaskJob } from '../models/TaskJob'
-import { TaskConfigError } from '../errors'
-import { TaskEntry } from '../models/TaskEntry'
+import { Is } from '@nofrills/types'
 import { TaskEvent } from '../TaskEvent'
+import { TaskJob } from '../models/TaskJob'
+import { TaskEntry } from '../models/TaskEntry'
 import { TaskEntryType } from '../models/TaskEntryType'
 import { TaskRunnerAdapter } from './TaskRunnerAdapter'
 import { TaskJobResult, EmptyTaskJobResult } from '../models/TaskJobResult'
-import { Is } from '@nofrills/types'
 
 export type TaskJobExec = () => Promise<TaskJobResult>
 
@@ -23,27 +22,32 @@ export interface TaskContext {
 }
 
 export class SerialTaskRunner extends EventEmitter implements TaskRunnerAdapter {
-  readonly stdin: NodeJS.ReadStream = process.stdin
-  readonly stdout: NodeJS.WriteStream = process.stdout
-  readonly stderr: NodeJS.WriteStream = process.stderr
-
   private readonly log = Logger.extend('serial')
 
-  execute(job: TaskJob): Promise<TaskJobResult[]> {
+  async execute(job: TaskJob): Promise<TaskJobResult[]> {
     const createTask = (entry: TaskEntry) => {
       const args = entry.arguments || []
       this.log.debug('> ', entry.command, args.join(' '))
       return this.run({ entry, env: job.env, job })
     }
 
-    const initiator = () => Promise.resolve([])
-
     if (job && job.task && job.task.entries) {
-      return serial(job.task.entries.map(createTask), initiator)
+      return serial(job.task.entries.map(createTask), this.initiator)
     }
 
-    const error = new TaskConfigError('could not execute an invalid configuration')
-    return Promise.reject(error)
+    const result = await this.initiator()
+
+    const taskNotFound: TaskJobResult = {
+      code: Infinity,
+      entry: {
+        command: job.name,
+      },
+      errors: [`could not find job named: ${job.name}`],
+      messages: [],
+      signal: null,
+    }
+
+    return [...result, taskNotFound]
   }
 
   protected run(context: TaskContext): TaskJobExec {
@@ -120,5 +124,9 @@ export class SerialTaskRunner extends EventEmitter implements TaskRunnerAdapter 
       arguments: parts.slice(1),
       command: parts[0],
     }
+  }
+
+  private initiator(): Promise<TaskJobResult[]> {
+    return Promise.resolve([])
   }
 }
