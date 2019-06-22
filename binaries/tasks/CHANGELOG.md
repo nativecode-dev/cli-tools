@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.1.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@7.0.3...@nofrills/tasks@7.1.0) (2019-06-22)
+
+
+### Features
+
+* add debugging to output ([ff1d05a](https://github.com/nativecode-dev/cli-tools/commit/ff1d05a))
+
+
+
+
+
 ## [7.0.3](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@7.0.2...@nofrills/tasks@7.0.3) (2019-06-22)
 
 **Note:** Version bump only for package @nofrills/tasks
