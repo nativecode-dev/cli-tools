@@ -1,5 +1,5 @@
 import $yargs, { Arguments } from 'yargs'
-import interactive, { OptionData } from 'yargs-interactive'
+import ui, { OptionData } from 'yargs-interactive'
 
 import { fs } from '@nofrills/fs'
 import { Returns } from '@nofrills/patterns'
@@ -14,7 +14,7 @@ import { TaskEntry } from './models/TaskEntry'
 import { TaskConfig } from './models/TaskConfig'
 import { TaskJobResult } from './models/TaskJobResult'
 
-import ViewCommand from './commands/view'
+import ViewOptions from './commands/view'
 
 const booty = $yargs
 const log = Logger.extend('cli-tasks')
@@ -47,20 +47,21 @@ async function load(args: Arguments<Options>): Promise<[TaskBuilder, TaskConfig]
   const dirname = exists ? args.cwd : process.cwd()
   const builder = TaskBuilder.dir(dirname)
 
-  builder.on(TaskEvent.ConfigFile, (filename: string) => {
+  builder.on(TaskEvent.ConfigFile, (filename: string): void => {
     if (args.info) {
       log.trace('[:merge]', filename)
     }
   })
 
-  builder.on(TaskEvent.Execute, (entry: TaskEntry) => {
+  builder.on(TaskEvent.Execute, (entry: TaskEntry): void => {
     if (args.info) {
       const normalized = entry.arguments || []
-      log.trace(`[${entry.command}]`, normalized.join(' '))
+      if (entry.origin) log.trace(`[${entry.origin}:${entry.command}]`, normalized.join(' '))
+      else log.trace(`[${entry.command}]`, normalized.join(' '))
     }
   })
 
-  builder.on(TaskEvent.Results, (result: TaskJobResult) => {
+  builder.on(TaskEvent.Results, (result: TaskJobResult): void => {
     if (args.json) {
       result.messages = result.messages.reduce<string[]>((output, message) => output.concat(message.split('\n')), [])
       log.trace(GLOBAL.format(result, args.formatted))
@@ -76,10 +77,11 @@ function timing(): void {
 }
 
 booty
+  .command(ViewOptions)
   .command<Options>('$0 [tasks..]', 'execute a given set of tasks', {
     aliases: ['@execute', '@exec', '@run', 'run-script', 'run-task'],
     builder: {},
-    handler: async args => {
+    handler: async (args: Arguments<Options>) => {
       const tasks = args.tasks || []
 
       if (tasks.length || args.json) {
@@ -87,23 +89,22 @@ booty
       }
 
       const selectables = Object.keys(GLOBAL.config.tasks)
-
-      const answers = await interactive().interactive({
+      const options = {
         interactive: { default: true },
         tasks: {
           choices: selectables,
-          describe: 'select tasks',
+          describe: 'select task to run',
           options: selectables,
           prompt: 'always',
           type: 'list',
         } as OptionData,
-      })
+      }
 
+      const answers = await Promise.resolve(ui().interactive(options))
       await exec(args, answers.tasks)
     },
   })
-  .command(ViewCommand)
-  .middleware(async args => {
+  .middleware(async (args: Arguments<Options>) => {
     GLOBAL.arguments = args
     GLOBAL.cwd = process.env.NOFRILLS_CWD ? process.env.NOFRILLS_CWD : GLOBAL.arguments.cwd
 

@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/ssh@0.17.9...@nofrills/ssh@1.0.0) (2019-06-22)
+
+
+### Features
+
+* **tasks:** removing stdio properties ([9ac4c38](https://github.com/nativecode-dev/cli-tools/commit/9ac4c38))
+
+
+### BREAKING CHANGES
+
+* **tasks:** Removes stdio properties as they are no longer needed.
+
+
+
+
+
+## [0.17.9](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/ssh@0.17.8...@nofrills/ssh@0.17.9) (2019-06-21)
+
+**Note:** Version bump only for package @nofrills/ssh
+
+
+
+
+
 ## [0.17.8](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/ssh@0.17.6...@nofrills/ssh@0.17.8) (2019-06-21)
 
 **Note:** Version bump only for package @nofrills/ssh

@@ -8,7 +8,7 @@ import { fs } from '@nofrills/fs'
 
 const log = Logger.extend('view')
 
-const configurations = ['package.json', 'tasks.json']
+const validfiles = ['package.json', 'tasks.json']
 
 export interface ViewOptions extends Options {
   filename: string
@@ -23,8 +23,8 @@ const command: CommandModule<{}, ViewOptions> = {
     if (args.filename) {
       const name = fs.basename(args.filename)
 
-      if (configurations.includes(name) === false) {
-        await yargs.showHelp()
+      if (validfiles.includes(name) === false) {
+        await Promise.resolve(yargs.showHelp())
         return args
       }
 

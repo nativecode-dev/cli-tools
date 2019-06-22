@@ -35,7 +35,7 @@
     "rimraf": "^2.6.3",
     "source-map-support": "^0.5.12",
     "ts-node": "^8.2.0",
-    "tslint": "^5.17.0",
+    "tslint": "^5.18.0",
     "tslint-config-standard": "^8.0.1",
     "tslint-no-unused-expression-chai": "^0.1.4",
     "typescript": "^3.5.2"
@@ -57,8 +57,9 @@
     "instrument": true,
     "report-dir": ".cache/coverage",
     "reporter": "text",
+    "skip-full": true,
     "sourceMap": true,
-    "temp-directory": ".cache/nyc"
+    "temp-dir": ".cache/nyc"
   },
   "repository": {
     "type": "git",
@@ -80,9 +81,11 @@
     "canary": "./publish canary"
   },
   "tasks": {
-    "bootstrap": "leran bootstrap",
+    "bootstrap": "lerna bootstrap",
     "build": [
       "[clean]",
+      "[format]",
+      "[lint]",
       "lerna run build"
     ],
     "clean": [
@@ -98,9 +101,24 @@
       "rimraf binaries/*/dist",
       "rimraf binaries/*/lib"
     ],
+    "commit": [
+      "git add -A .",
+      "npx git cz"
+    ],
+    "format": [
+      "prettier --loglevel silent --write \"binaries/*/specs/**/*.ts\"",
+      "prettier --write \"binaries/*/src/**/*.ts\""
+    ],
     "install": [
       "npm install",
       "[bootstrap"
+    ],
+    "lint": [
+      "tslint --project tsconfig.json --config tslint.json"
+    ],
+    "test": [
+      "[build]",
+      "nyc mocha --opts mocha.opts"
     ]
   }
 }
