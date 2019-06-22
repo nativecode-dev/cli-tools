@@ -116,7 +116,7 @@ describe('when using TaskRunner', () => {
     expect(env.SIMPLE).to.equal('test')
   })
 
-  describe('variable expansion', () => {
+  xdescribe('variable expansion', () => {
     it('should expand environment variables', async () => {
       const config: TaskConfig = {
         tasks: {
