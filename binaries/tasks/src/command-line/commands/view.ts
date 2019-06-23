@@ -1,6 +1,6 @@
 import yargs, { CommandModule } from 'yargs'
 
-import Logger from '../Logging'
+import Logger from '../../Logging'
 import GLOBAL from '../Globals'
 
 import { Options } from '../Options'

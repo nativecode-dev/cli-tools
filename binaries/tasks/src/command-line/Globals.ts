@@ -3,8 +3,8 @@ import deepmerge from 'deepmerge'
 import { Arguments } from 'yargs'
 
 import { Options } from './Options'
-import { TaskBuilder } from './TaskBuilder'
-import { TaskConfig } from './models/TaskConfig'
+import { TaskBuilder } from '../tasks/TaskBuilder'
+import { TaskConfig } from '../models/TaskConfig'
 
 export interface State {
   arguments: Arguments<Options>
