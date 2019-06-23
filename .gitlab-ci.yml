@@ -11,7 +11,7 @@ before_script:
 - npm ci
 - npm run bootstrap
 - npm run configure:ssh
-- npm git pull
+- git pull
 
 cache:
   paths:
