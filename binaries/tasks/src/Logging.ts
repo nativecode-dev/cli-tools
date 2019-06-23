@@ -2,24 +2,27 @@ import chalk from 'chalk'
 
 import { Is, DictionaryOf } from '@nofrills/types'
 import { ScrubsInterceptor } from '@nofrills/scrubs'
-import { CreateLogger, CreateOptions, Lincoln, Options, Log, LogMessageType } from '@nofrills/lincoln-debug'
+import { Log, LogMessageType } from '@nofrills/lincoln'
+import { CreateLogger, CreateOptions } from '@nofrills/lincoln-debug'
 
 import GLOBAL from './Globals'
 
-const LoggerOptions: Options = CreateOptions('nofrills:tasks')
+const LoggerOptions = CreateOptions('nofrills:tasks')
 
 export type Colorizer = (text: string) => string
 
 export interface Expressions extends DictionaryOf<RegExp> {
   cwd: RegExp
+  debug: RegExp
   env: RegExp
+  error: RegExp
   info: RegExp
   taskexec: RegExp
   timing: RegExp
 }
 
 export const REGEX: Expressions = {
-  cwd: new RegExp(`${GLOBAL.cwd}//?`, 'g'),
+  cwd: new RegExp(`${GLOBAL.cwd}[/]`, 'g'),
   debug: new RegExp(/^\[#[\w\d_\-\:>]+\]/g),
   env: new RegExp(/\$\{?[\w\d_]+\}?/g),
   error: new RegExp(/^\[\![\w\d_\-\:]+\]/g),
@@ -30,7 +33,7 @@ export const REGEX: Expressions = {
 
 const COLORIZERS: Colorizer[] = [
   (text: string) => text.replace(REGEX.info, part => chalk.bold.yellow(part)),
-  (text: string) => text.replace(REGEX.cwd, _ => ''),
+  (text: string) => text.replace(REGEX.cwd, _ => chalk.bold.grey('~/')),
   (text: string) => text.replace(REGEX.debug, part => chalk.bold.yellow(part)),
   (text: string) => text.replace(REGEX.env, part => chalk.cyan(part)),
   (text: string) => text.replace(REGEX.error, part => chalk.bold.red(part)),
@@ -70,7 +73,7 @@ LoggerOptions.interceptors.register('colorize', async (log: Log) => {
   switch (log.type) {
     case LogMessageType.debug:
     case LogMessageType.error:
-      if (GLOBAL.arguments.debug) {
+      if (GLOBAL.arguments && GLOBAL.arguments.debug) {
         if (log.parameters.length) {
           const category = log.parameters.slice(1, 1).map(value => `[#${value}]`)
           const values = log.parameters
@@ -95,6 +98,6 @@ LoggerOptions.interceptors.register('colorize', async (log: Log) => {
 
 LoggerOptions.interceptors.register('scrubs', ScrubsInterceptor)
 
-const Logger: Lincoln = CreateLogger(LoggerOptions)
+const Logger = CreateLogger(LoggerOptions)
 
 export default Logger
