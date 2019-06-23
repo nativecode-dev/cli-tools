@@ -5,6 +5,9 @@
     "outDir": "bin",
     "lib": [
       "es2018"
+    ],
+    "types": [
+      "node"
     ]
   },
   "exclude": [

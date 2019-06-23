@@ -5,7 +5,7 @@ stages:
 - publish
 
 before_script:
-- git submodule sync --recursive
+- source .ci-env
 - git submodule update --init --recursive
 - npm ci
 - npm run bootstrap
@@ -15,12 +15,10 @@ cache:
   paths:
   - node_modules
 
-continuous:
+feature:
   stage: test
-  except:
-  - develop
-  - master
-  - tags
+  only:
+  - /feature\/.*/
   script:
   - npm run build:ci
   - npm run test:ci
@@ -28,8 +26,6 @@ continuous:
 
 prerelease:
   stage: publish
-  except:
-  - tags
   only:
   - develop
   script:
@@ -40,9 +36,6 @@ prerelease:
 
 release:
   stage: publish
-  except:
-  - tags
-  - triggers
   only:
   - master
   script:
