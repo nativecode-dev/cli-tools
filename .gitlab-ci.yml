@@ -5,8 +5,8 @@ stages:
 - publish
 
 before_script:
-- source .ci-env
 - git submodule update --init --recursive
+- source .ci-env
 - npm ci
 - npm run bootstrap
 - npm run configure:ssh
