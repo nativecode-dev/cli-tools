@@ -49,6 +49,7 @@
   "loglevel": "silent",
   "npmClient": "npm",
   "npmClientArgs": [
+    "--no-progress",
     "--silent"
   ],
   "packages": [

@@ -83,15 +83,5 @@
     "release:pre": ".citools/lerna-publish prerelease",
     "upgrade": "npm-check -y",
     "postupgrade": "lerna run upgrade"
-  },
-  "tasks": {
-    "build": [
-      "[clean]",
-      "lerna run build"
-    ],
-    "clean": [
-      "rimraf binaries/*/bin",
-      "rimraf **/*.tsbuildinfo"
-    ]
   }
 }
