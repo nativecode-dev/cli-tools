@@ -22,7 +22,7 @@ continuous:
   - master
   - tags
   script:
-  - npm run build
+  - npm run build:ci
   - npm run test:ci
   - npm run release:canary
 
@@ -34,7 +34,7 @@ prerelease:
   - develop
   script:
   - npm run setup:git
-  - npm run build
+  - npm run build:ci
   - npm run test:ci
   - npm run release:pre
 
@@ -47,6 +47,6 @@ release:
   - master
   script:
   - npm run setup:git
-  - npm run build
+  - npm run build:ci
   - npm run test:ci
   - npm run release
