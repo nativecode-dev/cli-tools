@@ -1,7 +1,7 @@
 import { CreateResolver } from '@nofrills/fs'
 import { CLI, ConsoleOptions, ProcessArgs } from '@nofrills/console'
 
-import { Shebang } from './Shebang'
+import { Shebang } from './tasks/Shebang'
 import Logger from './Logging'
 
 const args = ProcessArgs.from(process.argv)

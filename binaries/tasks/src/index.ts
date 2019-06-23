@@ -1,8 +1,8 @@
 export * from './errors/index'
 
-export * from './Shebang'
+export * from './tasks/Shebang'
 export * from './models/Task'
-export * from './TaskBuilder'
+export * from './tasks/TaskBuilder'
 export * from './models/TaskConfig'
 export * from './models/TaskDefinitions'
 export * from './models/TaskEntry'

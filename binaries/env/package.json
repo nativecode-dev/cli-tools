@@ -7,7 +7,7 @@
   "name": "@nofrills/cli-env",
   "private": false,
   "types": "./bin/index.d.ts",
-  "version": "0.6.18",
+  "version": "0.6.21",
   "bin": {
     "cli-env": "./bin/cli-env.js"
   },
@@ -17,8 +17,9 @@
   "dependencies": {
     "@nofrills/console": "^3.6.0",
     "@nofrills/fs": "^3.5.1",
-    "@nofrills/lincoln-debug": "^3.6.0",
-    "@nofrills/tasks": "^7.1.1",
+    "@nofrills/lincoln": "^4.0.1",
+    "@nofrills/lincoln-debug": "^3.6.6",
+    "@nofrills/tasks": "^7.1.4",
     "yargs": "^13.2.4",
     "yargs-interactive": "^2.1.0"
   },
@@ -45,8 +46,6 @@
   },
   "scripts": {
     "build": "ts-node ../tasks/src/cli-tasks build",
-    "clean": "ts-node ../tasks/src/cli-tasks clean",
-    "exec": "ts-node ../tasks/src/cli-tasks exec",
-    "shebang": "ts-node ../tasks/src/cli-tasks shebang"
+    "upgrade": "npm-check -y"
   }
 }

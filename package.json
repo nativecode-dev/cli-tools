@@ -30,6 +30,7 @@
     "lerna": "^3.15.0",
     "lerna-update-wizard": "^0.14.0",
     "mocha": "^6.1.4",
+    "npm-check": "^5.9.0",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rimraf": "^2.6.3",
@@ -69,56 +70,28 @@
     "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
     "prebuild": "npm run bootstrap",
+    "build:ci": "lerna run build",
     "commit": "git add -A . && npx git cz",
-    "cli-tasks": "ts-node binaries/tasks/src/cli-tasks",
+    "task": "bash cli-tasks",
     "test": "nyc mocha --opts mocha.opts",
-    "pretest": "npx lerna run build",
-    "ci-test": "nyc mocha --opts .citools/mocha.opts",
-    "setup-git": ".citools/setup-git ${CI_COMMIT_REF_NAME} git@git.nativecode.net:nativecode/cli-tools.git automaton@nativecode.com",
-    "setup-ssh": ".citools/setup-ssh git.nativecode.net ${SSH_PRIVATE_KEY} gitssh.nativecode.net",
-    "pre-release": "./publish prerelease",
-    "release": "./publish release",
-    "canary": "./publish canary"
+    "pretest": "lerna run build",
+    "test:ci": "nyc mocha --opts .citools/mocha.opts",
+    "configure:git": ".citools/setup-git ${CI_COMMIT_REF_NAME} git@git.nativecode.net:nativecode/cli-tools.git automaton@nativecode.com",
+    "configure:ssh": ".citools/setup-ssh git.nativecode.net ${SSH_PRIVATE_KEY} gitssh.nativecode.net",
+    "release": ".citools/lerna-publish release",
+    "release:canary": ".citools/lerna-publish canary",
+    "release:pre": ".citools/lerna-publish prerelease",
+    "upgrade": "npm-check -y",
+    "postupgrade": "lerna run upgrade"
   },
   "tasks": {
-    "bootstrap": "lerna bootstrap",
     "build": [
       "[clean]",
-      "[format]",
-      "[lint]",
       "lerna run build"
     ],
     "clean": [
-      "[clean:cache]",
-      "[clean:output]"
-    ],
-    "clean:cache": [
-      "rimraf .cache",
-      "rimraf **/*.tsbuildinfo"
-    ],
-    "clean:output": [
       "rimraf binaries/*/bin",
-      "rimraf binaries/*/dist",
-      "rimraf binaries/*/lib"
-    ],
-    "commit": [
-      "git add -A .",
-      "npx git cz"
-    ],
-    "format": [
-      "prettier --loglevel silent --write \"binaries/*/specs/**/*.ts\"",
-      "prettier --write \"binaries/*/src/**/*.ts\""
-    ],
-    "install": [
-      "npm install",
-      "[bootstrap"
-    ],
-    "lint": [
-      "tslint --project tsconfig.json --config tslint.json"
-    ],
-    "test": [
-      "[build]",
-      "nyc mocha --opts mocha.opts"
+      "rimraf **/*.tsbuildinfo"
     ]
   }
 }

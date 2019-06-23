@@ -4,20 +4,22 @@ import $ui, { OptionData } from 'yargs-interactive'
 import { fs } from '@nofrills/fs'
 import { Returns } from '@nofrills/patterns'
 
-import GLOBAL from './Globals'
+import GLOBAL from './command-line/Globals'
 import Logger from './Logging'
 
-import { Options } from './Options'
-import { TaskEvent } from './TaskEvent'
-import { TaskBuilder } from './TaskBuilder'
+import { Options } from './command-line/Options'
+import { TaskEvent } from './tasks/TaskEvent'
+import { TaskBuilder } from './tasks/TaskBuilder'
 import { TaskEntry } from './models/TaskEntry'
 import { TaskConfig } from './models/TaskConfig'
 import { TaskJobResult } from './models/TaskJobResult'
 
-import ViewOptions from './commands/view'
+import ViewOptions from './command-line/commands/view'
 
 const booty = $yargs
 const log = Logger.extend('cli-tasks')
+
+const ERRORS: TaskJobResult[] = []
 
 async function exec(args: Arguments<Options>, ...tasks: string[]): Promise<Arguments<Options>> {
   const code = await execute(GLOBAL.builder, GLOBAL.config, ...tasks)
@@ -48,7 +50,7 @@ async function load(args: Arguments<Options>): Promise<[TaskBuilder, TaskConfig]
   const builder = TaskBuilder.dir(dirname)
 
   builder.on(TaskEvent.ConfigFile, (filename: string): void => {
-    if (args.info) {
+    if (args.debug) {
       log.trace('[:merge]', filename)
     }
   })
@@ -64,6 +66,15 @@ async function load(args: Arguments<Options>): Promise<[TaskBuilder, TaskConfig]
   builder.on(TaskEvent.Results, (result: TaskJobResult): void => {
     if (args.json) {
       result.messages = result.messages.reduce<string[]>((output, message) => output.concat(message.split('\n')), [])
+
+      if (result.code !== 0) {
+        ERRORS.push(result)
+
+        if (args.bail) {
+          process.exit(result.code)
+        }
+      }
+
       log.trace(GLOBAL.format(result, args.formatted))
     }
   })
@@ -75,6 +86,11 @@ function timing(): void {
   const seconds = GLOBAL.elapsed(GLOBAL.startup)
   log.trace(`[@${GLOBAL.cwd}] took ${seconds} seconds to execute`)
 }
+
+process.on('beforeExit', () => {
+  const MAX_ERROR_CODE = Math.max(...ERRORS.map(error => error.code))
+  process.exitCode = MAX_ERROR_CODE
+})
 
 booty
   .command(ViewOptions)
@@ -129,7 +145,7 @@ booty
       process.env.NOFRILLS_TASKS_YARGS = encoded
     }
 
-    if (GLOBAL.arguments.info) {
+    if (GLOBAL.arguments.debug) {
       log.trace('[:args]', process.argv.join(' '))
       log.trace('[:cwd]', process.cwd())
     }
