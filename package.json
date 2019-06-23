@@ -68,29 +68,14 @@
   },
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "build": "lerna run build",
-    "prebuild": "npm run bootstrap",
-    "commit": "git add -A . && npx git cz",
-    "task": "bash cli-tasks",
-    "test": "nyc mocha --opts mocha.opts",
-    "pretest": "lerna run build",
-    "test:ci": "nyc mocha --opts .citools/mocha.opts",
-    "setup:git": ".citools/setup-git ${CI_COMMIT_REF_NAME} git@git.nativecode.net:nativecode/cli-tools.git automaton@nativecode.com",
-    "setup:ssh": ".citools/setup-ssh git.nativecode.net ${SSH_PRIVATE_KEY} gitssh.nativecode.net",
-    "release": ".citools/lerna-publish release",
-    "release:canary": ".citools/lerna-publish canary",
-    "release:pre": ".citools/lerna-publish prerelease",
-    "upgrade": "npm-check -y",
-    "postupgrade": "lerna run upgrade"
-  },
-  "tasks": {
-    "build": [
-      "[clean]",
-      "lerna run build"
-    ],
-    "clean": [
-      "rimraf binaries/*/bin",
-      "rimraf **/*.tsbuildinfo"
-    ]
+    "build": "./cli-tasks build",
+    "build:ci": "./cli-tasks build:ci",
+    "test": "./cli-tasks test",
+    "test:ci": "./cli-tasks test:ci",
+    "configure:git": "./cli-tasks configure:git",
+    "configure:ssh": "./cli-tasks configure:ssh",
+    "release": "./cli-tasks release",
+    "release:canary": "./cli-tasks release:canary",
+    "release:pre": "./cli-tasks release:pre"
   }
 }
