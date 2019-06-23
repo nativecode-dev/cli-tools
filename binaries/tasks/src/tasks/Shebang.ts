@@ -1,7 +1,7 @@
 import { fs } from '@nofrills/fs'
 import { Is, Npm, DictionaryOf } from '@nofrills/types'
 
-import Logger from './Logging'
+import Logger from '../Logging'
 
 export class Shebang {
   private readonly log = Logger.extend('shebang')

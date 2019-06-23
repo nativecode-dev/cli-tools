@@ -1,3 +1,5 @@
 #!/bin/bash
 
-./node_modules/.bin/ts-node binaries/tasks/src/cli-tasks "$@"
+PATH=${PATH}:./node_modules/.bin
+
+ts-node binaries/tasks/src/cli-tasks "$@"

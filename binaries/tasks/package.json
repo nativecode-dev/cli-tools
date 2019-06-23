@@ -7,7 +7,7 @@
   "name": "@nofrills/tasks",
   "private": false,
   "types": "./bin/index.d.ts",
-  "version": "7.1.1",
+  "version": "7.1.4",
   "bin": {
     "cli-shebang": "./bin/cli-shebang.js",
     "cli-tasks": "./bin/cli-tasks.js"
@@ -16,15 +16,16 @@
     "url": "https://github.com/nativecode-dev/cli-tools/issues"
   },
   "dependencies": {
-    "@nofrills/console": "^3.6.0",
-    "@nofrills/fs": "^3.5.1",
-    "@nofrills/lincoln-debug": "^3.6.0",
-    "@nofrills/patterns": "^1.5.0",
-    "@nofrills/scrubs": "^3.6.0",
-    "@nofrills/types": "^3.4.3",
+    "@nofrills/console": "^4.0.1",
+    "@nofrills/fs": "^4.0.1",
+    "@nofrills/lincoln": "^4.0.1",
+    "@nofrills/lincoln-debug": "^4.0.1",
+    "@nofrills/patterns": "^2.0.1",
+    "@nofrills/scrubs": "^4.0.1",
+    "@nofrills/types": "^4.0.1",
     "deepmerge": "^3.2.1",
     "execa": "^1.0.0",
-    "get-stream": "^4.1.0",
+    "get-stream": "^5.1.0",
     "yargs": "^13.2.4",
     "yargs-interactive": "^2.1.0"
   },
@@ -51,8 +52,6 @@
   },
   "scripts": {
     "build": "ts-node src/cli-tasks build",
-    "clean": "ts-node src/cli-tasks clean",
-    "exec": "ts-node src/cli-tasks",
-    "shebang": "ts-node src/cli-shebang"
+    "upgrade": "npm-check -y"
   }
 }
