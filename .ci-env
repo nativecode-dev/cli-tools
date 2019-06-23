@@ -14,7 +14,7 @@ export BUILD_REPO_SSHKEY_PATH=${SSH_PRIVATE_KEY}
 #-------------------------------------------------------------------------------
 export BUILD_REPO_GIT="git@${BUILD_REPO_DOMAIN}:${BUILD_REPO}.git"
 export BUILD_REPO_URL="https://${BUILD_REPO_DOMAIN}/${BUILD_REPO}.git"
-export BUILD_REPO_URL_SSH="ssh://${BUILD_REPO_GIT}"
+export BUILD_REPO_URL_SSH="ssh://${BUILD_REPO_DOMAIN}/${BUILD_REPO}.git"
 
 #-------------------------------------------------------------------------------
 # DO NOT EDIT: Sets the path to include node_modules                           #
