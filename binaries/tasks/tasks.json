@@ -1,10 +1,10 @@
 {
   "tasks": {
     "build": [
-      "[build:ts]",
+      "[build:compile]",
       "[shebang]"
     ],
-    "build:ts": [
+    "build:compile": [
       "tsc --project tsconfig.json"
     ],
     "clean": [
@@ -13,9 +13,6 @@
     ],
     "shebang": [
       "ts-node ./src/cli-shebang"
-    ],
-    "run": [
-      "ts-node ./src/cli-tasks"
     ]
   }
 }

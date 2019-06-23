@@ -4,5 +4,6 @@
   "trailingComma": "all",
   "parser": "typescript",
   "printWidth": 120,
-  "proseWrap": "never"
+  "proseWrap": "never",
+  "tabWidth": 2
 }

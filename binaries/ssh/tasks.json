@@ -1,10 +1,10 @@
 {
   "tasks": {
     "build": [
-      "[build:ts]",
+      "[build:compile]",
       "[shebang]"
     ],
-    "build:ts": [
+    "build:compile": [
       "tsc --project tsconfig.json"
     ],
     "clean": [
