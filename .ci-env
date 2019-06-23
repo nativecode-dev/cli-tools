@@ -1,12 +1,12 @@
 #!/bin/bash
 
-BRANCH=${CI_COMMIT_REF_NAME}
-DOMAIN="nativecode.net"
-EMAIL="automaton+${PROJECT}@nativecode.com"
-GIT_HOST="git.${DOMAIN}"
-PROJECT="cli-tools"
-ORGANIZATION="nativecode"
-SSH_HOST="gitssh.${DOMAIN}"
-SSH_KEY=${SSH_PRIVATE_KEY}
+export BRANCH=${CI_COMMIT_REF_NAME}
+export DOMAIN="nativecode.net"
+export EMAIL="automaton+${PROJECT}@nativecode.com"
+export GIT_HOST="git.${DOMAIN}"
+export PROJECT="cli-tools"
+export ORGANIZATION="nativecode"
+export SSH_HOST="gitssh.${DOMAIN}"
+export SSH_KEY=${SSH_PRIVATE_KEY}
 
 source .citools/ci-export
