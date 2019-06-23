@@ -33,7 +33,7 @@ prerelease:
   only:
   - develop
   script:
-  - npm run setup:git
+  - npm run configure:git
   - npm run build:ci
   - npm run test:ci
   - npm run relase:pre
@@ -46,7 +46,7 @@ release:
   only:
   - master
   script:
-  - npm run setup:git
+  - npm run configure:git
   - npm run build:ci
   - npm run test:ci
   - npm run release
