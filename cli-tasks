@@ -1,5 +1,7 @@
 #!/bin/bash
 
-PATH=${PATH}:./node_modules/.bin
+source .ci-env
 
+npm install --no-progress
+npm run bootstrap
 ts-node binaries/tasks/src/cli-tasks "$@"

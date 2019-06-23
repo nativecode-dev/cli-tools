@@ -2,7 +2,7 @@
 --extension ts
 --full-trace
 --recursive
---reporter nyan
+--reporter min
 --require source-map-support/register
 --require ts-node/register
 --watch-extension ts
