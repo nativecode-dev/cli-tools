@@ -36,7 +36,7 @@ prerelease:
   - npm run configure:git
   - npm run build:ci
   - npm run test:ci
-  - npm run relase:pre
+  - npm run release:pre
 
 release:
   stage: publish
