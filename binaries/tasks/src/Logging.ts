@@ -5,7 +5,7 @@ import { ScrubsInterceptor } from '@nofrills/scrubs'
 import { Log, LogMessageType } from '@nofrills/lincoln'
 import { CreateLogger, CreateOptions } from '@nofrills/lincoln-debug'
 
-import GLOBAL from './Globals'
+import GLOBAL from './command-line/Globals'
 
 const LoggerOptions = CreateOptions('nofrills:tasks')
 

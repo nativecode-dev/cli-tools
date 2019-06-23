@@ -9,7 +9,7 @@ before_script:
 - git submodule update --init --recursive
 - npm ci
 - npm run bootstrap
-- npm run setup:ssh
+- npm run configure:ssh
 
 cache:
   paths:
@@ -22,7 +22,7 @@ continuous:
   - master
   - tags
   script:
-  - npm run build
+  - npm run build:ci
   - npm run test:ci
   - npm run release:canary
 
@@ -33,10 +33,10 @@ prerelease:
   only:
   - develop
   script:
-  - npm run setup:git
-  - npm run build
+  - npm run configure:git
+  - npm run build:ci
   - npm run test:ci
-  - npm run release:pre
+  - npm run relase:pre
 
 release:
   stage: publish
@@ -46,7 +46,7 @@ release:
   only:
   - master
   script:
-  - npm run setup:git
-  - npm run build
+  - npm run configure:git
+  - npm run build:ci
   - npm run test:ci
   - npm run release

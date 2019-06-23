@@ -6,7 +6,7 @@ import { serial } from '@nofrills/patterns'
 import Logger from '../Logging'
 
 import { Is } from '@nofrills/types'
-import { TaskEvent } from '../TaskEvent'
+import { TaskEvent } from '../tasks/TaskEvent'
 import { TaskJob } from '../models/TaskJob'
 import { TaskEntry } from '../models/TaskEntry'
 import { TaskEntryType } from '../models/TaskEntryType'

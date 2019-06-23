@@ -5,7 +5,7 @@ import { fs } from '@nofrills/fs'
 import expect from './expect'
 
 import { TaskJob } from '../src/models/TaskJob'
-import { TaskBuilder } from '../src/TaskBuilder'
+import { TaskBuilder } from '../src/tasks/TaskBuilder'
 import { TaskConfig } from '../src/models/TaskConfig'
 import { TaskRunner } from '../src/runners/TaskRunner'
 import { TaskJobResult } from '../src/models/TaskJobResult'
