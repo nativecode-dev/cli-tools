@@ -18,7 +18,6 @@
     ],
     "clean:artifacts": [
       "rimraf binaries/*/bin",
-      "rimraf binaries/*/lib",
       "rimraf **/*.tsbuildinfo"
     ],
     "configure:ci": [
