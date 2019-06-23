@@ -1,0 +1,44 @@
+{
+  "author": "opensource@nativecode.com",
+  "description": "Clam CLI",
+  "homepage": "https://github.com/nativecode-dev/cli-tools",
+  "license": "MIT",
+  "main": "./bin/clam.js",
+  "name": "@nativecode/clam",
+  "private": false,
+  "types": "./bin/clam.d.ts",
+  "version": "0.0.0",
+  "bin": {
+    "clam": "./bin/clam.js"
+  },
+  "bugs": {
+    "url": "https://github.com/nativecode-dev/cli-tools/issues"
+  },
+  "dependencies": {
+    "@nofrills/fs": "^4.0.1",
+    "@nofrills/lincoln": "^4.0.1",
+    "yargs": "^13.2.4"
+  },
+  "directories": {
+    "lib": "bin",
+    "test": "specs"
+  },
+  "files": [
+    "bin"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nativecode-dev/cli-tools.git"
+  },
+  "scripts": {
+    "build": "ts-node ../tasks/src/cli-tasks build",
+    "exec": "ts-node src/clam",
+    "upgrade": "npm-check -y"
+  },
+  "devDependencies": {
+    "@types/yargs": "^13.0.0"
+  }
+}

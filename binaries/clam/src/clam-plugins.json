@@ -1,0 +1,14 @@
+{
+  "plugins": [
+    {
+      "command": "info",
+      "description": "displays system information",
+      "files": [
+        "commands/info/cpu",
+        "commands/info/disks",
+        "commands/info/os"
+      ],
+      "name": "info"
+    }
+  ]
+}

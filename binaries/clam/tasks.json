@@ -1,0 +1,18 @@
+{
+  "tasks": {
+    "build": [
+      "[build:compile]",
+      "[shebang]"
+    ],
+    "build:compile": [
+      "tsc --project tsconfig.json"
+    ],
+    "clean": [
+      "rimraf bin",
+      "rimraf *.tsbuildinfo"
+    ],
+    "shebang": [
+      "ts-node ../tasks/src/cli-shebang"
+    ]
+  }
+}
