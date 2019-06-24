@@ -1,7 +1,7 @@
 import { Loader } from '../Loader'
 import { Plugin } from './Plugin'
 
-import { Manifest } from '../models/Manifest'
+import { Manifest } from './Manifest'
 
 export class PluginLoader extends Loader<Manifest> {
   constructor(filepath: string) {
@@ -12,7 +12,7 @@ export class PluginLoader extends Loader<Manifest> {
     const manifests = await super.load()
 
     return manifests.map(manifest => {
-      return new Plugin(manifest.json)
+      return new Plugin(manifest.cwd, manifest.json)
     })
   }
 }

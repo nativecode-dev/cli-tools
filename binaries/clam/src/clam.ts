@@ -3,30 +3,30 @@ import yargs, { Argv } from 'yargs'
 import { fs } from '@nofrills/fs'
 import { EventEmitter } from 'events'
 
-import { ConfigLoader } from './ConfigLoader'
+import Logger from './Logging'
+
+import { ConfigLoader } from './config/ConfigLoader'
 import { PluginLoader } from './plugins/PluginLoader'
 
-import { Config } from './models/Config'
+import { Config } from './config/Config'
 
 const regex = new RegExp(/\$\{?([A-Za-z,0-9,_]+)\}?/g)
 
 export class Clam extends EventEmitter {
+  private readonly log = Logger
+
   private readonly regex = new RegExp(/\$\{?[A-Za-z,0-9,_]+\}?\/?/g)
 
-  constructor(private readonly booty: yargs.Argv<{}>) {
+  constructor(private readonly yargs: Argv<{}>) {
     super()
   }
 
-  initialize(): Promise<void> {
-    return Promise.resolve()
-  }
-
-  async load(): Promise<Argv<{}>> {
+  async initialize(): Promise<Argv<{}>> {
     const configs = await this.configs()
     const loaders = await this.plugins(configs)
     const manifests = await Promise.all(loaders.map(loader => loader.manifests()))
     const plugins = manifests.reduce((result, current) => result.concat(current), [])
-    return plugins.reduce((result, plugin) => plugin.create(result), this.booty)
+    return plugins.reduce(async (result, plugin) => plugin.create(await result), Promise.resolve(this.yargs))
   }
 
   protected async configs(): Promise<Config[]> {
@@ -61,10 +61,23 @@ export class Clam extends EventEmitter {
 }
 
 async function main() {
-  const clam = new Clam(yargs)
-  const booty = await clam.load()
+  const booty = yargs
+    .option('config', {
+      alias: 'c',
+      default: null,
+      string: true,
+    })
+    .option('cwd', {
+      default: process.cwd(),
+      string: true,
+    })
+    .help()
+    .showHelpOnFail(false)
+    .scriptName(fs.basename(__filename, false))
 
-  console.log(booty.help().argv)
+  const clam = new Clam(booty)
+  const final = await clam.initialize()
+  final.parse()
 }
 
 main().catch(console.error)

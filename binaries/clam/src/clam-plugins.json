@@ -1,5 +1,5 @@
 {
-  "plugins": [
+  "commands": [
     {
       "command": "info",
       "description": "displays system information",

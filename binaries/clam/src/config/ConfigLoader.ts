@@ -1,5 +1,5 @@
-import { Loader } from './Loader'
-import { Config } from './models/Config'
+import { Loader } from '../Loader'
+import { Config } from './Config'
 
 export class ConfigLoader extends Loader<Config> {
   constructor(filepaths: string[]) {
