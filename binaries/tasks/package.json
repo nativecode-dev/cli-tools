@@ -7,7 +7,7 @@
   "name": "@nofrills/tasks",
   "private": false,
   "types": "./bin/index.d.ts",
-  "version": "7.1.7",
+  "version": "7.1.9",
   "bin": {
     "cli-shebang": "./bin/cli-shebang.js",
     "cli-tasks": "./bin/cli-tasks.js"
@@ -39,6 +39,9 @@
   "directories": {
     "lib": "bin",
     "test": "specs"
+  },
+  "engine": {
+    "node": ">=8.10.49"
   },
   "files": [
     "bin"

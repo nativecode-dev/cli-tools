@@ -7,7 +7,7 @@
   "name": "@nofrills/ssh",
   "private": false,
   "types": "./bin/index.d.ts",
-  "version": "1.0.8",
+  "version": "1.0.10",
   "bin": {
     "cli-ssh": "./bin/cli-ssh.js"
   },
@@ -32,6 +32,9 @@
   "directories": {
     "lib": "bin",
     "test": "specs"
+  },
+  "engine": {
+    "node": ">=8.10.49"
   },
   "files": [
     "bin"
