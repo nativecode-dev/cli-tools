@@ -1,16 +1,13 @@
 #!/bin/bash
 
-export BUILD_REPO="nativecode/cli-tools"
-export BUILD_REPO_BRANCH=${CI_COMMIT_REF_NAME}
-export BUILD_REPO_DOMAIN="git.nativecode.net"
-export BUILD_REPO_DOMAIN_SSH="gitssh.nativecode.net"
-export BUILD_REPO_EMAIL="automaton+cli-tools@nativecode.com"
-export BUILD_REPO_SSHKEY_PATH=${SSH_PRIVATE_KEY:-"/file-not-found":}
+export BRANCH=${CI_COMMIT_REF_NAME}
+export DOMAIN="nativecode.net"
+export PROJECT="cli-tools"
+export ORGANIZATION="nativecode"
+export SSH_KEY=${SSH_PRIVATE_KEY}
 
-#-------------------------------------------------------------------------------
-# DO NOT EDIT
-#-------------------------------------------------------------------------------
-export BUILD_REPO_GIT="git@${BUILD_REPO_DOMAIN}:${BUILD_REPO}.git"
-export BUILD_REPO_URL="https://${BUILD_REPO_DOMAIN}/${BUILD_REPO}.git"
-export BUILD_REPO_URL_SSH="ssh://${BUILD_REPO_GIT}"
-export PATH=./node_modules/.bin:${PATH}
+export EMAIL="automaton+${PROJECT}@nativecode.com"
+export GIT_HOST="git.${DOMAIN}"
+export SSH_HOST="gitssh.${DOMAIN}"
+
+source .citools/ci-export
