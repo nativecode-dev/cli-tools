@@ -7,7 +7,7 @@
   "name": "@nofrills/cli-env",
   "private": false,
   "types": "./bin/index.d.ts",
-  "version": "0.6.28",
+  "version": "0.6.29",
   "bin": {
     "cli-env": "./bin/cli-env.js"
   },
@@ -19,7 +19,7 @@
     "@nofrills/fs": "^3.5.1",
     "@nofrills/lincoln": "^4.0.1",
     "@nofrills/lincoln-debug": "^3.6.6",
-    "@nofrills/tasks": "^7.1.11",
+    "@nofrills/tasks": "^7.1.12",
     "yargs": "^13.2.4",
     "yargs-interactive": "^2.1.0"
   },
