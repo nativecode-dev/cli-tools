@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.1.11](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@7.1.9...@nofrills/tasks@7.1.11) (2019-06-27)
+
+**Note:** Version bump only for package @nofrills/tasks
+
+
+
+
+
 ## [7.1.10](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@7.1.7...@nofrills/tasks@7.1.10) (2019-06-27)
 
 **Note:** Version bump only for package @nofrills/tasks

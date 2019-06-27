@@ -74,6 +74,7 @@
     "prebuild": "npm run bootstrap",
     "build:ci": "lerna run build",
     "commit": "git add -A . && npx git cz",
+    "lerna": "lerna",
     "task": "bash cli-tasks",
     "test": "nyc mocha --opts mocha.opts",
     "pretest": "lerna run build",
