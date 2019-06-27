@@ -33,6 +33,9 @@
     "lib": "bin",
     "test": "specs"
   },
+  "engine": {
+    "node": ">=8.10.49"
+  },
   "files": [
     "bin"
   ],

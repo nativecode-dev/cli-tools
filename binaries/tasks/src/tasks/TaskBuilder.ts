@@ -75,8 +75,8 @@ export class TaskBuilder extends EventEmitter {
     const serial = new SerialTaskRunner()
     const executeHandler = (entry: TaskEntry) => this.emit(TaskEvent.Execute, entry)
     const resultsHandler = (results: TaskJobResult[]) => this.emit(TaskEvent.Results, results)
-    serial.on(TaskEvent.Execute, executeHandler)
-    serial.on(TaskEvent.Results, resultsHandler)
+    serial.prependListener(TaskEvent.Execute, executeHandler)
+    serial.prependListener(TaskEvent.Results, resultsHandler)
 
     try {
       config = config || (await this.build())
@@ -86,8 +86,8 @@ export class TaskBuilder extends EventEmitter {
       this.log.debug('run-results', ...results)
       return results
     } finally {
-      serial.off(TaskEvent.Execute, resultsHandler)
-      serial.off(TaskEvent.Execute, executeHandler)
+      serial.removeListener(TaskEvent.Execute, resultsHandler)
+      serial.removeListener(TaskEvent.Execute, executeHandler)
     }
   }
 
