@@ -24,7 +24,7 @@
     "yargs-interactive": "^2.1.0"
   },
   "devDependencies": {
-    "@types/node": "*",
+    "@types/node": "^8.10.49",
     "@types/pegjs": "^0.10.1",
     "@types/yargs": "^13.0.0",
     "@types/yargs-interactive": "^2.0.0",

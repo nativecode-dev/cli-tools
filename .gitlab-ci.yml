@@ -1,7 +1,6 @@
 image: node:latest
 
 stages:
-- test
 - publish
 
 before_script:
@@ -15,10 +14,11 @@ cache:
   paths:
   - node_modules
 
-feature:
-  stage: test
+continuous:
+  stage: publish
   only:
   - /feature\/.*/
+  - /hotfix\/.*/
   script:
   - npm run build:ci
   - npm run test:ci
