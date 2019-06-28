@@ -9,7 +9,7 @@ class OsCommand implements CommandModule<{}, OsOptions> {
   readonly describe = 'shows operating system information'
 
   handler = (args: Arguments<OsOptions>): void => {
-    return
+    console.log(':os', args)
   }
 }
 

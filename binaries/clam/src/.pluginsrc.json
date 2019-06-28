@@ -1,0 +1,10 @@
+{
+  "description": "info plugins",
+  "files": [
+    "commands/info/cpu",
+    "commands/info/disks",
+    "commands/info/os"
+  ],
+  "name": "info",
+  "version": "1.0"
+}

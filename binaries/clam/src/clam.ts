@@ -1,4 +1,4 @@
-import yargs, { Argv } from 'yargs'
+import { Argv } from 'yargs'
 
 import { fs } from '@nofrills/fs'
 import { EventEmitter } from 'events'
@@ -8,6 +8,7 @@ import Logger from './Logging'
 import { ConfigLoader } from './config/ConfigLoader'
 import { PluginLoader } from './plugins/PluginLoader'
 
+import cli from './cli'
 import { Config } from './config/Config'
 
 const regex = new RegExp(/\$\{?([A-Za-z,0-9,_]+)\}?/g)
@@ -17,16 +18,12 @@ export class Clam extends EventEmitter {
 
   private readonly regex = new RegExp(/\$\{?[A-Za-z,0-9,_]+\}?\/?/g)
 
-  constructor(private readonly yargs: Argv<{}>) {
-    super()
-  }
-
-  async initialize(): Promise<Argv<{}>> {
+  async initialize(yargs: Argv<{}>): Promise<Argv<{}>> {
     const configs = await this.configs()
     const loaders = await this.plugins(configs)
     const manifests = await Promise.all(loaders.map(loader => loader.manifests()))
     const plugins = manifests.reduce((result, current) => result.concat(current), [])
-    return plugins.reduce(async (result, plugin) => plugin.create(await result), Promise.resolve(this.yargs))
+    return plugins.reduce(async (result, plugin) => plugin.create(await result), Promise.resolve(yargs))
   }
 
   protected async configs(): Promise<Config[]> {
@@ -46,7 +43,7 @@ export class Clam extends EventEmitter {
     const directories = [
       __dirname,
       ...configs
-        .map(config => config.plugins)
+        .map(config => config.locations.plugins)
         .reduce((result, current) => result.concat(current), [])
         .map(directory => this.environment(directory))
         .map(directory => fs.resolve(directory)),
@@ -61,23 +58,9 @@ export class Clam extends EventEmitter {
 }
 
 async function main() {
-  const booty = yargs
-    .option('config', {
-      alias: 'c',
-      default: null,
-      string: true,
-    })
-    .option('cwd', {
-      default: process.cwd(),
-      string: true,
-    })
-    .help()
-    .showHelpOnFail(false)
-    .scriptName(fs.basename(__filename, false))
-
-  const clam = new Clam(booty)
-  const final = await clam.initialize()
-  final.parse()
+  const clam = new Clam()
+  const host = await clam.initialize(cli())
+  return host.parse()
 }
 
 main().catch(console.error)

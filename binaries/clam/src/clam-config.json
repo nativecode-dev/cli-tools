@@ -1,6 +1,0 @@
-{
-  "plugins": [
-    "${PWD}",
-    "${HOME}/.clam"
-  ]
-}

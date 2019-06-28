@@ -3,7 +3,7 @@ import { Config } from './Config'
 
 export class ConfigLoader extends Loader<Config> {
   constructor(filepaths: string[]) {
-    super('clam-config.json', filepaths)
+    super('.clamrc.json', filepaths)
   }
 
   async configurations(): Promise<Config[]> {

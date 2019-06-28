@@ -5,11 +5,11 @@ export interface DiskOptions {}
 class DisksCommand implements CommandModule<{}, DiskOptions> {
   readonly aliases = []
   readonly builder = {}
-  readonly command = 'os'
-  readonly describe = 'shows operating system information'
+  readonly command = 'disks'
+  readonly describe = 'shows device information'
 
   handler = (args: Arguments<DiskOptions>): void => {
-    return
+    console.log(':disks', args)
   }
 }
 

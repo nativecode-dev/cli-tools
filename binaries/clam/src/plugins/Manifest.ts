@@ -1,5 +1,6 @@
-import { ManifestCommand } from './ManifestCommand'
-
 export interface Manifest {
-  commands: ManifestCommand[]
+  files: string[]
+  description?: string
+  name: string
+  version: string
 }

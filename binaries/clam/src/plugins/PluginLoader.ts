@@ -5,7 +5,7 @@ import { Manifest } from './Manifest'
 
 export class PluginLoader extends Loader<Manifest> {
   constructor(filepath: string) {
-    super('clam-plugins.json', [filepath])
+    super('.pluginsrc.json', [filepath])
   }
 
   async manifests(): Promise<Plugin[]> {
