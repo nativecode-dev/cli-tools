@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.1.13](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@7.1.12...@nofrills/tasks@7.1.13) (2019-06-27)
+
+**Note:** Version bump only for package @nofrills/tasks
+
+
+
+
+
+## [7.1.12](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@7.1.7...@nofrills/tasks@7.1.12) (2019-06-27)
+
+**Note:** Version bump only for package @nofrills/tasks
+
+
+
+
+
+## [7.1.11](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@7.1.9...@nofrills/tasks@7.1.11) (2019-06-27)
+
+**Note:** Version bump only for package @nofrills/tasks
+
+
+
+
+
+## [7.1.10](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@7.1.7...@nofrills/tasks@7.1.10) (2019-06-27)
+
+**Note:** Version bump only for package @nofrills/tasks
+
+
+
+
+
+## [7.1.9](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@7.1.8...@nofrills/tasks@7.1.9) (2019-06-27)
+
+
+### Bug Fixes
+
+* updating package locks ([c385693](https://github.com/nativecode-dev/cli-tools/commit/c385693))
+
+
+
+
+
 ## [7.1.8](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@7.1.7...@nofrills/tasks@7.1.8) (2019-06-23)
 
 **Note:** Version bump only for package @nofrills/tasks
