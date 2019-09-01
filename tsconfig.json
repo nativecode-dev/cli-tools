@@ -1,14 +1,11 @@
 {
-  "extends": "./tsconfig.settings.json",
+  "extends": "./tsconfig.settings",
+  "compilerOptions": {
+    "typeRoots": [
+      "node_modules/@types"
+    ]
+  },
   "include": [
-    "**/src/**/*.ts"
-  ],
-  "references": [
-    {
-      "path": "binaries/ssh"
-    },
-    {
-      "path": "binaries/tasks"
-    }
+    "binaries/*/src/**/*.ts"
   ]
 }

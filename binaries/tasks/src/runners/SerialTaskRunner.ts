@@ -96,14 +96,14 @@ export class SerialTaskRunner extends EventEmitter implements TaskRunnerAdapter 
       cmdproc.stdout.pipe(process.stdout)
     }
 
-    const { code, signal, stderr, stdout } = await cmdproc
+    const response = await cmdproc
 
     const result: TaskJobResult = {
-      code,
+      code: response.exitCode,
       entry,
-      errors: this.convertString(stderr),
-      messages: this.convertString(stdout),
-      signal,
+      errors: this.convertString(response.stderr),
+      messages: this.convertString(response.stdout),
+      signal: response.signal || null,
     }
 
     this.emit(TaskEvent.Results, result)
