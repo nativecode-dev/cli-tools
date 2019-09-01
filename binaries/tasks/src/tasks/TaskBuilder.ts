@@ -76,14 +76,17 @@ export class TaskBuilder extends EventEmitter {
 
     const executeHandler = (entry: TaskEntry) => this.emit(TaskEvent.Execute, entry)
     const resultsHandler = (results: TaskJobResult[]) => {
-      results.forEach(result => {
-        if (result.code === 0) {
-          result.messages.forEach(message => process.stdout.write(message))
-        } else {
-          result.messages.forEach(message => process.stderr.write(message))
-        }
-      })
-      this.emit(TaskEvent.Results, results)
+      if (results) {
+        results.forEach(result => {
+          if (result.code === 0) {
+            result.messages.forEach(message => process.stdout.write(message))
+          } else {
+            result.messages.forEach(message => process.stderr.write(message))
+          }
+        })
+
+        this.emit(TaskEvent.Results, results)
+      }
     }
 
     serial.prependListener(TaskEvent.Execute, executeHandler)
