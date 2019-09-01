@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.1](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@9.0.0...@nofrills/tasks@9.0.1) (2019-09-01)
+
+
+### Bug Fixes
+
+* **tasks:** remove error output ([c7bb987](https://github.com/nativecode-dev/cli-tools/commit/c7bb987))
+
+
+
+
+
 # [9.0.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@8.0.0...@nofrills/tasks@9.0.0) (2019-09-01)
 
 
