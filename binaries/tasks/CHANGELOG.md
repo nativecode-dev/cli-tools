@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.0.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@7.1.13...@nofrills/tasks@8.0.0) (2019-09-01)
+
+
+### Bug Fixes
+
+* **tasks:** check for undefined results ([0d0da4f](https://github.com/nativecode-dev/cli-tools/commit/0d0da4f))
+* **tasks:** upgraded execa package forced changes in use ([8f37cc0](https://github.com/nativecode-dev/cli-tools/commit/8f37cc0))
+* upgrading packages ([03d279e](https://github.com/nativecode-dev/cli-tools/commit/03d279e))
+
+
+### Features
+
+* **tasks:** updated results handler ([e959beb](https://github.com/nativecode-dev/cli-tools/commit/e959beb))
+
+
+### BREAKING CHANGES
+
+* **tasks:** changes cli output during some errors
+
+
+
+
+
 ## [7.1.13](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@7.1.12...@nofrills/tasks@7.1.13) (2019-06-27)
 
 **Note:** Version bump only for package @nofrills/tasks
