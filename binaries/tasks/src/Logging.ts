@@ -72,7 +72,6 @@ function write(stream: NodeJS.WriteStream, log: Log): void {
 LoggerOptions.interceptors.register('colorize', async (log: Log) => {
   switch (log.type) {
     case LogMessageType.debug:
-    case LogMessageType.error:
       if (GLOBAL.arguments && GLOBAL.arguments.debug) {
         if (log.parameters.length) {
           const category = log.parameters.slice(1, 1).map(value => `[#${value}]`)
