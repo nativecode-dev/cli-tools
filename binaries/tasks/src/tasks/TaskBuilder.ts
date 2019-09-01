@@ -14,8 +14,6 @@ import { TaskEntryType } from '../models/TaskEntryType'
 import { TaskJobResult } from '../models/TaskJobResult'
 import { TaskDefinition } from '../models/TaskDefinitions'
 import { SerialTaskRunner } from '../runners/SerialTaskRunner'
-import { TaskEvent } from './TaskEvent'
-import { EventEmitter } from 'events'
 
 export interface TaskContext {
   config: TaskConfig
@@ -23,7 +21,7 @@ export interface TaskContext {
   task: Task
 }
 
-export class TaskBuilder extends EventEmitter {
+export class TaskBuilder {
   private readonly log = Logger.extend('builder')
   private readonly resolver: FileResolver
 
@@ -32,7 +30,6 @@ export class TaskBuilder extends EventEmitter {
     private readonly definitions: string[],
     private readonly config: TaskConfig = { tasks: {} },
   ) {
-    super()
     this.config = this.transform(config)
     this.resolver = CreateResolver(cwd)
   }
@@ -49,23 +46,17 @@ export class TaskBuilder extends EventEmitter {
     const filenames = await this.resolve()
 
     const configs = await Promise.all(
-      filenames
-        .map(filename => {
-          this.emit(TaskEvent.ConfigFile, filename)
-          return filename
-        })
-        .map(async filename => {
-          try {
-            const config = await fs.json<TaskConfig>(filename)
-            const transformed = this.transform({ tasks: config.tasks })
-            this.emit(TaskEvent.Transform, transformed)
-            this.log.debug('task-config', transformed.tasks)
-            return transformed
-          } catch (error) {
-            this.log.error(error)
-            return this.config
-          }
-        }),
+      filenames.map(async filename => {
+        try {
+          const config = await fs.json<TaskConfig>(filename)
+          const transformed = this.transform({ tasks: config.tasks })
+          this.log.debug('task-config', transformed.tasks)
+          return transformed
+        } catch (error) {
+          this.log.error(error)
+          return this.config
+        }
+      }),
     )
 
     return configs.reduce((config, current) => deepmerge(config, current), this.config)
@@ -74,40 +65,12 @@ export class TaskBuilder extends EventEmitter {
   async run(names: string[], config?: TaskConfig): Promise<TaskJobResult[]> {
     const serial = new SerialTaskRunner()
 
-    const executeHandler = (entry: TaskEntry) => {
-      if (entry) {
-        this.emit(TaskEvent.Execute, entry)
-      }
-    }
-
-    const resultsHandler = (results: TaskJobResult | TaskJobResult[]) => {
-      const maps: TaskJobResult[] = Is.array(results) ? results as TaskJobResult[] : [results as TaskJobResult]
-
-      maps.map(result => {
-        if (result.code === 0) {
-          return result.messages.map(message => process.stdout.write(message))
-        } else {
-          return result.messages.map(message => process.stderr.write(message))
-        }
-      })
-
-      this.emit(TaskEvent.Results, results)
-    }
-
-    serial.prependListener(TaskEvent.Execute, executeHandler)
-    serial.prependListener(TaskEvent.Results, resultsHandler)
-
-    try {
-      config = config || (await this.build())
-      const runner = new TaskRunner(config, serial)
-      this.log.debug('run', names, config)
-      const results = await runner.run(names, this.cwd)
-      this.log.debug('run-results', ...results)
-      return results
-    } finally {
-      serial.removeListener(TaskEvent.Results, resultsHandler)
-      serial.removeListener(TaskEvent.Execute, executeHandler)
-    }
+    config = config || (await this.build())
+    const runner = new TaskRunner(config, serial)
+    this.log.debug('run', names, config)
+    const results = await runner.run(names, this.cwd)
+    this.log.debug('run-results', ...results)
+    return results
   }
 
   protected expand(config: TaskConfig, value: Task | TaskDefinition[]): Task {
