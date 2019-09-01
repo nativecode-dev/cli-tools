@@ -1,66 +1,39 @@
-import { Argv } from 'yargs'
+import findup from 'find-up'
+import deepmerge from 'deepmerge'
 
+import { Argv } from 'yargs'
 import { fs } from '@nofrills/fs'
-import { EventEmitter } from 'events'
 
 import Logger from './Logging'
+import ClamShell from './ClamShell'
 
-import { ConfigLoader } from './config/ConfigLoader'
-import { PluginLoader } from './plugins/PluginLoader'
+import ClamOptions, { ClamOptions as Options } from './ClamOptions'
+import { ClamConfig } from './ClamConfig'
 
-import cli from './cli'
-import { Config } from './config/Config'
+import LoggingMiddleware from './middleware/LoggingMiddleware'
 
-const regex = new RegExp(/\$\{?([A-Za-z,0-9,_]+)\}?/g)
+const DefaultConfig: ClamConfig = {
+  plugins: [],
+}
 
-export class Clam extends EventEmitter {
-  private readonly log = Logger
+async function configuration() {
+  const log = Logger.extend('configuration')
+  const filename = await findup(['.clamrc', '.clamrc.json'])
 
-  private readonly regex = new RegExp(/\$\{?[A-Za-z,0-9,_]+\}?\/?/g)
-
-  async initialize(yargs: Argv<{}>): Promise<Argv<{}>> {
-    const configs = await this.configs()
-    const loaders = await this.plugins(configs)
-    const manifests = await Promise.all(loaders.map(loader => loader.manifests()))
-    const plugins = manifests.reduce((result, current) => result.concat(current), [])
-    return plugins.reduce(async (result, plugin) => plugin.create(await result), Promise.resolve(yargs))
-  }
-
-  protected async configs(): Promise<Config[]> {
-    const loader = new ConfigLoader([__dirname, process.cwd()])
-    const configs = await loader.configurations()
-    return configs
-  }
-
-  protected environment(value: string): string {
-    const replacement = value.replace(regex, (_, part) => {
-      return process.env[part] || ''
-    })
-    return replacement
-  }
-
-  protected async plugins(configs: Config[]): Promise<PluginLoader[]> {
-    const directories = [
-      __dirname,
-      ...configs
-        .map(config => config.locations.plugins)
-        .reduce((result, current) => result.concat(current), [])
-        .map(directory => this.environment(directory))
-        .map(directory => fs.resolve(directory)),
-    ]
-
-    const dirmap = await Promise.all(
-      directories.map(async directory => ({ directory, exists: await fs.exists(directory) })),
-    )
-
-    return dirmap.filter(dir => dir.exists).map(dir => new PluginLoader(dir.directory))
+  if (filename) {
+    log.trace(':configuration', filename)
+    const json = await fs.json<ClamConfig>(filename)
+    const merged = deepmerge.all<ClamConfig>([DefaultConfig, json])
+    return ClamShell().config(merged)
+  } else {
+    log.trace(':configuration', 'none')
+    return ClamShell().config(DefaultConfig)
   }
 }
 
 async function main() {
-  const clam = new Clam()
-  const host = await clam.initialize(cli())
-  return host.parse()
+  const yargs = await configuration()
+  ClamOptions(LoggingMiddleware(yargs as Argv<Options>)).parse()
 }
 
-main().catch(console.error)
+main().catch(Logger.error)

@@ -17,7 +17,16 @@
   "dependencies": {
     "@nofrills/fs": "^4.0.1",
     "@nofrills/lincoln": "^4.0.1",
+    "@nofrills/lincoln-console": "^4.0.7",
+    "chalk": "^2.4.2",
+    "deepmerge": "^3.3.0",
+    "find-up": "^4.1.0",
     "yargs": "^13.2.4"
+  },
+  "devDependencies": {
+    "@types/deepmerge": "^2.2.0",
+    "@types/find-up": "^2.1.1",
+    "@types/yargs": "^13.0.0"
   },
   "directories": {
     "lib": "bin",
@@ -40,8 +49,5 @@
     "build": "ts-node ../tasks/src/cli-tasks build",
     "exec": "ts-node src/clam",
     "upgrade": "npm-check -y"
-  },
-  "devDependencies": {
-    "@types/yargs": "^13.0.0"
   }
 }

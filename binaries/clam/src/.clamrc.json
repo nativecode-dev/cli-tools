@@ -1,8 +1,0 @@
-{
-  "locations": {
-    "plugins": [
-      "${PWD}",
-      "${HOME}/.clam"
-    ]
-  }
-}
