@@ -1,6 +1,5 @@
 import execa from 'execa'
 
-import { EventEmitter } from 'events'
 import { serial } from '@nofrills/patterns'
 
 import Logger from '../Logging'
@@ -21,7 +20,7 @@ export interface TaskContext {
   job: TaskJob
 }
 
-export class SerialTaskRunner extends EventEmitter implements TaskRunnerAdapter {
+export class SerialTaskRunner implements TaskRunnerAdapter {
   private readonly log = Logger.extend('serial')
 
   async execute(job: TaskJob): Promise<TaskJobResult[]> {
@@ -84,11 +83,9 @@ export class SerialTaskRunner extends EventEmitter implements TaskRunnerAdapter 
       env: context.env,
       gid: context.entry.gid,
       shell: context.job.task.shell || true,
-      stdio: ['inherit', 'pipe', 'pipe'],
+      stdio: ['inherit', process.stdout, process.stderr],
       uid: context.entry.uid,
     }
-
-    this.emit(TaskEvent.Execute, entry)
 
     const childprocess = execa(entry.command, substitutions, options)
     const stderr = childprocess.stderr ? childprocess.stderr.pipe(process.stderr) : process.stderr
@@ -105,8 +102,6 @@ export class SerialTaskRunner extends EventEmitter implements TaskRunnerAdapter 
 
     result.errors.forEach(error => stderr.write(error))
     result.messages.forEach(message => stdout.write(message))
-
-    this.emit(TaskEvent.Results, result)
 
     this.log.debug('command', entry.command, result)
 

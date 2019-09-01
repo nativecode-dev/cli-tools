@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [9.0.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@8.0.0...@nofrills/tasks@9.0.0) (2019-09-01)
+
+
+### Bug Fixes
+
+* **tasks:** remove event emitters ([ea6667d](https://github.com/nativecode-dev/cli-tools/commit/ea6667d))
+
+
+### BREAKING CHANGES
+
+* **tasks:** removed EventEmitter implementations
+
+
+
+
+
 # [8.0.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@7.1.13...@nofrills/tasks@8.0.0) (2019-09-01)
 
 
