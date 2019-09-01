@@ -37,7 +37,6 @@ async function execute(builder: TaskBuilder, config: TaskConfig, ...tasks: strin
   const code: number = Math.max(
     ...results
       .map(result => ({ code: result.code, errors: result.errors, messages: result.messages, job: result.entry }))
-      .map(result => Returns(result).after(() => (result.errors.length > 0 ? console.error(...result.errors) : void 0)))
       .map(result => result.code),
   )
 

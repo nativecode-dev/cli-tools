@@ -73,8 +73,13 @@ export class TaskBuilder extends EventEmitter {
 
   async run(names: string[], config?: TaskConfig): Promise<TaskJobResult[]> {
     const serial = new SerialTaskRunner()
+
     const executeHandler = (entry: TaskEntry) => this.emit(TaskEvent.Execute, entry)
-    const resultsHandler = (results: TaskJobResult[]) => this.emit(TaskEvent.Results, results)
+    const resultsHandler = (results: TaskJobResult[]) => {
+      results.forEach(result => result.messages.forEach(message => process.stdout.write(message)))
+      this.emit(TaskEvent.Results, results)
+    }
+
     serial.prependListener(TaskEvent.Execute, executeHandler)
     serial.prependListener(TaskEvent.Results, resultsHandler)
 
