@@ -1,7 +1,0 @@
-#!/bin/bash
-
-source .ci-env
-
-npm install --no-progress
-npm run bootstrap
-ts-node binaries/tasks/src/cli-tasks "$@"

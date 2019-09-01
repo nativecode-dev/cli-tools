@@ -15,19 +15,19 @@
     "url": "https://github.com/nativecode-dev/cli-tools/issues"
   },
   "dependencies": {
-    "@nofrills/console": "^3.6.0",
-    "@nofrills/fs": "^3.5.1",
-    "@nofrills/lincoln": "^4.0.1",
-    "@nofrills/lincoln-debug": "^3.6.6",
+    "@nofrills/console": "^5.0.1",
+    "@nofrills/fs": "^6.0.1",
+    "@nofrills/lincoln": "^5.0.1",
+    "@nofrills/lincoln-debug": "^5.0.1",
     "@nofrills/tasks": "^7.1.13",
-    "yargs": "^13.2.4",
-    "yargs-interactive": "^2.1.0"
+    "yargs": "^14.0.0",
+    "yargs-interactive": "^3.0.0"
   },
   "devDependencies": {
-    "@types/node": "^8.10.49",
+    "@types/node": "^12.7.3",
     "@types/pegjs": "^0.10.1",
-    "@types/yargs": "^13.0.0",
-    "@types/yargs-interactive": "^2.0.0",
+    "@types/yargs": "^13.0.2",
+    "@types/yargs-interactive": "^2.1.0",
     "ts-node": "^8.3.0"
   },
   "directories": {

@@ -46,11 +46,10 @@
       "yes": true
     }
   },
-  "loglevel": "silent",
+  "loglevel": "error",
   "npmClient": "npm",
   "npmClientArgs": [
-    "--no-progress",
-    "--silent"
+    "--no-progress"
   ],
   "packages": [
     "binaries/*"
