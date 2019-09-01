@@ -43,11 +43,6 @@ export class TaskRunner {
       return this.config.tasks[name] as Task
     }
 
-    return names.map(name => ({
-      cwd,
-      env,
-      name,
-      task: task(name),
-    }))
+    return names.map(name => ({ cwd, env, name, task: task(name) }))
   }
 }

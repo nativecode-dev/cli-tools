@@ -89,14 +89,11 @@ export class SerialTaskRunner extends EventEmitter implements TaskRunnerAdapter 
     }
 
     this.emit(TaskEvent.Execute, entry)
-    const cmdproc = execa(entry.command, substitutions, options)
 
-    if (cmdproc.stderr && cmdproc.stdout) {
-      cmdproc.stderr.pipe(process.stderr)
-      cmdproc.stdout.pipe(process.stdout)
-    }
-
-    const response = await cmdproc
+    const childprocess = execa(entry.command, substitutions, options)
+    const stderr = childprocess.stderr ? childprocess.stderr.pipe(process.stderr) : process.stderr
+    const stdout = childprocess.stdout ? childprocess.stdout.pipe(process.stdout) : process.stdout
+    const response = await childprocess
 
     const result: TaskJobResult = {
       code: response.exitCode,
@@ -105,6 +102,9 @@ export class SerialTaskRunner extends EventEmitter implements TaskRunnerAdapter 
       messages: this.convertString(response.stdout),
       signal: response.signal || null,
     }
+
+    result.errors.forEach(error => stderr.write(error))
+    result.messages.forEach(message => stdout.write(message))
 
     this.emit(TaskEvent.Results, result)
 

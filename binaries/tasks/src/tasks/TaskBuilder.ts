@@ -74,19 +74,24 @@ export class TaskBuilder extends EventEmitter {
   async run(names: string[], config?: TaskConfig): Promise<TaskJobResult[]> {
     const serial = new SerialTaskRunner()
 
-    const executeHandler = (entry: TaskEntry) => this.emit(TaskEvent.Execute, entry)
-    const resultsHandler = (results: TaskJobResult[]) => {
-      if (results) {
-        results.forEach(result => {
-          if (result.code === 0) {
-            result.messages.forEach(message => process.stdout.write(message))
-          } else {
-            result.messages.forEach(message => process.stderr.write(message))
-          }
-        })
-
-        this.emit(TaskEvent.Results, results)
+    const executeHandler = (entry: TaskEntry) => {
+      if (entry) {
+        this.emit(TaskEvent.Execute, entry)
       }
+    }
+
+    const resultsHandler = (results: TaskJobResult | TaskJobResult[]) => {
+      const maps: TaskJobResult[] = Is.array(results) ? results as TaskJobResult[] : [results as TaskJobResult]
+
+      maps.map(result => {
+        if (result.code === 0) {
+          return result.messages.map(message => process.stdout.write(message))
+        } else {
+          return result.messages.map(message => process.stderr.write(message))
+        }
+      })
+
+      this.emit(TaskEvent.Results, results)
     }
 
     serial.prependListener(TaskEvent.Execute, executeHandler)
@@ -100,7 +105,7 @@ export class TaskBuilder extends EventEmitter {
       this.log.debug('run-results', ...results)
       return results
     } finally {
-      serial.removeListener(TaskEvent.Execute, resultsHandler)
+      serial.removeListener(TaskEvent.Results, resultsHandler)
       serial.removeListener(TaskEvent.Execute, executeHandler)
     }
   }
