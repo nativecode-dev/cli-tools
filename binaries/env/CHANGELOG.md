@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.32](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/cli-env@0.6.31...@nofrills/cli-env@0.6.32) (2019-09-01)
+
+**Note:** Version bump only for package @nofrills/cli-env
+
+
+
+
+
 ## [0.6.31](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/cli-env@0.6.30...@nofrills/cli-env@0.6.31) (2019-09-01)
 
 
