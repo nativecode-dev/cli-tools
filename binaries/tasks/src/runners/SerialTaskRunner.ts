@@ -1,6 +1,5 @@
 import execa from 'execa'
 
-import { EventEmitter } from 'events'
 import { serial } from '@nofrills/patterns'
 
 import Logger from '../Logging'
@@ -21,7 +20,7 @@ export interface TaskContext {
   job: TaskJob
 }
 
-export class SerialTaskRunner extends EventEmitter implements TaskRunnerAdapter {
+export class SerialTaskRunner implements TaskRunnerAdapter {
   private readonly log = Logger.extend('serial')
 
   async execute(job: TaskJob): Promise<TaskJobResult[]> {
@@ -84,29 +83,25 @@ export class SerialTaskRunner extends EventEmitter implements TaskRunnerAdapter 
       env: context.env,
       gid: context.entry.gid,
       shell: context.job.task.shell || true,
-      stdio: ['inherit', 'pipe', 'pipe'],
+      stdio: ['inherit', process.stdout, process.stderr],
       uid: context.entry.uid,
     }
 
-    this.emit(TaskEvent.Execute, entry)
-    const cmdproc = execa(entry.command, substitutions, options)
-
-    if (cmdproc.stderr && cmdproc.stdout) {
-      cmdproc.stderr.pipe(process.stderr)
-      cmdproc.stdout.pipe(process.stdout)
-    }
-
-    const { code, signal, stderr, stdout } = await cmdproc
+    const childprocess = execa(entry.command, substitutions, options)
+    const stderr = childprocess.stderr ? childprocess.stderr.pipe(process.stderr) : process.stderr
+    const stdout = childprocess.stdout ? childprocess.stdout.pipe(process.stdout) : process.stdout
+    const response = await childprocess
 
     const result: TaskJobResult = {
-      code,
+      code: response.exitCode,
       entry,
-      errors: this.convertString(stderr),
-      messages: this.convertString(stdout),
-      signal,
+      errors: this.convertString(response.stderr),
+      messages: this.convertString(response.stdout),
+      signal: response.signal || null,
     }
 
-    this.emit(TaskEvent.Results, result)
+    result.errors.forEach(error => stderr.write(error))
+    result.messages.forEach(message => stdout.write(message))
 
     this.log.debug('command', entry.command, result)
 

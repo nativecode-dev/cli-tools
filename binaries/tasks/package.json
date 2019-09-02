@@ -7,7 +7,7 @@
   "name": "@nofrills/tasks",
   "private": false,
   "types": "./bin/index.d.ts",
-  "version": "7.1.12",
+  "version": "9.0.1",
   "bin": {
     "cli-shebang": "./bin/cli-shebang.js",
     "cli-tasks": "./bin/cli-tasks.js"
@@ -16,24 +16,24 @@
     "url": "https://github.com/nativecode-dev/cli-tools/issues"
   },
   "dependencies": {
-    "@nofrills/console": "^4.0.1",
-    "@nofrills/fs": "^4.0.1",
-    "@nofrills/lincoln": "^4.0.1",
-    "@nofrills/lincoln-debug": "^4.0.1",
-    "@nofrills/patterns": "^2.0.1",
-    "@nofrills/scrubs": "^4.0.1",
-    "@nofrills/types": "^4.0.1",
-    "deepmerge": "^3.2.1",
-    "execa": "^1.0.0",
+    "@nofrills/console": "^5.0.1",
+    "@nofrills/fs": "^6.0.1",
+    "@nofrills/lincoln": "^5.0.1",
+    "@nofrills/lincoln-debug": "^5.0.1",
+    "@nofrills/patterns": "^2.1.1",
+    "@nofrills/scrubs": "^6.0.1",
+    "@nofrills/types": "^5.0.1",
+    "deepmerge": "^4.0.0",
+    "execa": "^2.0.4",
     "get-stream": "^5.1.0",
-    "yargs": "^13.2.4",
-    "yargs-interactive": "^2.1.0"
+    "yargs": "^14.0.0",
+    "yargs-interactive": "^3.0.0"
   },
   "devDependencies": {
-    "@types/execa": "^0.9.0",
-    "@types/node": "^8.10.49",
-    "@types/yargs": "^13.0.0",
-    "@types/yargs-interactive": "^2.0.0",
+    "@types/execa": "^2.0.0",
+    "@types/node": "^12.7.3",
+    "@types/yargs": "^13.0.2",
+    "@types/yargs-interactive": "^2.1.0",
     "ts-node": "^8.3.0"
   },
   "directories": {

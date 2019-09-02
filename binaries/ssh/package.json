@@ -7,7 +7,7 @@
   "name": "@nofrills/ssh",
   "private": false,
   "types": "./bin/index.d.ts",
-  "version": "1.0.13",
+  "version": "1.0.15",
   "bin": {
     "cli-ssh": "./bin/cli-ssh.js"
   },
@@ -15,18 +15,18 @@
     "url": "https://github.com/nativecode-dev/cli-tools/issues"
   },
   "dependencies": {
-    "@nofrills/console": "^4.0.1",
-    "@nofrills/fs": "^4.0.1",
-    "@nofrills/lincoln": "^4.0.1",
-    "@nofrills/lincoln-debug": "^4.0.1",
+    "@nofrills/console": "^5.0.1",
+    "@nofrills/fs": "^6.0.1",
+    "@nofrills/lincoln": "^5.0.1",
+    "@nofrills/lincoln-debug": "^5.0.1",
     "pegjs": "^0.10.0",
-    "ts-pegjs": "^0.2.2",
-    "yargs": "^13.2.4"
+    "ts-pegjs": "^0.2.6",
+    "yargs": "^14.0.0"
   },
   "devDependencies": {
-    "@types/node": "^8.10.49",
+    "@types/node": "^12.7.3",
     "@types/pegjs": "^0.10.1",
-    "@types/yargs": "^13.0.0",
+    "@types/yargs": "^13.0.2",
     "ts-node": "^8.3.0"
   },
   "directories": {

@@ -2,7 +2,6 @@ import $yargs, { Arguments } from 'yargs'
 import $ui, { OptionData } from 'yargs-interactive'
 
 import { fs } from '@nofrills/fs'
-import { Returns } from '@nofrills/patterns'
 
 import GLOBAL from './command-line/Globals'
 import Logger from './Logging'
@@ -37,7 +36,6 @@ async function execute(builder: TaskBuilder, config: TaskConfig, ...tasks: strin
   const code: number = Math.max(
     ...results
       .map(result => ({ code: result.code, errors: result.errors, messages: result.messages, job: result.entry }))
-      .map(result => Returns(result).after(() => (result.errors.length > 0 ? console.error(...result.errors) : void 0)))
       .map(result => result.code),
   )
 
@@ -48,37 +46,6 @@ async function load(args: Arguments<Options>): Promise<[TaskBuilder, TaskConfig]
   const exists = await fs.exists(args.cwd, false)
   const dirname = exists ? args.cwd : process.cwd()
   const builder = TaskBuilder.dir(dirname)
-
-  builder.on(TaskEvent.ConfigFile, (filename: string): void => {
-    if (args.debug) {
-      log.trace('[:merge]', filename)
-    }
-  })
-
-  builder.on(TaskEvent.Execute, (entry: TaskEntry): void => {
-    if (args.info) {
-      const normalized = entry.arguments || []
-      if (entry.origin) log.trace(`[${entry.origin}:${entry.command}]`, normalized.join(' '))
-      else log.trace(`[${entry.command}]`, normalized.join(' '))
-    }
-  })
-
-  builder.on(TaskEvent.Results, (result: TaskJobResult): void => {
-    if (args.json) {
-      result.messages = result.messages.reduce<string[]>((output, message) => output.concat(message.split('\n')), [])
-
-      if (result.code !== 0) {
-        ERRORS.push(result)
-
-        if (args.bail) {
-          process.exit(result.code)
-        }
-      }
-
-      log.trace(GLOBAL.format(result, args.formatted))
-    }
-  })
-
   return [builder, await builder.build()]
 }
 

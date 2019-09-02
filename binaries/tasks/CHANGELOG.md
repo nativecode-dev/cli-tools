@@ -3,6 +3,64 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.1](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@9.0.0...@nofrills/tasks@9.0.1) (2019-09-01)
+
+
+### Bug Fixes
+
+* **tasks:** remove error output ([c7bb987](https://github.com/nativecode-dev/cli-tools/commit/c7bb987))
+
+
+
+
+
+# [9.0.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@8.0.0...@nofrills/tasks@9.0.0) (2019-09-01)
+
+
+### Bug Fixes
+
+* **tasks:** remove event emitters ([ea6667d](https://github.com/nativecode-dev/cli-tools/commit/ea6667d))
+
+
+### BREAKING CHANGES
+
+* **tasks:** removed EventEmitter implementations
+
+
+
+
+
+# [8.0.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@7.1.13...@nofrills/tasks@8.0.0) (2019-09-01)
+
+
+### Bug Fixes
+
+* **tasks:** check for undefined results ([0d0da4f](https://github.com/nativecode-dev/cli-tools/commit/0d0da4f))
+* **tasks:** upgraded execa package forced changes in use ([8f37cc0](https://github.com/nativecode-dev/cli-tools/commit/8f37cc0))
+* upgrading packages ([03d279e](https://github.com/nativecode-dev/cli-tools/commit/03d279e))
+
+
+### Features
+
+* **tasks:** updated results handler ([e959beb](https://github.com/nativecode-dev/cli-tools/commit/e959beb))
+
+
+### BREAKING CHANGES
+
+* **tasks:** changes cli output during some errors
+
+
+
+
+
+## [7.1.13](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@7.1.12...@nofrills/tasks@7.1.13) (2019-06-27)
+
+**Note:** Version bump only for package @nofrills/tasks
+
+
+
+
+
 ## [7.1.12](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@7.1.7...@nofrills/tasks@7.1.12) (2019-06-27)
 
 **Note:** Version bump only for package @nofrills/tasks
