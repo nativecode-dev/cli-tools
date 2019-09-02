@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.2](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@9.0.1...@nofrills/tasks@9.0.2) (2019-09-02)
+
+**Note:** Version bump only for package @nofrills/tasks
+
+
+
+
+
 ## [9.0.1](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@9.0.0...@nofrills/tasks@9.0.1) (2019-09-01)
 
 
