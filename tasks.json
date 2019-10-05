@@ -5,6 +5,7 @@
     ],
     "build": [
       "[clean]",
+      "[bootstrap]",
       "[build:compile]"
     ],
     "build:ci": [

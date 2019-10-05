@@ -16,32 +16,32 @@
     }
   },
   "devDependencies": {
-    "@types/chai": "^4.2.0",
+    "@types/chai": "^4.2.3",
     "@types/chai-as-promised": "^7.1.2",
     "@types/mocha": "^5.2.7",
-    "@types/node": "^12.7.3",
-    "@types/yargs": "^13.0.2",
+    "@types/node": "^12.7.11",
+    "@types/yargs": "^13.0.3",
     "@types/yargs-interactive": "^2.1.0",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "commitizen": "^4.0.3",
     "coveralls": "^3.0.6",
-    "cross-env": "^5.2.1",
+    "cross-env": "^6.0.3",
     "cz-conventional-changelog": "^3.0.2",
     "git-ssh-key": "^1.1.0",
     "lerna": "^3.16.4",
     "lerna-update-wizard": "^0.16.0",
-    "mocha": "^6.2.0",
+    "mocha": "^6.2.1",
     "npm-check": "^5.9.0",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rimraf": "^3.0.0",
     "source-map-support": "^0.5.13",
-    "ts-node": "^8.2.0",
-    "tslint": "^5.19.0",
+    "ts-node": "^8.4.1",
+    "tslint": "^5.20.0",
     "tslint-config-standard": "^8.0.1",
     "tslint-no-unused-expression-chai": "^0.1.4",
-    "typescript": "^3.6.2"
+    "typescript": "^3.6.3"
   },
   "keywords": [],
   "nyc": {
@@ -88,8 +88,8 @@
     "postupgrade": "lerna run upgrade"
   },
   "dependencies": {
-    "@nofrills/fs": "^6.0.1",
-    "@nofrills/lincoln-debug": "^5.0.1",
+    "@nofrills/fs": "^7.0.0",
+    "@nofrills/lincoln-debug": "^6.0.0",
     "yargs": "^14.0.0"
   }
 }
