@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.0.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@9.0.2...@nofrills/tasks@10.0.0) (2019-10-05)
+
+
+### Features
+
+* **cli-tools:** upgrade dependencies ([baa9663](https://github.com/nativecode-dev/cli-tools/commit/baa9663))
+
+
+### BREAKING CHANGES
+
+* **cli-tools:** remove cli-tasks dependencies from cli-env
+
+
+
+
+
 ## [9.0.2](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@9.0.1...@nofrills/tasks@9.0.2) (2019-09-02)
 
 **Note:** Version bump only for package @nofrills/tasks

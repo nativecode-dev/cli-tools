@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/ssh@1.0.16...@nofrills/ssh@2.0.0) (2019-10-05)
+
+
+### Features
+
+* **cli-tools:** upgrade dependencies ([baa9663](https://github.com/nativecode-dev/cli-tools/commit/baa9663))
+
+
+### BREAKING CHANGES
+
+* **cli-tools:** remove cli-tasks dependencies from cli-env
+
+
+
+
+
 ## [1.0.16](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/ssh@1.0.15...@nofrills/ssh@1.0.16) (2019-09-02)
 
 **Note:** Version bump only for package @nofrills/ssh
