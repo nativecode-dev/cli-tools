@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/cli-env@1.0.0...@nofrills/cli-env@1.0.1) (2020-01-10)
+
+
+### Bug Fixes
+
+* **all:** upgrade all packages ([ddfe806](https://github.com/nativecode-dev/cli-tools/commit/ddfe806fa5d1b0e16fdb55d34d6a79a6af2a284a))
+
+
+
+
+
 # [1.0.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/cli-env@0.6.34...@nofrills/cli-env@1.0.0) (2019-10-05)
 
 
