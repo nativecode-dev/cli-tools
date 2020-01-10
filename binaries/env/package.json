@@ -7,7 +7,7 @@
   "name": "@nofrills/cli-env",
   "private": false,
   "types": "./bin/index.d.ts",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "bin": {
     "cli-env": "./bin/cli-env.js"
   },
