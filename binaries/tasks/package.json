@@ -16,25 +16,26 @@
     "url": "https://github.com/nativecode-dev/cli-tools/issues"
   },
   "dependencies": {
-    "@nofrills/console": "^5.0.2",
-    "@nofrills/fs": "^7.0.0",
-    "@nofrills/lincoln": "^6.0.0",
-    "@nofrills/lincoln-debug": "^6.0.0",
-    "@nofrills/patterns": "^2.1.1",
-    "@nofrills/scrubs": "^6.0.2",
-    "@nofrills/types": "^6.0.0",
-    "deepmerge": "^4.0.0",
-    "execa": "^2.0.5",
+    "@nofrills/console": "^11.0.0",
+    "@nofrills/fs": "^11.0.0",
+    "@nofrills/lincoln": "^11.0.0",
+    "@nofrills/lincoln-debug": "^11.0.0",
+    "@nofrills/patterns": "^10.0.1",
+    "@nofrills/scrubs": "^11.0.0",
+    "@nofrills/types": "^10.0.2",
+    "chalk": "^3.0.0",
+    "deepmerge": "^4.2.2",
+    "execa": "^4.0.0",
     "get-stream": "^5.1.0",
-    "yargs": "^14.0.0",
+    "yargs": "^15.1.0",
     "yargs-interactive": "^3.0.0"
   },
   "devDependencies": {
     "@types/execa": "^2.0.0",
-    "@types/node": "^12.7.11",
-    "@types/yargs": "^13.0.3",
+    "@types/node": "^13.1.6",
+    "@types/yargs": "^15.0.0",
     "@types/yargs-interactive": "^2.1.0",
-    "ts-node": "^8.4.1"
+    "ts-node": "^8.6.0"
   },
   "directories": {
     "lib": "bin",
@@ -54,7 +55,6 @@
     "url": "https://github.com/nativecode-dev/cli-tools.git"
   },
   "scripts": {
-    "build": "ts-node src/cli-tasks build",
-    "upgrade": "npm-check -y"
+    "build": "ts-node src/cli-tasks build"
   }
 }
