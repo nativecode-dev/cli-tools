@@ -16,32 +16,31 @@
     }
   },
   "devDependencies": {
-    "@types/chai": "^4.2.0",
+    "@types/chai": "^4.2.7",
     "@types/chai-as-promised": "^7.1.2",
     "@types/mocha": "^5.2.7",
-    "@types/node": "^12.7.3",
-    "@types/yargs": "^13.0.2",
+    "@types/node": "^13.1.6",
+    "@types/yargs": "^15.0.0",
     "@types/yargs-interactive": "^2.1.0",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "commitizen": "^4.0.3",
-    "coveralls": "^3.0.6",
-    "cross-env": "^5.2.1",
+    "coveralls": "^3.0.9",
+    "cross-env": "^6.0.3",
     "cz-conventional-changelog": "^3.0.2",
     "git-ssh-key": "^1.1.0",
-    "lerna": "^3.16.4",
-    "lerna-update-wizard": "^0.16.0",
-    "mocha": "^6.2.0",
-    "npm-check": "^5.9.0",
-    "nyc": "^14.1.1",
-    "prettier": "^1.18.2",
+    "lerna": "^3.20.2",
+    "lerna-update-wizard": "^0.17.7",
+    "mocha": "^7.0.0",
+    "nyc": "^15.0.0",
+    "prettier": "^1.19.1",
     "rimraf": "^3.0.0",
-    "source-map-support": "^0.5.13",
-    "ts-node": "^8.2.0",
-    "tslint": "^5.19.0",
-    "tslint-config-standard": "^8.0.1",
+    "source-map-support": "^0.5.16",
+    "ts-node": "^8.6.0",
+    "tslint": "^5.20.1",
+    "tslint-config-standard": "^9.0.0",
     "tslint-no-unused-expression-chai": "^0.1.4",
-    "typescript": "^3.6.2"
+    "typescript": "^3.7.4"
   },
   "keywords": [],
   "nyc": {
@@ -64,32 +63,87 @@
     "sourceMap": true,
     "temp-dir": ".cache/nyc"
   },
+  "tasks": {
+    "build": [
+      "[clean]",
+      "[build:compile]"
+    ],
+    "build:ci": [
+      "lerna bootstrap",
+      "[build:compile]"
+    ],
+    "build:compile": [
+      "lerna run build"
+    ],
+    "clean": [
+      "[clean:artifacts]"
+    ],
+    "clean:artifacts": [
+      "rimraf binaries/*/bin",
+      "rimraf **/*.tsbuildinfo"
+    ],
+    "configure:ci": [
+      "npm ci",
+      "[build:ci]",
+      "[test:ci]"
+    ],
+    "configure:git": [
+      ".citools/setup-git ${BUILD_REPO_BRANCH} ${BUILD_REPO_GIT} ${BUILD_REPO_EMAIL}"
+    ],
+    "configure:ssh": [
+      ".citools/setup-ssh ${BUILD_REPO_DOMAIN} ${BUILD_REPO_SSHKEY_PATH} ${BUILD_REPO_DOMAIN_SSH}"
+    ],
+    "release": [
+      "[configure:ci]",
+      ".citools/lerna-publish release"
+    ],
+    "release:canary": [
+      "[configure:ci]",
+      ".citools/lerna-publish canary"
+    ],
+    "release:prerelease": [
+      "[configure:ci]",
+      ".citools/lerna-publish prerelease"
+    ],
+    "source:format": [
+      "prettier --loglevel silent --write \"*/*/specs/**/*.ts\"",
+      "prettier --loglevel silent --write \"*/*/src/**/*.ts\""
+    ],
+    "source:lint": [
+      "tslint --project tsconfig.json --config tslint.json"
+    ],
+    "test": [
+      "[build]",
+      "nyc mocha"
+    ],
+    "test:ci": [
+      "cross-env DEBUG= nyc mocha"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nativecode-dev/cli-tools.git"
   },
   "scripts": {
-    "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
-    "prebuild": "npm run bootstrap",
     "build:ci": "lerna run build",
     "commit": "git add -A . && git cz",
     "lerna": "lerna",
     "task": "cli-tasks",
-    "test": "nyc mocha --opts mocha.opts",
+    "test": "nyc mocha",
     "pretest": "lerna run build",
-    "test:ci": "nyc mocha --opts .citools/mocha.opts",
+    "test:ci": "nyc mocha",
     "configure:git": ".citools/setup-git ${BUILD_REPO_BRANCH} ${BUILD_REPO_GIT} ${BUILD_REPO_EMAIL}",
     "configure:ssh": ".citools/setup-ssh ${BUILD_REPO_DOMAIN} ${BUILD_REPO_SSHKEY_PATH} ${BUILD_REPO_DOMAIN_SSH}",
+    "prepare": "lerna bootstrap",
     "release": ".citools/lerna-publish release",
     "release:canary": ".citools/lerna-publish canary",
     "release:pre": ".citools/lerna-publish prerelease",
-    "upgrade": "npm-check -y",
-    "postupgrade": "lerna run upgrade"
+    "upgrade": "lernaupdate"
   },
   "dependencies": {
-    "@nofrills/fs": "^6.0.1",
-    "@nofrills/lincoln-debug": "^5.0.1",
-    "yargs": "^14.0.0"
+    "@nofrills/fs": "^11.0.0",
+    "@nofrills/lincoln-debug": "^11.0.0",
+    "yargs": "^15.1.0"
   }
 }

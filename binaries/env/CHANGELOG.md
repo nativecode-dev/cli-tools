@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.2](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/cli-env@1.0.1...@nofrills/cli-env@1.0.2) (2020-01-10)
+
+
+### Bug Fixes
+
+* **all:** remove lincoln package ([e3ffd2b](https://github.com/nativecode-dev/cli-tools/commit/e3ffd2b7094d503088e7ce440133a1cc27408a55))
+
+
+
+
+
+## [1.0.1](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/cli-env@1.0.0...@nofrills/cli-env@1.0.1) (2020-01-10)
+
+
+### Bug Fixes
+
+* **all:** upgrade all packages ([ddfe806](https://github.com/nativecode-dev/cli-tools/commit/ddfe806fa5d1b0e16fdb55d34d6a79a6af2a284a))
+
+
+
+
+
+# [1.0.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/cli-env@0.6.34...@nofrills/cli-env@1.0.0) (2019-10-05)
+
+
+### Features
+
+* **cli-tools:** upgrade dependencies ([baa9663](https://github.com/nativecode-dev/cli-tools/commit/baa9663))
+
+
+### BREAKING CHANGES
+
+* **cli-tools:** remove cli-tasks dependencies from cli-env
+
+
+
+
+
 ## [0.6.34](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/cli-env@0.6.33...@nofrills/cli-env@0.6.34) (2019-09-02)
 
 **Note:** Version bump only for package @nofrills/cli-env

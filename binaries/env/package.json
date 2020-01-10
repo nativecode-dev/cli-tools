@@ -7,7 +7,7 @@
   "name": "@nofrills/cli-env",
   "private": false,
   "types": "./bin/index.d.ts",
-  "version": "0.6.34",
+  "version": "1.0.2",
   "bin": {
     "cli-env": "./bin/cli-env.js"
   },
@@ -15,20 +15,18 @@
     "url": "https://github.com/nativecode-dev/cli-tools/issues"
   },
   "dependencies": {
-    "@nofrills/console": "^5.0.1",
-    "@nofrills/fs": "^6.0.1",
-    "@nofrills/lincoln": "^5.0.1",
-    "@nofrills/lincoln-debug": "^5.0.1",
-    "@nofrills/tasks": "^9.0.2",
-    "yargs": "^14.0.0",
+    "@nofrills/console": "^11.0.0",
+    "@nofrills/fs": "^11.0.0",
+    "@nofrills/lincoln-debug": "^11.0.0",
+    "yargs": "^15.1.0",
     "yargs-interactive": "^3.0.0"
   },
   "devDependencies": {
-    "@types/node": "^12.7.3",
+    "@types/node": "^13.1.6",
     "@types/pegjs": "^0.10.1",
-    "@types/yargs": "^13.0.2",
+    "@types/yargs": "^15.0.0",
     "@types/yargs-interactive": "^2.1.0",
-    "ts-node": "^8.3.0"
+    "ts-node": "^8.6.0"
   },
   "directories": {
     "lib": "bin",
@@ -48,7 +46,6 @@
     "url": "https://github.com/nativecode-dev/cli-tools.git"
   },
   "scripts": {
-    "build": "ts-node ../tasks/src/cli-tasks build",
-    "upgrade": "npm-check -y"
+    "build": "ts-node ../tasks/src/cli-tasks build"
   }
 }

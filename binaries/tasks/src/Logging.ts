@@ -1,9 +1,7 @@
 import chalk from 'chalk'
 
 import { Is, DictionaryOf } from '@nofrills/types'
-import { ScrubsInterceptor } from '@nofrills/scrubs'
-import { Log, LogMessageType } from '@nofrills/lincoln'
-import { CreateLogger, CreateOptions } from '@nofrills/lincoln-debug'
+import { ScrubsInterceptor, CreateOptions, Log, LogMessageType, CreateLogger } from '@nofrills/scrubs'
 
 import GLOBAL from './command-line/Globals'
 
@@ -69,7 +67,7 @@ function write(stream: NodeJS.WriteStream, log: Log): void {
   }
 }
 
-LoggerOptions.interceptors.register('colorize', async (log: Log) => {
+LoggerOptions.interceptors.register('colorize', (log: Log) => {
   switch (log.type) {
     case LogMessageType.debug:
       if (GLOBAL.arguments && GLOBAL.arguments.debug) {
@@ -92,7 +90,7 @@ LoggerOptions.interceptors.register('colorize', async (log: Log) => {
       break
   }
 
-  return Promise.resolve(log)
+  return log
 })
 
 LoggerOptions.interceptors.register('scrubs', ScrubsInterceptor)
