@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tags@0.2.0...@nofrills/tags@0.3.0) (2020-02-12)
+
+
+### Features
+
+* add text ordering ([e27cbce](https://github.com/nativecode-dev/cli-tools/commit/e27cbceeaea8ae579a551dd8091d2ca77e536e95))
+
+
+
+
+
 # [0.2.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tags@0.1.7...@nofrills/tags@0.2.0) (2020-02-12)
 
 
