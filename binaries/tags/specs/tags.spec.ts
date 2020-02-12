@@ -1,6 +1,7 @@
 import expect from './expect'
 
-import { DockerHubTags, DockerHubTagType } from '../src/DockerHubTags'
+import { DockerHubTags } from '../src/DockerHubTags'
+import { DockerHubTagType } from '../src/DockerHubTagType'
 
 describe('when using tags', () => {
   const sut = new DockerHubTags('linuxserver/radarr', DockerHubTagType.semver)
