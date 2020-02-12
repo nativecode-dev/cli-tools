@@ -1,0 +1,20 @@
+{
+  "extends": "../../tsconfig.settings",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "bin",
+    "lib": [
+      "es2018"
+    ],
+    "types": [
+      "node"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "specs"
+  ],
+  "include": [
+    "src/**/*.ts"
+  ]
+}
