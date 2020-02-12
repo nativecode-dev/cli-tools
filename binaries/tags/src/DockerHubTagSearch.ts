@@ -1,65 +1,39 @@
-import semver from 'semver'
+import { compare } from 'compare-versions'
 
 import { Tag } from './Tag'
+import { TagInfo } from './TagInfo'
 
-const PATTERN = /v((?:[0-9]+\.){2}[0-9]+)(?:-([\w\d]+))?/g
+const PATTERN = /^v?((?:[0-9]+\.){2,3}[0-9]+)(?:-([\w\d]+))?$/g
 
-export class DockerTagSearch {
-  constructor(private readonly tags: Tag[]) {}
+export class DockerHubTagSearch {
+  constructor(private readonly tags: TagInfo[]) {}
 
-  enumerate(): string[] {
-    return this.tags.reduce<string[]>((result, current) => {
-      const cleaned = this.clean(current.name)
-
-      if (cleaned) {
-        return [...result, cleaned]
-      }
-
-      return result
-    }, [])
+  enumerate(): Tag[] {
+    return this.tags
+      .map(tag => tag.name)
+      .filter(tag => PATTERN.test(tag))
+      .reduce<Tag[]>((result, current) => {
+        return [...result, { name: current, version: current }]
+      }, [])
   }
 
   latest(currentVersion: string): string | null {
-    return semver.sort(this.enumerate()).reduce<string | null>((result, version) => {
-      if (semver.gt(version, this.cleanVersion(currentVersion))) {
-        return version
+    return this.enumerate().reduce((result, current) => {
+      if (compare(current.version, currentVersion, '>')) {
+        return current.version
       }
 
       return result
-    }, null)
+    }, currentVersion)
   }
 
   latestVersions(currentVersion: string): string[] {
-    return semver.sort(this.enumerate()).reduce<string[]>((result, version) => {
-      if (semver.gt(version, currentVersion)) {
-        return [...result, version]
+    return this.enumerate().reduce<string[]>((result, current) => {
+      if (compare(current.version, currentVersion, '>')) {
+        return [...result, current.version]
       }
 
       return result
     }, [])
-  }
-
-  private clean(version: string): string | null {
-    const coerced = semver.coerce(version)
-
-    if (PATTERN.test(version) || semver.valid(coerced)) {
-      const cleaned = semver.clean(version)
-
-      if (cleaned !== null) {
-        return cleaned
-      }
-    }
-
-    return null
-  }
-
-  private cleanVersion(version: string): string {
-    const cleaned = this.clean(version)
-
-    if (cleaned === null) {
-      return version
-    }
-
-    return cleaned
   }
 }

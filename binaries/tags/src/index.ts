@@ -2,11 +2,11 @@ import yargs from 'yargs'
 
 export * from './DockerHubTags'
 
-import { DockerHubTagsCommand, DockerHubOptions } from './Commands/DockerHubTagsCommand'
+import { DockerHubOptions, TagsCommand } from './Commands/DockerHubTagsCommand'
 
 yargs
   .scriptName('dockerhub')
-  .command<DockerHubOptions>(DockerHubTagsCommand)
+  .command<DockerHubOptions>(TagsCommand)
   .showHelpOnFail(true)
   .version()
   .parse()
