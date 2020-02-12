@@ -11,7 +11,7 @@
   "bin": {
     "dockerhub": "bin/index.js",
     "dockerhub-tags": "bin/index.js",
-    "@nofrills/tags": "bin/index.js"
+    "tags": "bin/index.js"
   },
   "bugs": {
     "url": "https://github.com/nativecode-dev/cli-tools/issues"
