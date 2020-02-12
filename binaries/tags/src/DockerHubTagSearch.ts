@@ -3,7 +3,7 @@ import { compare } from 'compare-versions'
 import { Tag } from './Tag'
 import { TagInfo } from './TagInfo'
 
-const PATTERN = /^v?((?:[0-9]+\.){2,3}[0-9]+)(?:-([\w\d]+))?$/g
+const PATTERN = /^v?((?:[0-9]+\.){2,3}[0-9]+)(?:-([\w\d]+))?$/m
 
 export class DockerHubTagSearch {
   constructor(private readonly tags: TagInfo[]) {}
