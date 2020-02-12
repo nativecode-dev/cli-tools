@@ -7,7 +7,7 @@
   "name": "@nofrills/tags",
   "private": false,
   "types": "bin/index.d.ts",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "bin": {
     "dockerhub-tags": "bin/index.js"
   },
