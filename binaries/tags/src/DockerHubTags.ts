@@ -3,11 +3,7 @@ import fetch from 'node-fetch'
 import { DockerHubTagText } from './DockerHubTagText'
 import { DockerHubTagVersion } from './DockerHubTagVersion'
 import { DockerHubTagSource } from './DockerHubTagSource'
-
-export enum DockerHubTagType {
-  semver = 'semver',
-  text = 'text',
-}
+import { DockerHubTagType } from './DockerHubTagType'
 
 export class DockerHubTags {
   constructor(protected readonly repository: string, protected readonly type: DockerHubTagType) {}

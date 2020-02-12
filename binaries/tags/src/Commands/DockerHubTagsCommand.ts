@@ -1,7 +1,8 @@
 import { Arguments, CommandModule } from 'yargs'
 
 import { Builder } from './Builder'
-import { DockerHubTags, DockerHubTagType } from '../DockerHubTags'
+import { DockerHubTags } from '../DockerHubTags'
+import { DockerHubTagType } from '../DockerHubTagType'
 
 export interface DockerHubOptions extends Arguments {
   limit?: string
