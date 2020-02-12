@@ -16,4 +16,8 @@ export class DockerHubTagText implements DockerHubTagSource {
   latest(currentVersion: string, limitVersion?: string): string {
     return currentVersion
   }
+
+  latestVersions(currentVersion: string, limitVersion?: string): string[] {
+    return [currentVersion]
+  }
 }
