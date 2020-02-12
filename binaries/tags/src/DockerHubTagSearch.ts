@@ -17,9 +17,13 @@ export class DockerHubTagSearch {
       }, [])
   }
 
-  latest(currentVersion: string): string | null {
+  latest(currentVersion: string, limitVersion?: string): string | null {
     return this.enumerate().reduce((result, current) => {
       if (compare(current.version, currentVersion, '>')) {
+        if (limitVersion && compare(current.version, limitVersion, '>')) {
+          return result
+        }
+
         return current.version
       }
 
@@ -27,9 +31,13 @@ export class DockerHubTagSearch {
     }, currentVersion)
   }
 
-  latestVersions(currentVersion: string): string[] {
+  latestVersions(currentVersion: string, limitVersion?: string): string[] {
     return this.enumerate().reduce<string[]>((result, current) => {
       if (compare(current.version, currentVersion, '>')) {
+        if (limitVersion && compare(current.version, limitVersion, '>')) {
+          return result
+        }
+
         return [...result, current.version]
       }
 
