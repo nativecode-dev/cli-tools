@@ -1,0 +1,47 @@
+{
+  "author": "opensource@nativecode.com",
+  "description": "Simple Tags Comparator",
+  "homepage": "https://github.com/nativecode-dev/cli-tools",
+  "license": "MIT",
+  "main": "bin/index.js",
+  "name": "@nofrills/tags",
+  "private": false,
+  "types": "bin/index.d.ts",
+  "version": "0.1.0",
+  "bin": {
+    "dockerhub-tags": "bin/index.js"
+  },
+  "bugs": {
+    "url": "https://github.com/nativecode-dev/cli-tools/issues"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.0",
+    "semver": "^7.1.3",
+    "yargs": "^15.1.0"
+  },
+  "directories": {
+    "lib": "bin",
+    "test": "specs"
+  },
+  "engine": {
+    "node": ">=8.10.49"
+  },
+  "files": [
+    "bin"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nativecode-dev/cli-tools.git"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/node-fetch": "^2.5.4",
+    "@types/semver": "^7.1.0",
+    "@types/yargs": "^15.0.3"
+  }
+}
