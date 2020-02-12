@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.7](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tags@0.1.6...@nofrills/tags@0.1.7) (2020-02-12)
+
+
+### Bug Fixes
+
+* regex versoin checker ([a8f00ac](https://github.com/nativecode-dev/cli-tools/commit/a8f00ac7804e3a913a73a795d65aec856d5e13ee))
+
+
+
+
+
 ## [0.1.6](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tags@0.1.5...@nofrills/tags@0.1.6) (2020-02-12)
 
 **Note:** Version bump only for package @nofrills/tags
