@@ -1,13 +1,13 @@
 import expect from './expect'
 
-import { DockerTags } from '../src/DockerTags'
+import { DockerTags } from '../src/DockerHubTags'
 
 describe('when using tags', () => {
   const sut = new DockerTags('linuxserver/hydra2')
 
   it('should get tags', async () => {
     const tags = await sut.tags()
-    expect(tags.findGreaterThan('v2.13.5-ls57')).is.not.empty
+    expect(tags.latestVersions('v2.13.5-ls57')).is.not.empty
   })
 
   it('should get latest', async () => {
