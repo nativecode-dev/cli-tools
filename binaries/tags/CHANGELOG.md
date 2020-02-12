@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tags@0.1.7...@nofrills/tags@0.2.0) (2020-02-12)
+
+
+### Features
+
+* add version limiter ([d421668](https://github.com/nativecode-dev/cli-tools/commit/d421668a1efbfd0effd30c458df11d9dfafa6359))
+
+
+
+
+
 ## [0.1.7](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tags@0.1.6...@nofrills/tags@0.1.7) (2020-02-12)
 
 
