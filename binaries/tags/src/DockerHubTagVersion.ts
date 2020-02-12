@@ -2,10 +2,11 @@ import { compare } from 'compare-versions'
 
 import { Tag } from './Tag'
 import { TagInfo } from './TagInfo'
+import { DockerHubTagSource } from './DockerHubTagSource'
 
 const PATTERN = /^v?((?:[0-9]+\.){2,3}[0-9]+)(?:-([\w\d]+))?$/m
 
-export class DockerHubTagSearch {
+export class DockerHubTagVersion implements DockerHubTagSource {
   constructor(private readonly tags: TagInfo[]) {}
 
   enumerate(): Tag[] {
@@ -13,18 +14,18 @@ export class DockerHubTagSearch {
       .map(tag => tag.name)
       .filter(tag => PATTERN.test(tag))
       .reduce<Tag[]>((result, current) => {
-        return [...result, { name: current, version: current }]
+        return [...result, { name: current, value: current }]
       }, [])
   }
 
-  latest(currentVersion: string, limitVersion?: string): string | null {
+  latest(currentVersion: string, limitVersion?: string): string {
     return this.enumerate().reduce((result, current) => {
-      if (compare(current.version, currentVersion, '>')) {
-        if (limitVersion && compare(current.version, limitVersion, '>')) {
+      if (compare(current.value, currentVersion, '>')) {
+        if (limitVersion && compare(current.value, limitVersion, '>')) {
           return result
         }
 
-        return current.version
+        return current.value
       }
 
       return result
@@ -33,12 +34,12 @@ export class DockerHubTagSearch {
 
   latestVersions(currentVersion: string, limitVersion?: string): string[] {
     return this.enumerate().reduce<string[]>((result, current) => {
-      if (compare(current.version, currentVersion, '>')) {
-        if (limitVersion && compare(current.version, limitVersion, '>')) {
+      if (compare(current.value, currentVersion, '>')) {
+        if (limitVersion && compare(current.value, limitVersion, '>')) {
           return result
         }
 
-        return [...result, current.version]
+        return [...result, current.value]
       }
 
       return result
