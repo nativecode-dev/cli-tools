@@ -4,7 +4,7 @@ import { Tag } from './Tag'
 
 const PATTERN = /v((?:[0-9]+\.){2}[0-9]+)(?:-([\w\d]+))?/g
 
-export class DockerTagSearch {
+export class DockerHubTagSearch {
   constructor(private readonly tags: Tag[]) {}
 
   enumerate(): string[] {
