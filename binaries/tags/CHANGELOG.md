@@ -3,9 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.1.8](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tags@0.1.7...@nofrills/tags@0.1.8) (2020-02-12)
+# [0.4.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tags@0.3.0...@nofrills/tags@0.4.0) (2020-02-12)
 
-**Note:** Version bump only for package @nofrills/tags
+
+### Features
+
+* add latest versions ([cf99676](https://github.com/nativecode-dev/cli-tools/commit/cf99676d50def0de83b79ed654d85ed6a223fb0d))
+
+
+
+
+
+# [0.3.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tags@0.2.0...@nofrills/tags@0.3.0) (2020-02-12)
+
+
+### Features
+
+* add text ordering ([e27cbce](https://github.com/nativecode-dev/cli-tools/commit/e27cbceeaea8ae579a551dd8091d2ca77e536e95))
+
+
+
+
+
+# [0.2.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tags@0.1.7...@nofrills/tags@0.2.0) (2020-02-12)
+
+
+### Features
+
+* add version limiter ([d421668](https://github.com/nativecode-dev/cli-tools/commit/d421668a1efbfd0effd30c458df11d9dfafa6359))
 
 
 
