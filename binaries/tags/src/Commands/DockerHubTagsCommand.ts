@@ -5,18 +5,23 @@ import { DockerHubTags } from '../DockerHubTags'
 
 export interface DockerHubOptions extends Arguments {
   repository: string
-  tag: string
+  tag?: string
 }
 
 export class DockerHubTagsCommand implements CommandModule<{}, DockerHubOptions> {
-  command = '$0 <repository> <tag>'
+  command = '$0 <repository> [tag]'
 
   builder: Builder = {}
 
   handler = async (args: DockerHubOptions) => {
     const search = new DockerHubTags(args.repository)
     const searcher = await search.tags()
-    console.log(`v${searcher.latest(args.tag)}`)
+
+    if (args.tag) {
+      console.log(searcher.latest(args.tag))
+    } else {
+      console.log(searcher.enumerate().map(tag => tag.version))
+    }
   }
 }
 

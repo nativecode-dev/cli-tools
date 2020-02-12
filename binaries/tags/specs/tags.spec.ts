@@ -1,9 +1,9 @@
 import expect from './expect'
 
-import { DockerTags } from '../src/DockerHubTags'
+import { DockerHubTags } from '../src/DockerHubTags'
 
 describe('when using tags', () => {
-  const sut = new DockerTags('linuxserver/hydra2')
+  const sut = new DockerHubTags('linuxserver/radarr')
 
   it('should get tags', async () => {
     const tags = await sut.tags()
