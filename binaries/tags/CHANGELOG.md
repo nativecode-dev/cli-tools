@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tags@0.3.0...@nofrills/tags@0.4.0) (2020-02-12)
+
+
+### Features
+
+* add latest versions ([cf99676](https://github.com/nativecode-dev/cli-tools/commit/cf99676d50def0de83b79ed654d85ed6a223fb0d))
+
+
+
+
+
 # [0.3.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tags@0.2.0...@nofrills/tags@0.3.0) (2020-02-12)
 
 
