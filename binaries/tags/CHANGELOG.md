@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tags@0.4.0...@nofrills/tags@0.5.0) (2020-02-13)
+
+
+### Features
+
+* add sorting to enumerate ([67e0551](https://github.com/nativecode-dev/cli-tools/commit/67e05516c3fc470eb022291e7dbb9747b99a000a))
+
+
+
+
+
 # [0.4.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tags@0.3.0...@nofrills/tags@0.4.0) (2020-02-12)
 
 
