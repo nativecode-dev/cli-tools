@@ -12,10 +12,9 @@
       "conventionalCommits": true,
       "ignoreChanges": [
         "*.md",
-        "CHANGELOG.md",
-        "LICENSE",
-        "README.md",
         ".npmignore",
+        "LICENSE",
+        "package.json",
         "package-lock.json",
         "tasks.json",
         "tsconfig.json"
@@ -33,10 +32,9 @@
       "conventionalCommits": true,
       "ignoreChanges": [
         "*.md",
-        "CHANGELOG.md",
-        "LICENSE",
-        "README.md",
         ".npmignore",
+        "LICENSE",
+        "package.json",
         "package-lock.json",
         "tasks.json",
         "tsconfig.json"

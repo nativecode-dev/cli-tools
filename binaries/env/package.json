@@ -22,11 +22,11 @@
     "yargs-interactive": "^3.0.0"
   },
   "devDependencies": {
-    "@types/node": "^13.1.6",
+    "@types/node": "^13.7.1",
     "@types/pegjs": "^0.10.1",
-    "@types/yargs": "^15.0.0",
+    "@types/yargs": "^15.0.3",
     "@types/yargs-interactive": "^2.1.0",
-    "ts-node": "^8.6.0"
+    "ts-node": "^8.6.2"
   },
   "directories": {
     "lib": "bin",
@@ -46,6 +46,7 @@
     "url": "https://github.com/nativecode-dev/cli-tools.git"
   },
   "scripts": {
-    "build": "ts-node ../tasks/src/cli-tasks build"
+    "build": "ts-node ../tasks/src/cli-tasks build",
+    "upgrade": "npx npm-check -y"
   }
 }

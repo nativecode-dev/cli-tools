@@ -39,7 +39,8 @@
     "url": "https://github.com/nativecode-dev/cli-tools.git"
   },
   "scripts": {
-    "build": "ts-node ../tasks/src/cli-tasks build"
+    "build": "ts-node ../tasks/src/cli-tasks build",
+    "upgrade": "npx npm-check -y"
   },
   "devDependencies": {
     "@types/node-fetch": "^2.5.4",
