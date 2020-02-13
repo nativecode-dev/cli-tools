@@ -21,7 +21,7 @@
         "tsconfig.json"
       ],
       "loglevel": "verbose",
-      "message": "chore(release): publish",
+      "message": "[skip ci] chore(release): publish",
       "yes": true
     },
     "version": {
@@ -42,7 +42,7 @@
         "tsconfig.json"
       ],
       "loglevel": "verbose",
-      "message": "chore(release): publish",
+      "message": "[skip ci] chore(release): publish",
       "yes": true
     }
   },
