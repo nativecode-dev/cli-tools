@@ -13,9 +13,8 @@ export class DockerHubTagVersion implements DockerHubTagSource {
     return this.tags
       .map(tag => tag.name)
       .filter(tag => PATTERN.test(tag))
-      .reduce<Tag[]>((result, current) => {
-        return [...result, { name: current, value: current }]
-      }, [])
+      .reduce<Tag[]>((result, current) => [...result, { name: current, value: current }], [])
+      .sort((a, b) => (compare(a.name, b.name, '>') ? 1 : -1))
   }
 
   latest(currentVersion: string, limitVersion?: string): string {

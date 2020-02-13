@@ -139,7 +139,8 @@
     "release": ".citools/lerna-publish release",
     "release:canary": ".citools/lerna-publish canary",
     "release:pre": ".citools/lerna-publish prerelease",
-    "upgrade": "lernaupdate"
+    "upgrade": "lernaupdate",
+    "exec:tags": "ts-node binaries/tags/src/index.ts"
   },
   "dependencies": {
     "@nofrills/fs": "^11.0.0",

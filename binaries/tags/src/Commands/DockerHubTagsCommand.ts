@@ -1,15 +1,9 @@
-import { Arguments, CommandModule } from 'yargs'
+import { CommandModule } from 'yargs'
 
 import { Builder } from './Builder'
 import { DockerHubTags } from '../DockerHubTags'
 import { DockerHubTagType } from '../DockerHubTagType'
-
-export interface DockerHubOptions extends Arguments {
-  limit?: string
-  repository: string
-  tag?: string
-  type: DockerHubTagType
-}
+import { DockerHubOptions } from './DockerHubOptions'
 
 export class DockerHubTagsCommand implements CommandModule<{}, DockerHubOptions> {
   command = '$0 <repository> [tag] [limit]'
