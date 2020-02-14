@@ -9,6 +9,11 @@ export class DockerHubTagsCommand implements CommandModule<{}, DockerHubOptions>
   command = '$0 <repository> [tag] [limit]'
 
   builder: Builder = {
+    tagStartsWith: {
+      array: true,
+      default: [],
+      type: 'string',
+    },
     type: {
       choices: Object.keys(DockerHubTagType),
       default: DockerHubTagType.semver,
@@ -17,7 +22,12 @@ export class DockerHubTagsCommand implements CommandModule<{}, DockerHubOptions>
   }
 
   handler = async (args: DockerHubOptions) => {
-    const search = new DockerHubTags(args.repository, args.type)
+    const search = new DockerHubTags({
+      repository: args.repository,
+      tagStartsWith: args.tagStartsWith,
+      type: args.type,
+    })
+
     const searcher = await search.tags()
 
     if (args.tag && args.limit) {
@@ -25,7 +35,7 @@ export class DockerHubTagsCommand implements CommandModule<{}, DockerHubOptions>
     } else if (args.tag) {
       console.log(searcher.latest(args.tag))
     } else {
-      console.log(searcher.enumerate().map(tag => tag.value))
+      console.log(...searcher.enumerate().map(tag => tag.value))
     }
   }
 }
