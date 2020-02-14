@@ -4,8 +4,6 @@ import { DockerHubTags } from '../src/DockerHubTags'
 import { DockerHubTagType } from '../src/DockerHubTagType'
 
 describe('when using tags', () => {
-  const radarr = new DockerHubTags({ repository: 'linuxserver/radarr' })
-  const jackett = new DockerHubTags({ repository: 'linuxserver/jackett' })
   const hydra = new DockerHubTags({ repository: 'linuxserver/hydra2' })
   const ombi = new DockerHubTags({ repository: 'linuxserver/ombi', tagStartsWith: ['v'] })
 
@@ -16,6 +14,6 @@ describe('when using tags', () => {
 
   it('should get exact version', async () => {
     const tags = await ombi.tags()
-    expect(tags.latest('3.0.5020-ls3', 'v3.0.4892-ls45')).to.equal('v3.0.4892-ls45')
+    expect(tags.latest('3.0', 'v3.0.4892-ls45')).to.equal('v3.0.4892-ls45')
   })
 })
