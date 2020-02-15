@@ -1,7 +1,7 @@
 import expect from './expect'
 
-import { DockerHubTags } from '../src/DockerHubTags'
-import { DockerHubTagType } from '../src/DockerHubTagType'
+import { DockerHubTags } from '../src/v1/DockerHubTags'
+import { DockerHubTagType } from '../src/v1/DockerHubTagType'
 
 describe('when using tags', () => {
   const hydra = new DockerHubTags({ repository: 'linuxserver/hydra2' })

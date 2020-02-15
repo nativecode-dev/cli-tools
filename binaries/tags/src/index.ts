@@ -1,8 +1,8 @@
 import yargs from 'yargs'
 
-export * from './DockerHubTags'
-export * from './DockerHubTagType'
-export * from './DockerHubTagSource'
+export * from './v1/DockerHubTags'
+export * from './v1/DockerHubTagType'
+export * from './v1/DockerHubTagSource'
 
 import { TagsCommand } from './Commands/DockerHubTagsCommand'
 import { DockerHubOptions } from './Commands/DockerHubOptions'

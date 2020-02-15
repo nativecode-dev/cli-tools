@@ -1,8 +1,8 @@
 import { CommandModule } from 'yargs'
 
 import { Builder } from './Builder'
-import { DockerHubTags } from '../DockerHubTags'
-import { DockerHubTagType } from '../DockerHubTagType'
+import { DockerHubTags } from '../v1/DockerHubTags'
+import { DockerHubTagType } from '../v1/DockerHubTagType'
 import { DockerHubOptions } from './DockerHubOptions'
 
 export class DockerHubTagsCommand implements CommandModule<{}, DockerHubOptions> {
