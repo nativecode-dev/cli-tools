@@ -18,7 +18,7 @@
   "devDependencies": {
     "@types/chai": "^4.2.9",
     "@types/chai-as-promised": "^7.1.2",
-    "@types/mocha": "^5.2.7",
+    "@types/mocha": "^7.0.1",
     "@types/node": "^13.7.1",
     "@types/yargs": "^15.0.3",
     "@types/yargs-interactive": "^2.1.0",
@@ -26,7 +26,7 @@
     "chai-as-promised": "^7.1.1",
     "commitizen": "^4.0.3",
     "coveralls": "^3.0.9",
-    "cross-env": "^6.0.3",
+    "cross-env": "^7.0.0",
     "cz-conventional-changelog": "^3.1.0",
     "git-ssh-key": "^1.1.0",
     "lerna": "^3.20.2",
@@ -37,7 +37,7 @@
     "rimraf": "^3.0.2",
     "source-map-support": "^0.5.16",
     "ts-node": "^8.6.2",
-    "tslint": "^5.20.1",
+    "tslint": "^6.0.0",
     "tslint-config-standard": "^9.0.0",
     "tslint-no-unused-expression-chai": "^0.1.4",
     "typescript": "^3.7.5"
@@ -128,6 +128,7 @@
     "build": "lerna run build",
     "build:ci": "lerna run build",
     "commit": "git add -A . && git cz",
+    "exec:dh": "ts-node binaries/dockerhub/src/index.ts",
     "lerna": "lerna",
     "task": "cli-tasks",
     "test": "nyc mocha",
@@ -139,7 +140,7 @@
     "release": ".citools/lerna-publish release",
     "release:canary": ".citools/lerna-publish canary",
     "release:pre": ".citools/lerna-publish prerelease",
-    "upgrade": "lernaupdate"
+    "upgrade": "npx npm-check -y && lerna run upgrade"
   },
   "dependencies": {
     "@nofrills/fs": "^11.0.0",

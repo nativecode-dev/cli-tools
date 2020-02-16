@@ -12,16 +12,15 @@
       "conventionalCommits": true,
       "ignoreChanges": [
         "*.md",
-        "CHANGELOG.md",
-        "LICENSE",
-        "README.md",
         ".npmignore",
+        "LICENSE",
+        "package.json",
         "package-lock.json",
         "tasks.json",
         "tsconfig.json"
       ],
       "loglevel": "verbose",
-      "message": "chore(release): publish",
+      "message": "[skip ci] chore(release): publish",
       "yes": true
     },
     "version": {
@@ -33,16 +32,15 @@
       "conventionalCommits": true,
       "ignoreChanges": [
         "*.md",
-        "CHANGELOG.md",
-        "LICENSE",
-        "README.md",
         ".npmignore",
+        "LICENSE",
+        "package.json",
         "package-lock.json",
         "tasks.json",
         "tsconfig.json"
       ],
       "loglevel": "verbose",
-      "message": "chore(release): publish",
+      "message": "[skip ci] chore(release): publish",
       "yes": true
     }
   },

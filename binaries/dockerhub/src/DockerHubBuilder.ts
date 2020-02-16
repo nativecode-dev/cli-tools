@@ -1,5 +1,5 @@
 import { Options } from 'yargs'
 
-export interface Builder {
+export interface DockerHubBuilder {
   [key: string]: Options
 }

@@ -4,20 +4,21 @@
   "homepage": "https://github.com/nativecode-dev/cli-tools",
   "license": "MIT",
   "main": "bin/index.js",
-  "name": "@nofrills/tags",
+  "name": "@nofrills/dockerhub",
   "private": false,
   "types": "bin/index.d.ts",
-  "version": "0.4.1",
+  "version": "0.6.0-next.2",
   "bin": {
-    "dockerhub": "bin/index.js",
-    "dockerhub-tags": "bin/index.js",
-    "tags": "bin/index.js"
+    "dh": "bin/index.js",
+    "dockerhub": "bin/index.js"
   },
   "bugs": {
     "url": "https://github.com/nativecode-dev/cli-tools/issues"
   },
   "dependencies": {
-    "compare-versions": "^3.5.1",
+    "@nativecode/rest-client": "^2.4.1",
+    "compare-versions": "^3.6.0",
+    "deepmerge": "^4.2.2",
     "node-fetch": "^2.6.0",
     "yargs": "^15.1.0"
   },
@@ -39,9 +40,11 @@
     "url": "https://github.com/nativecode-dev/cli-tools.git"
   },
   "scripts": {
-    "build": "ts-node ../tasks/src/cli-tasks build"
+    "build": "ts-node ../tasks/src/cli-tasks build",
+    "upgrade": "npx npm-check -y"
   },
   "devDependencies": {
+    "@types/deepmerge": "^2.2.0",
     "@types/node-fetch": "^2.5.4",
     "@types/yargs": "^15.0.3",
     "ts-node": "^8.6.0"
