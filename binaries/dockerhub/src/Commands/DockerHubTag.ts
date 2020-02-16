@@ -14,7 +14,7 @@ import { VersionCompare } from '../Matchers/VersionCompare'
 
 export class DockerHubTag implements CommandModule<{}, DockerHubTagOptions> {
   aliases = ['tags', 'tag', 't']
-  command = 'tags [optons] <username> <repository> [tag] [limit]'
+  command = 'tags <repository> [tag] [limit]'
 
   builder: DockerHubBuilder = {
     'ends-with': {
@@ -49,6 +49,10 @@ export class DockerHubTag implements CommandModule<{}, DockerHubTagOptions> {
       default: false,
       type: 'boolean',
     },
+    reverse: {
+      default: false,
+      type: 'boolean',
+    },
   }
 
   handler = async (args: DockerHubTagOptions) => {
@@ -65,7 +69,7 @@ export class DockerHubTag implements CommandModule<{}, DockerHubTagOptions> {
       client.match(OnlySemVer())
     }
 
-    if (args.noArch || args.latest || args.tag) {
+    if (args.noArch || args.tag) {
       client.match(NoArch())
     }
 
@@ -90,12 +94,12 @@ export class DockerHubTag implements CommandModule<{}, DockerHubTagOptions> {
     }
 
     if (args.latest) {
-      const latest = await client.latest(args.username, args.repository)
+      const latest = await client.latest(args.repository)
       console.log(latest?.repository.name)
       return
     }
 
-    const tags = await client.find(args.username, args.repository)
+    const tags = await client.find(args.repository, args.reverse)
     tags.map(tag => console.log(tag.repository.name))
   }
 }

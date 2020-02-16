@@ -46,22 +46,24 @@ export class DockerHubClient {
     return this
   }
 
-  async find(username: string, repository: string): Promise<Tag[]> {
+  async find(repository: string, reverse: boolean = false): Promise<Tag[]> {
     const matchers = Array.from(this.matchers.values())
-    const source = await this.tags.list(username, repository)
+    const source = await this.tags.list(repository)
 
     this.matchers.clear()
 
     return Promise.resolve(
-      matchers.reduce<Tag[]>(
-        (tags, matcher) => this.tag_match(matcher, tags),
-        source.results.map(tag => ({ repository: tag, version: TagVersionParse(tag.name) })),
-      ),
+      matchers
+        .reduce<Tag[]>(
+          (tags, matcher) => this.tag_match(matcher, tags),
+          source.results.map(tag => ({ repository: tag, version: TagVersionParse(tag.name) })),
+        )
+        .sort((a, b) => (compare(a.repository.name, b.repository.name, reverse ? '<' : '>') ? -1 : 1)),
     )
   }
 
-  async latest(username: string, repository: string): Promise<Tag | null> {
-    const found = await this.find(username, repository)
+  async latest(repository: string): Promise<Tag | null> {
+    const found = await this.find(repository)
 
     return found.reduce<Tag | null>(
       (tag, current) => (tag && compare(current.repository.name, tag.repository.name, '<') ? tag : current),
