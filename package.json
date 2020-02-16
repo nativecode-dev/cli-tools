@@ -128,7 +128,7 @@
     "build": "lerna run build",
     "build:ci": "lerna run build",
     "commit": "git add -A . && git cz",
-    "exec:tags": "ts-node binaries/tags/src/index.ts",
+    "exec:dh": "ts-node binaries/dockerhub/src/index.ts",
     "lerna": "lerna",
     "task": "cli-tasks",
     "test": "nyc mocha",
