@@ -32,22 +32,22 @@ describe('when using DockerHubClient', () => {
     })
 
     it('should list namespaces', async () => {
-      const namespaces = await client.namespace.list()
+      const namespaces = await client.namespaces.list()
       expect(namespaces).to.include('nativecode')
     })
 
     it('should list repositories', async () => {
-      const namespaces = await client.namespace.list()
+      const namespaces = await client.namespaces.list()
       const user = username(namespaces)
-      const repositories = await client.repository.list(user)
+      const repositories = await client.repositories.list(user)
       expect(repositories.results.map(repo => repo.name)).to.include('mntnfs')
     })
 
     it('should list tags', async () => {
-      const namespaces = await client.namespace.list()
+      const namespaces = await client.namespaces.list()
       const user = username(namespaces)
-      const repositories = await client.repository.list(user)
-      const tags = await client.tag.list(user, repository(repositories.results).name)
+      const repositories = await client.repositories.list(user)
+      const tags = await client.tags.list(user, repository(repositories.results).name)
       expect(tags.results.map(tag => tag.name)).to.include('1.105')
     })
 
@@ -59,16 +59,6 @@ describe('when using DockerHubClient', () => {
     it('should filter tags that do not start with "v"', async () => {
       const results = await client.filter(tag => tag.name.startsWith('v') === false).find('linuxserver', 'radarr')
       expect(results.every(result => result.name.startsWith('v'))).to.be.false
-    })
-
-    it('should find only semver tags', async () => {
-      const results = await client.filter(tag => client.semver(tag.name)).find('linuxserver', 'radarr')
-      expect(results.every(result => client.semver(result.name))).to.be.true
-    })
-
-    it('should find only text tags', async () => {
-      const results = await client.filter(tag => client.text(tag.name)).find('linuxserver', 'radarr')
-      expect(results.every(result => client.text(result.name))).to.be.true
     })
   })
 })

@@ -24,4 +24,8 @@ export class Authentication extends RestResource {
 
     return response.token
   }
+
+  setToken(token: string) {
+    this.callback(token)
+  }
 }

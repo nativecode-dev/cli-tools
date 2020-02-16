@@ -1,4 +1,4 @@
-export interface Tag {
+export interface RepositoryTag {
   name: string
   full_size: number
   images: string[]

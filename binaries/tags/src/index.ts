@@ -1,15 +1,25 @@
 import yargs from 'yargs'
 
-export * from './v1/DockerHubTags'
-export * from './v1/DockerHubTagType'
-export * from './v1/DockerHubTagSource'
+import { TagsCommand } from './Commands/DockerHubTag'
+import { LoginCommand } from './Commands/DockerHubLogin'
+import { ReposCommand } from './Commands/DockerHubRepo'
 
-import { TagsCommand } from './Commands/DockerHubTagsCommand'
-import { DockerHubOptions } from './Commands/DockerHubOptions'
+import { DockerHubTagOptions } from './Commands/DockerHubTagOptions'
+import { DockerHubLoginOptions } from './Commands/DockerHubLoginOptions'
+import { DockerHubRepoOptions } from './Commands/DockerHubRepoOptions'
+import { DockerHubFormat } from './DockerHubFormat'
 
 yargs
   .scriptName('dockerhub')
-  .command<DockerHubOptions>(TagsCommand)
+  .usage('$0 <command>')
+  .command<DockerHubLoginOptions>(LoginCommand)
+  .command<DockerHubRepoOptions>(ReposCommand)
+  .command<DockerHubTagOptions>(TagsCommand)
+  .option('format', {
+    choices: Object.keys(DockerHubFormat),
+    default: DockerHubFormat.text,
+    type: 'string',
+  })
   .showHelpOnFail(true)
   .version()
   .parse()

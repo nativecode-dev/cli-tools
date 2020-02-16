@@ -1,61 +1,70 @@
 import { URL } from 'url'
 import { CreateLogger, CreateOptions } from '@nofrills/lincoln-debug'
 
-import { Tag } from './Models/Tag'
-import { TagFilter } from './TagFilter'
-import { Namespace } from './Resources/Namespace'
-import { Repository } from './Resources/Repository'
-import { RepositoryTag } from './Resources/RepositoryTag'
+import { RepositoryTag } from './Models/RepositoryTag'
+import { Tags } from './Resources/Tags'
+import { TagMatch } from './TagMatch'
+import { Namespaces } from './Resources/Namespaces'
+import { Repositories } from './Resources/Repositories'
 import { Authentication } from './Resources/Authentication'
 
 const options = CreateOptions('dockerhub')
 const logger = CreateLogger(options)
 
 export class DockerHubClient {
-  private readonly filters: Set<TagFilter> = new Set<TagFilter>()
+  private readonly matchers: Set<TagMatch> = new Set<TagMatch>()
 
   auth: Authentication
-  namespace: Namespace
-  repository: Repository
-  tag: RepositoryTag
+  namespaces: Namespaces
+  repositories: Repositories
+  tags: Tags
 
-  constructor(version: number = 2) {
+  constructor(token?: string, version: number = 2) {
     const endpoint = new URL(`https://hub.docker.com/v${version}`)
 
     this.auth = new Authentication(endpoint, logger, token => {
-      const authstr = `JWT ${token}`
-      this.namespace.setAuthorization(authstr)
-      this.repository.setAuthorization(authstr)
-      this.tag.setAuthorization(authstr)
+      const authtoken = `JWT ${token}`
+      this.namespaces.setAuthorization(authtoken)
+      this.repositories.setAuthorization(authtoken)
+      this.tags.setAuthorization(authtoken)
     })
 
-    this.namespace = new Namespace(endpoint, logger)
-    this.repository = new Repository(endpoint, logger)
-    this.tag = new RepositoryTag(endpoint, logger)
+    this.namespaces = new Namespaces(endpoint, logger)
+    this.repositories = new Repositories(endpoint, logger)
+    this.tags = new Tags(endpoint, logger)
+
+    if (token) {
+      this.auth.setToken(token)
+    }
   }
 
-  filter(filter: TagFilter): DockerHubClient {
-    this.filters.add(filter)
+  filter(filter: TagMatch): DockerHubClient {
+    this.matchers.add(filter)
     return this
   }
 
-  async find(username: string, repository: string): Promise<Tag[]> {
-    const found = await this.tag.list(username, repository)
-    const filters = Array.from(this.filters.values())
-    this.filters.clear()
+  async find(username: string, repository: string): Promise<RepositoryTag[]> {
+    const matchers = Array.from(this.matchers.values())
+    const tags = await this.tags.list(username, repository)
+
+    this.matchers.clear()
 
     return Promise.resolve(
-      filters.reduce<Tag[]>((results, current) => results.concat(found.results.filter(current)), []),
+      tags.results.reduce<RepositoryTag[]>((results, tag) => {
+        const matches = matchers.reduce((result, current) => {
+          if (current(tag) === false) {
+            return false
+          }
+
+          return result
+        }, true)
+
+        if (matches) {
+          results.push(tag)
+        }
+
+        return results
+      }, []),
     )
-  }
-
-  semver(version: string): boolean {
-    const pattern = /^(?:([a-zA-Z0-9]+)-)?v?((?:[0-9]+\.){2,3}[0-9]+)(?:-([\w\d]+))?$/m
-    return pattern.test(version)
-  }
-
-  text(version: string): boolean {
-    const pattern = /[\d_-]+/m
-    return pattern.test(version)
   }
 }
