@@ -4,6 +4,7 @@ import expect from './expect'
 
 import { DockerHubClient } from '../src/DockerHubClient'
 import { RepositoryInfo } from '../src/Models/RepositoryInfo'
+import { StartsWith } from '../src/Matchers/StartsWith'
 
 const DOCKERHUB_USERNAME = process.env.DOCKERHUB_USERNAME || 'username'
 const DOCKERHUB_PASSWORD = process.env.DOCKERHUB_PASSWORD || 'password'
@@ -49,20 +50,13 @@ describe('when using DockerHubClient', () => {
       const namespaces = await client.namespaces.list()
       const user = username(namespaces)
       const repositories = await client.repositories.list(user)
-      const tags = await client.tags.list(user, repository(repositories.results).name)
+      const tags = await client.tags.list(`${user}/${repository(repositories.results).name}`)
       expect(tags.results.map(tag => tag.name)).to.include('1.105')
     })
 
     it('should filter tags that start with "v"', async () => {
-      const results = await client.match(tag => tag.repository.name.startsWith('v')).find('linuxserver', 'radarr')
+      const results = await client.match(StartsWith('v')).find('linuxserver/radarr')
       expect(results.every(result => result.repository.name.startsWith('v'))).to.be.true
-    })
-
-    it('should filter tags that do not start with "v"', async () => {
-      const results = await client
-        .match(tag => tag.repository.name.startsWith('v') === false)
-        .find('linuxserver', 'radarr')
-      expect(results.every(result => result.repository.name.startsWith('v'))).to.be.false
     })
   })
 })

@@ -58,7 +58,7 @@ export class DockerHubClient {
           (tags, matcher) => this.tag_match(matcher, tags),
           source.results.map(tag => ({ repository: tag, version: TagVersionParse(tag.name) })),
         )
-        .sort((a, b) => (compare(a.repository.name, b.repository.name, reverse ? '<' : '>') ? -1 : 1)),
+        .sort((a, b) => (compare(a.repository.name, b.repository.name, reverse ? '<' : '>') ? 1 : -1)),
     )
   }
 
