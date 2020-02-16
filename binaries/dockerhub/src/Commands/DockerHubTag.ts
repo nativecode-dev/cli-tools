@@ -53,7 +53,6 @@ export class DockerHubTag implements CommandModule<{}, DockerHubTagOptions> {
 
   handler = async (args: DockerHubTagOptions) => {
     const config = await ConfigFile.load(ConfigFile.filename)
-    console.log(args)
 
     if (config.auth_token === undefined) {
       console.log('You must first login before you can access Docker Hub.')
@@ -62,11 +61,11 @@ export class DockerHubTag implements CommandModule<{}, DockerHubTagOptions> {
 
     const client = new DockerHubClient(config.auth_token)
 
-    if (args.semverOnly || args.tag) {
+    if (args.semverOnly || args.latest || args.tag) {
       client.match(OnlySemVer())
     }
 
-    if (args.noArch || args.tag) {
+    if (args.noArch || args.latest || args.tag) {
       client.match(NoArch())
     }
 
@@ -83,15 +82,16 @@ export class DockerHubTag implements CommandModule<{}, DockerHubTagOptions> {
     }
 
     if (args.tag) {
-      client.match(VersionCompare(args.tag))
+      client.match(VersionCompare(args.tag, '<'))
     }
 
     if (args.limit) {
-      client.match(VersionCompare(args.limit, '<'))
+      client.match(VersionCompare(args.limit, '>'))
     }
 
     if (args.latest) {
-      console.log(await client.latest(args.username, args.repository))
+      const latest = await client.latest(args.username, args.repository)
+      console.log(latest?.repository.name)
       return
     }
 
