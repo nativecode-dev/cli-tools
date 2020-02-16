@@ -1,6 +1,6 @@
-import { RepositoryTag } from '../Models/RepositoryTag'
+import { Tag } from '../Tag'
 import { TagMatch } from '../TagMatch'
 
 export function EndsWith(value: string): TagMatch {
-  return (tag: RepositoryTag) => tag.name.endsWith(value)
+  return (tag: Tag) => tag.repository.name.endsWith(value)
 }

@@ -8,7 +8,7 @@ import { DockerHubLoginOptions } from './DockerHubLoginOptions'
 
 export class DockerHubLogin implements CommandModule<{}, DockerHubLoginOptions> {
   aliases = ['login', 'logon']
-  command = '$0 <username> [password]'
+  command = 'login <username> [password]'
 
   builder: DockerHubBuilder = {
     'passwd-stdin': {

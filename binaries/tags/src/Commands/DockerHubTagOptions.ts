@@ -1,14 +1,13 @@
 import { DockerHubOptions } from '../DockerHubOptions'
 
 export interface DockerHubTagOptions extends DockerHubOptions {
-  filters: {
-    ends_with: string[]
-    starts_with: string[]
-  }
-
+  endsWith: string[]
+  latest: boolean
+  noArch: boolean
   releaseOnly: boolean
   repository: string
   semverOnly: boolean
+  startsWith: string[]
   username: string
 
   limit?: string

@@ -1,10 +1,8 @@
+import { Tag } from '../Tag'
 import { TagMatch } from '../TagMatch'
-import { RepositoryTag } from '../Models/RepositoryTag'
-import { TagVersionParse } from '../TagVersionParse'
 
 export function OnlyReleases(): TagMatch {
-  return (tag: RepositoryTag) => {
-    const version = TagVersionParse(tag.name)
-    return version !== null && version.prerelease === undefined
+  return (tag: Tag) => {
+    return tag.version !== null && tag.version.prerelease === undefined
   }
 }

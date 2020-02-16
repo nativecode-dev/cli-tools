@@ -1,5 +1,5 @@
-import { RepositoryTag } from './Models/RepositoryTag'
+import { Tag } from './Tag'
 
 export interface TagMatch {
-  (tag: RepositoryTag): boolean
+  (tag: Tag): boolean
 }

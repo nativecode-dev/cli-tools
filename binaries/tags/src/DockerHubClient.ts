@@ -1,9 +1,12 @@
 import { URL } from 'url'
+import { compare } from 'compare-versions'
 import { CreateLogger, CreateOptions } from '@nofrills/lincoln-debug'
 
-import { RepositoryTag } from './Models/RepositoryTag'
-import { Tags } from './Resources/Tags'
+import { Tag } from './Tag'
 import { TagMatch } from './TagMatch'
+import { TagVersionParse } from './TagVersionParse'
+
+import { Tags } from './Resources/Tags'
 import { Namespaces } from './Resources/Namespaces'
 import { Repositories } from './Resources/Repositories'
 import { Authentication } from './Resources/Authentication'
@@ -38,33 +41,43 @@ export class DockerHubClient {
     }
   }
 
-  filter(filter: TagMatch): DockerHubClient {
-    this.matchers.add(filter)
+  match(matcher: TagMatch): DockerHubClient {
+    this.matchers.add(matcher)
     return this
   }
 
-  async find(username: string, repository: string): Promise<RepositoryTag[]> {
+  async find(username: string, repository: string): Promise<Tag[]> {
     const matchers = Array.from(this.matchers.values())
-    const tags = await this.tags.list(username, repository)
+    const source = await this.tags.list(username, repository)
 
     this.matchers.clear()
 
     return Promise.resolve(
-      tags.results.reduce<RepositoryTag[]>((results, tag) => {
-        const matches = matchers.reduce((result, current) => {
-          if (current(tag) === false) {
-            return false
-          }
-
-          return result
-        }, true)
-
-        if (matches) {
-          results.push(tag)
-        }
-
-        return results
-      }, []),
+      matchers.reduce<Tag[]>(
+        (tags, matcher) => this.tag_match(matcher, tags),
+        source.results.map(tag => ({ repository: tag, version: TagVersionParse(tag.name) })),
+      ),
     )
+  }
+
+  async latest(username: string, repository: string): Promise<Tag | null> {
+    const found = await this.find(username, repository)
+
+    return found.reduce<Tag | null>(
+      (tag, current) => (tag && compare(current.repository.name, tag.repository.name, '<') ? tag : current),
+      null,
+    )
+  }
+
+  private tag_match(matcher: TagMatch, tags: Tag[]): Tag[] {
+    return tags.reduce<Tag[]>((results, tag) => {
+      const matches = matcher(tag)
+
+      if (matches) {
+        results.push(tag)
+      }
+
+      return results
+    }, [])
   }
 }

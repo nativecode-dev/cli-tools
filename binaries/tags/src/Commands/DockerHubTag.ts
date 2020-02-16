@@ -1,32 +1,48 @@
 import { CommandModule } from 'yargs'
 
-import { StartsWith, EndsWith } from '../Matchers'
 import { ConfigFile } from '../Config/ConfigFile'
 import { DockerHubClient } from '../DockerHubClient'
-import { OnlyReleases } from '../Matchers/OnlyReleases'
 import { DockerHubBuilder } from '../DockerHubBuilder'
 import { DockerHubTagOptions } from './DockerHubTagOptions'
+
+import { NoArch } from '../Matchers/NoArch'
+import { EndsWith } from '../Matchers/EndsWith'
+import { StartsWith } from '../Matchers/StartsWith'
 import { OnlySemVer } from '../Matchers/OnlySemVer'
+import { OnlyReleases } from '../Matchers/OnlyReleases'
+import { VersionCompare } from '../Matchers/VersionCompare'
 
 export class DockerHubTag implements CommandModule<{}, DockerHubTagOptions> {
   aliases = ['tags', 'tag', 't']
-  command = '$0 <username> <repository> [tag] [limit]'
+  command = 'tags [optons] <username> <repository> [tag] [limit]'
 
   builder: DockerHubBuilder = {
-    'filters.ends_with': {
+    'ends-with': {
+      alias: 'e',
       array: true,
       default: [],
       type: 'string',
     },
-    'filters.starts_with': {
-      array: true,
-      default: [],
-      type: 'string',
+    latest: {
+      alias: 'l',
+      default: false,
+      type: 'boolean',
+    },
+    'no-arch': {
+      alias: 'n',
+      default: false,
+      type: 'boolean',
     },
     'release-only': {
       alias: 'r',
       default: false,
       type: 'boolean',
+    },
+    'starts-with': {
+      alias: 's',
+      array: true,
+      default: [],
+      type: 'string',
     },
     'semver-only': {
       alias: 'v',
@@ -37,6 +53,7 @@ export class DockerHubTag implements CommandModule<{}, DockerHubTagOptions> {
 
   handler = async (args: DockerHubTagOptions) => {
     const config = await ConfigFile.load(ConfigFile.filename)
+    console.log(args)
 
     if (config.auth_token === undefined) {
       console.log('You must first login before you can access Docker Hub.')
@@ -45,24 +62,41 @@ export class DockerHubTag implements CommandModule<{}, DockerHubTagOptions> {
 
     const client = new DockerHubClient(config.auth_token)
 
+    if (args.semverOnly || args.tag) {
+      client.match(OnlySemVer())
+    }
+
+    if (args.noArch || args.tag) {
+      client.match(NoArch())
+    }
+
     if (args.releaseOnly) {
-      client.filter(OnlyReleases())
+      client.match(OnlyReleases())
     }
 
-    if (args.semverOnly) {
-      client.filter(OnlySemVer())
+    if (args.endsWith) {
+      args.endsWith.forEach(value => client.match(EndsWith(value)))
     }
 
-    if (args.filters.ends_with) {
-      args.filters.ends_with.forEach(value => client.filter(EndsWith(value)))
+    if (args.startsWith) {
+      args.startsWith.forEach(value => client.match(StartsWith(value)))
     }
 
-    if (args.filters.starts_with) {
-      args.filters.starts_with.forEach(value => client.filter(StartsWith(value)))
+    if (args.tag) {
+      client.match(VersionCompare(args.tag))
+    }
+
+    if (args.limit) {
+      client.match(VersionCompare(args.limit, '<'))
+    }
+
+    if (args.latest) {
+      console.log(await client.latest(args.username, args.repository))
+      return
     }
 
     const tags = await client.find(args.username, args.repository)
-    tags.forEach(tag => console.log(tag.name))
+    tags.map(tag => console.log(tag.repository.name))
   }
 }
 

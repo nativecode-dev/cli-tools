@@ -6,7 +6,7 @@ import { DockerHubRepoOptions } from './DockerHubRepoOptions'
 
 export class DockerHubRepo implements CommandModule<{}, DockerHubRepoOptions> {
   aliases = ['repositories', 'repository', 'repos', 'repo']
-  command = '$0 [username]'
+  command = 'repositories <username>'
 
   builder = {}
 

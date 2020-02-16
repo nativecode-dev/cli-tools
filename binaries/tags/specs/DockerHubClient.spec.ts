@@ -52,13 +52,15 @@ describe('when using DockerHubClient', () => {
     })
 
     it('should filter tags that start with "v"', async () => {
-      const results = await client.filter(tag => tag.name.startsWith('v')).find('linuxserver', 'radarr')
-      expect(results.every(result => result.name.startsWith('v'))).to.be.true
+      const results = await client.match(tag => tag.repository.name.startsWith('v')).find('linuxserver', 'radarr')
+      expect(results.every(result => result.repository.name.startsWith('v'))).to.be.true
     })
 
     it('should filter tags that do not start with "v"', async () => {
-      const results = await client.filter(tag => tag.name.startsWith('v') === false).find('linuxserver', 'radarr')
-      expect(results.every(result => result.name.startsWith('v'))).to.be.false
+      const results = await client
+        .match(tag => tag.repository.name.startsWith('v') === false)
+        .find('linuxserver', 'radarr')
+      expect(results.every(result => result.repository.name.startsWith('v'))).to.be.false
     })
   })
 })

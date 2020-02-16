@@ -1,6 +1,6 @@
-import { RepositoryTag } from '../Models/RepositoryTag'
+import { Tag } from '../Tag'
 import { TagMatch } from '../TagMatch'
 
 export function Pattern(value: string): TagMatch {
-  return (tag: RepositoryTag) => new RegExp(value).test(tag.name)
+  return (tag: Tag) => new RegExp(value).test(tag.repository.name)
 }
