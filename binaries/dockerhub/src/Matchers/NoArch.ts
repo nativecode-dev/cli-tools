@@ -1,7 +1,7 @@
 import { Tag } from '../Tag'
-import { TagMatch } from '../TagMatch'
+import { TagMatcher } from '../TagMatcher'
 
-export function NoArch(): TagMatch {
+export function NoArch(): TagMatcher {
   return (tag: Tag) => {
     if (tag.version && tag.version.arch) {
       return false

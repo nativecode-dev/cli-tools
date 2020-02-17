@@ -1,6 +1,11 @@
 export * from './DockerHubClient'
 export * from './Tag'
+export * from './TagMap'
 export * from './TagMatch'
+export * from './TagMatcher'
+export * from './TagResolve'
+export * from './TagResolveAll'
+export * from './TagSort'
 export * from './TagVersion'
 export * from './TagVersionParse'
 

@@ -2,6 +2,6 @@ import { TagVersion } from './TagVersion'
 import { RepositoryTag } from './Models/RepositoryTag'
 
 export interface Tag {
-  repository: RepositoryTag
+  repotag: RepositoryTag
   version: TagVersion | null
 }

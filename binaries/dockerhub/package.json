@@ -19,6 +19,7 @@
     "@nativecode/rest-client": "^2.4.1",
     "compare-versions": "^3.6.0",
     "deepmerge": "^4.2.2",
+    "fast-deep-equal": "^3.1.1",
     "node-fetch": "^2.6.0",
     "yargs": "^15.1.0"
   },

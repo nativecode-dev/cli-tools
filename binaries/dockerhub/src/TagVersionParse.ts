@@ -24,7 +24,7 @@ latest
 amd64-latest
 20190228
 */
-const GlobalPattern = '^(?:([a-zA-Z0-9]+)-)?v?((?:[0-9]{0,3}\\.){2,3}[0-9]+)(?:-([\\w\\d]+))?$'
+const GlobalPattern = '^(?:([a-zA-Z0-9]+)-)?v?((?:[0-9]{0,3}\\.?){2,3}[0-9]+)(?:-([\\w\\d]+))?$'
 const GlobalRegex = new RegExp(GlobalPattern, 'm')
 
 export const SemVerRegex = (cached: boolean = true) => (cached ? GlobalRegex : new RegExp(GlobalPattern, 'gm'))

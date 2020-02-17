@@ -1,6 +1,6 @@
 import { Tag } from '../Tag'
-import { TagMatch } from '../TagMatch'
+import { TagMatcher } from '../TagMatcher'
 
-export function Pattern(value: string): TagMatch {
-  return (tag: Tag) => new RegExp(value).test(tag.repository.name)
+export function Pattern(value: string): TagMatcher {
+  return (tag: Tag) => new RegExp(value).test(tag.repotag.name)
 }

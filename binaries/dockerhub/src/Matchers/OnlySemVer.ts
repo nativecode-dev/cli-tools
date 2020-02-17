@@ -1,9 +1,9 @@
 import { validate } from 'compare-versions'
 
 import { Tag } from '../Tag'
-import { TagMatch } from '../TagMatch'
+import { TagMatcher } from '../TagMatcher'
 import { SemVerRegex } from '../TagVersionParse'
 
-export function OnlySemVer(): TagMatch {
-  return (tag: Tag) => SemVerRegex().test(tag.repository.name) && validate(tag.repository.name)
+export function OnlySemVer(): TagMatcher {
+  return (tag: Tag) => SemVerRegex().test(tag.repotag.name) && validate(tag.repotag.name)
 }
