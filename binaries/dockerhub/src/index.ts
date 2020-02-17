@@ -2,7 +2,6 @@ export * from './DockerHubClient'
 export * from './Tag'
 export * from './TagMatch'
 export * from './TagVersion'
-export * from './TagVersionMatch'
 export * from './TagVersionParse'
 
 export * from './Matchers'

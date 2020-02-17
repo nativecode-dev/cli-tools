@@ -1,5 +1,5 @@
 import { URL } from 'url'
-import { compare } from 'compare-versions'
+import { compare, validate } from 'compare-versions'
 import { CreateLogger, CreateOptions } from '@nofrills/lincoln-debug'
 
 import { Tag } from './Tag'
@@ -52,14 +52,25 @@ export class DockerHubClient {
 
     this.matchers.clear()
 
-    return Promise.resolve(
-      matchers
-        .reduce<Tag[]>(
-          (tags, matcher) => this.tag_match(matcher, tags),
-          source.results.map(tag => ({ repository: tag, version: TagVersionParse(tag.name) })),
-        )
-        .sort((a, b) => (compare(a.repository.name, b.repository.name, reverse ? '<' : '>') ? 1 : -1)),
-    )
+    const operator = () => (reverse ? '<' : '>')
+
+    const matched = matchers
+      .reduce<Tag[]>(
+        (tags, matcher) => this.tag_match(matcher, this.tag_resolve(tags)),
+        source.results.map(tag => ({ repository: tag, version: TagVersionParse(tag.name) })),
+      )
+      .sort((source, target) => {
+        const src = source.version && validate(source.version.original) ? source : null
+        const tgt = target.version && validate(target.version.original) ? target : null
+
+        if (src && tgt) {
+          return compare(src.version!.original, tgt.version!.original, operator()) ? 1 : -1
+        }
+
+        return source.repository.name > target.repository.name ? 1 : -1
+      })
+
+    return Promise.resolve(matched)
   }
 
   async latest(repository: string): Promise<Tag | null> {
@@ -81,5 +92,19 @@ export class DockerHubClient {
 
       return results
     }, [])
+  }
+
+  private tag_resolve(tags: Tag[]): Tag[] {
+    return tags.map(tag => {
+      if (/[a-zA-Z]+/g.test(tag.repository.name)) {
+        const matched = tags.find(x => tag.repository.full_size === x.repository.full_size)
+
+        if (matched) {
+          tag.version = matched.version
+        }
+      }
+
+      return tag
+    })
   }
 }
