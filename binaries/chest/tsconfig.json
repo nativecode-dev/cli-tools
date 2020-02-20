@@ -1,10 +1,11 @@
 {
+  "extends": "../../tsconfig.settings",
   "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "bin",
     "lib": [
       "es2018"
     ],
-    "outDir": "bin",
-    "rootDir": "src",
     "types": [
       "node"
     ]
@@ -13,7 +14,6 @@
     "node_modules",
     "specs"
   ],
-  "extends": "../../tsconfig.settings",
   "include": [
     "src/**/*.ts"
   ]

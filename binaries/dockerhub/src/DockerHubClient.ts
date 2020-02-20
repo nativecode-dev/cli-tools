@@ -66,12 +66,17 @@ export class DockerHubClient {
   async latest(repository: string): Promise<Tag | null> {
     const tags = await this.find(repository)
 
-    const latest = (source: Tag, target: Tag | null) =>
-      target
+    const latest = (source: Tag, target: Tag | null) => {
+      if (source.repotag.name === 'latest') {
+        return true
+      }
+
+      return target
         ? validate(source.repotag.name) &&
-          validate(target.repotag.name) &&
-          compare(source.repotag.name, target.repotag.name, '>')
+            validate(target.repotag.name) &&
+            compare(source.repotag.name, target.repotag.name, '>')
         : true
+    }
 
     return tags.reduce<Tag | null>((result, tag) => (latest(tag, result) ? tag : result), null)
   }

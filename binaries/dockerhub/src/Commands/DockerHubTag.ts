@@ -77,11 +77,11 @@ export class DockerHubTag implements CommandModule<{}, DockerHubTagOptions> {
 
     const client = new DockerHubClient(config.auth_token)
 
-    if (args.semverOnly || args.tag) {
+    if (args.semverOnly || args.releaseOnly || args.tag) {
       client.match(OnlySemVer())
     }
 
-    if (args.noArch || args.tag) {
+    if (args.noArch) {
       client.match(NoArch())
     }
 
@@ -110,13 +110,13 @@ export class DockerHubTag implements CommandModule<{}, DockerHubTagOptions> {
 
       if (latest) {
         if (latest.version) {
-          return console.log(`${latest.repotag.name} (${latest.version.original})`)
+          return console.log(latest.version.original)
         }
 
         return console.log(latest.repotag.name)
       }
 
-      console.log('Failed to find latest:', args.repository)
+      console.error('Failed to find latest:', args.repository)
       return process.exit(1)
     }
 
@@ -128,7 +128,7 @@ export class DockerHubTag implements CommandModule<{}, DockerHubTagOptions> {
       }
 
       if (tag.version.original !== tag.repotag.name) {
-        return console.log(`${tag.repotag.name} (${tag.version.original})`)
+        return console.log(`${tag.repotag.name} (${tag.references.map(ref => ref.repotag.name).join(', ')})`)
       }
 
       return console.log(tag.version.original)

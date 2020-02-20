@@ -16,6 +16,7 @@
     }
   },
   "devDependencies": {
+    "@nofrills/tasks": "^10.0.3",
     "@types/chai": "^4.2.9",
     "@types/chai-as-promised": "^7.1.2",
     "@types/mocha": "^7.0.1",
@@ -63,63 +64,6 @@
     "sourceMap": true,
     "temp-dir": ".cache/nyc"
   },
-  "tasks": {
-    "build": [
-      "[clean]",
-      "[build:compile]"
-    ],
-    "build:ci": [
-      "lerna bootstrap",
-      "[build:compile]"
-    ],
-    "build:compile": [
-      "lerna run build"
-    ],
-    "clean": [
-      "[clean:artifacts]"
-    ],
-    "clean:artifacts": [
-      "rimraf binaries/*/bin",
-      "rimraf **/*.tsbuildinfo"
-    ],
-    "configure:ci": [
-      "npm ci",
-      "[build:ci]",
-      "[test:ci]"
-    ],
-    "configure:git": [
-      ".citools/setup-git ${BUILD_REPO_BRANCH} ${BUILD_REPO_GIT} ${BUILD_REPO_EMAIL}"
-    ],
-    "configure:ssh": [
-      ".citools/setup-ssh ${BUILD_REPO_DOMAIN} ${BUILD_REPO_SSHKEY_PATH} ${BUILD_REPO_DOMAIN_SSH}"
-    ],
-    "release": [
-      "[configure:ci]",
-      ".citools/lerna-publish release"
-    ],
-    "release:canary": [
-      "[configure:ci]",
-      ".citools/lerna-publish canary"
-    ],
-    "release:prerelease": [
-      "[configure:ci]",
-      ".citools/lerna-publish prerelease"
-    ],
-    "source:format": [
-      "prettier --loglevel silent --write \"*/*/specs/**/*.ts\"",
-      "prettier --loglevel silent --write \"*/*/src/**/*.ts\""
-    ],
-    "source:lint": [
-      "tslint --project tsconfig.json --config tslint.json"
-    ],
-    "test": [
-      "[build]",
-      "nyc mocha"
-    ],
-    "test:ci": [
-      "cross-env DEBUG= nyc mocha"
-    ]
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nativecode-dev/cli-tools.git"
@@ -129,6 +73,7 @@
     "build:ci": "lerna run build",
     "commit": "git add -A . && git cz",
     "exec:dh": "ts-node binaries/dockerhub/src/index.ts",
+    "exec:chest": "ts-node binaries/chest/src/index.ts",
     "lerna": "lerna",
     "task": "cli-tasks",
     "test": "nyc mocha",

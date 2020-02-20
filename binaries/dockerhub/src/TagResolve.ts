@@ -1,15 +1,31 @@
 import deepequal from 'fast-deep-equal'
 
+import { compare, validate } from 'compare-versions'
+
 import { Tag } from './Tag'
 import { RepositoryImage } from './Models/RepositoryImage'
+import { TagSort } from './TagSort'
 
 export function TagResolve(tag: Tag, tags: Tag[]): Tag {
   const same = (source: RepositoryImage[], target: RepositoryImage[]) =>
     deepequal(source.map(img => img.digest).sort(), target.map(img => img.digest).sort())
 
-  const found = tags
+  const references = tags
+    .filter(source => source !== tag)
     .filter(source => same(source.repotag.images, tag.repotag.images))
-    .reduce<Tag | null>((result, source) => (source.version ? source : result), null)
+
+  tag.references = tag.references.concat(references).sort(TagSort())
+
+  const found = references.reduce<Tag | null>((result, source) => {
+    const src = validate(source.repotag.name) ? source : null
+    const tgt = validate(tag.repotag.name) ? tag : null
+
+    if (src && tgt) {
+      return compare(src.repotag.name, tgt.repotag.name, '>') ? source : result
+    }
+
+    return source.version ? source : result
+  }, null)
 
   if (found) {
     tag.version = found.version
