@@ -1,4 +1,4 @@
-import { CommandModule, Argv } from 'yargs'
+import { CommandModule, Argv, CommandBuilder } from 'yargs'
 
 import { LoginCommand } from './DockerHubLogin'
 import { ReposCommand } from './DockerHubRepo'
@@ -12,7 +12,7 @@ import { DockerHubTagOptions } from './DockerHubTagOptions'
 export class DockerHub implements CommandModule<{}, DockerHubOptions> {
   command = '$0 <command>'
 
-  builder = (args: Argv<{}>): Argv<DockerHubOptions> => {
+  builder: CommandBuilder<{}, DockerHubOptions> = (args: Argv<{}>): Argv<DockerHubOptions> => {
     return args
       .positional('command', {
         choices: ['login', 'tags', 'repos'],

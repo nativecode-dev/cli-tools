@@ -1,8 +1,7 @@
-import { CommandModule } from 'yargs'
+import { CommandModule, CommandBuilder } from 'yargs'
 
 import { ConfigFile } from '../Config/ConfigFile'
 import { DockerHubClient } from '../DockerHubClient'
-import { DockerHubBuilder } from '../DockerHubBuilder'
 import { DockerHubTagOptions } from './DockerHubTagOptions'
 
 import { NoArch } from '../Matchers/NoArch'
@@ -16,7 +15,7 @@ export class DockerHubTag implements CommandModule<{}, DockerHubTagOptions> {
   aliases = ['tags', 'tag', 't']
   command = 'tags [optons] <username> <repository> [tag] [limit]'
 
-  builder: DockerHubBuilder = {
+  builder: CommandBuilder<{}, DockerHubTagOptions> = {
     'ends-with': {
       alias: 'e',
       array: true,

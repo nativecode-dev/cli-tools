@@ -1,16 +1,16 @@
 import readline from 'readline'
 
-import { CommandModule } from 'yargs'
+import { CommandModule, CommandBuilder } from 'yargs'
+
 import { ConfigFile } from '../Config/ConfigFile'
 import { DockerHubClient } from '../DockerHubClient'
-import { DockerHubBuilder } from '../DockerHubBuilder'
 import { DockerHubLoginOptions } from './DockerHubLoginOptions'
 
 export class DockerHubLogin implements CommandModule<{}, DockerHubLoginOptions> {
   aliases = ['login', 'logon']
   command = 'login <username> [password]'
 
-  builder: DockerHubBuilder = {
+  builder: CommandBuilder<{}, DockerHubLoginOptions> = {
     'passwd-stdin': {
       default: false,
       type: 'boolean',
