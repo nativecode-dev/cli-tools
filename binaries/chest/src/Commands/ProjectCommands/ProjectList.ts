@@ -1,10 +1,10 @@
 import { CommandModule, CommandBuilder } from 'yargs'
 
+import { output } from '../../Output/Output'
 import { getProjectGroup } from '../../Functions/GetProjectGroup'
 
-import { ProjectListOptions } from './ProjectListOptions'
 import { ChestProjectType } from '../ChestProjectType'
-import { output } from '../../Output/Output'
+import { ProjectListOptions } from './ProjectListOptions'
 
 export class ProjectList implements CommandModule<{}, ProjectListOptions> {
   aliases = ['list', 'ls']

@@ -1,3 +1,6 @@
-export function formatJson<T>(data: T) {
-  return console.log(JSON.stringify(data))
+import os from 'os'
+
+export function formatJson<T>(data: T, stdout: NodeJS.WriteStream, stderr: NodeJS.WriteStream) {
+  stdout.write(JSON.stringify(data))
+  return stdout.write(os.EOL)
 }

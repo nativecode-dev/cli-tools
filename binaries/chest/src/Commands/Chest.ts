@@ -21,7 +21,7 @@ export class Chest implements CommandModule<{}, ChestOptions> {
       .option('format', {
         alias: 'f',
         choices: Object.keys(OutputType),
-        default: OutputType.json,
+        default: OutputType.text,
         type: 'string',
       })
       .command<ChestWorkspaceOptions>(WorkspaceCommand)
