@@ -4,6 +4,8 @@ import { CreateLogger, CreateOptions } from '@nofrills/lincoln-debug'
 
 import { Tag } from './Tag'
 import { TagMatch } from './TagMatch'
+import { tagMatcher } from './TagMatcher'
+import { tagResolver } from './TagResolver'
 import { TagVersionParse } from './TagVersionParse'
 
 import { Tags } from './Resources/Tags'
@@ -56,7 +58,7 @@ export class DockerHubClient {
 
     const matched = matchers
       .reduce<Tag[]>(
-        (tags, matcher) => this.tag_match(matcher, this.tag_resolve(tags)),
+        (tags, matcher) => tagMatcher(matcher, tagResolver(tags)),
         source.results.map(tag => ({ repository: tag, version: TagVersionParse(tag.name) })),
       )
       .sort((source, target) => {
@@ -80,31 +82,5 @@ export class DockerHubClient {
       (tag, current) => (tag && compare(current.repository.name, tag.repository.name, '<') ? tag : current),
       null,
     )
-  }
-
-  private tag_match(matcher: TagMatch, tags: Tag[]): Tag[] {
-    return tags.reduce<Tag[]>((results, tag) => {
-      const matches = matcher(tag)
-
-      if (matches) {
-        results.push(tag)
-      }
-
-      return results
-    }, [])
-  }
-
-  private tag_resolve(tags: Tag[]): Tag[] {
-    return tags.map(tag => {
-      if (/[a-zA-Z]+/g.test(tag.repository.name)) {
-        const matched = tags.find(x => tag.repository.full_size === x.repository.full_size)
-
-        if (matched) {
-          tag.version = matched.version
-        }
-      }
-
-      return tag
-    })
   }
 }
