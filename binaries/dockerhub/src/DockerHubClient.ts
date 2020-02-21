@@ -43,11 +43,6 @@ export class DockerHubClient {
     }
   }
 
-  match(matcher: TagMatch): DockerHubClient {
-    this.matchers.add(matcher)
-    return this
-  }
-
   async find(repository: string, reverse: boolean = false): Promise<Tag[]> {
     const matchers = Array.from(this.matchers.values())
     const source = await this.tags.list(repository)
@@ -82,5 +77,10 @@ export class DockerHubClient {
       (tag, current) => (tag && compare(current.repository.name, tag.repository.name, '<') ? tag : current),
       null,
     )
+  }
+
+  match(matcher: TagMatch): DockerHubClient {
+    this.matchers.add(matcher)
+    return this
   }
 }
