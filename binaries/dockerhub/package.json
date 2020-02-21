@@ -7,7 +7,7 @@
   "name": "@nofrills/dockerhub",
   "private": false,
   "types": "bin/index.d.ts",
-  "version": "0.6.0",
+  "version": "0.6.1-next.0",
   "bin": {
     "dh": "bin/index.js",
     "dockerhub": "bin/index.js"
@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@nativecode/rest-client": "^2.4.1",
+    "@nofrills/fs": "^11.0.0",
     "compare-versions": "^3.6.0",
     "deepmerge": "^4.2.2",
     "node-fetch": "^2.6.0",
