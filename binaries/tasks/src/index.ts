@@ -1,13 +1,12 @@
 import yargs from 'yargs'
 
-import { TaskOptions } from './Commands/TaskOptions'
+import { TaskCommandOptions } from './Commands/TaskCommandOptions'
 import { DefaultCommand } from './Commands/TaskCommand'
 
 yargs
   .scriptName('tasks')
-  .usage('$0 <command>')
-  .command<TaskOptions>(DefaultCommand)
+  .command<TaskCommandOptions>(DefaultCommand)
   .recommendCommands()
-  .showHelpOnFail(true)
+  .showHelpOnFail(process.env.TASKS_SHOW_HELP_ON_FAIL === 'true' || false)
   .version()
   .parse()

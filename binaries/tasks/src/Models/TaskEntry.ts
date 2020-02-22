@@ -1,12 +1,11 @@
 import { TaskEntryType } from './TaskEntryType'
 
 export interface TaskEntry {
-  arguments?: string[]
+  args: string[]
   command: string
-  detached?: boolean
   gid?: number
-  name?: string
+  name: string
   origin?: string
-  type?: TaskEntryType
+  type: TaskEntryType
   uid?: number
 }

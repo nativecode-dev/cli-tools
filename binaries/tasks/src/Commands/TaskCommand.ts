@@ -1,30 +1,38 @@
-import { fs } from '@nofrills/fs'
-import { CommandBuilder, CommandModule } from 'yargs'
+import { CommandBuilder, CommandModule, Argv } from 'yargs'
 
-import { TaskOptions } from './TaskOptions'
-import { TASK_LOADER_FILES, taskLoader } from '../Tasks/TaskLoader'
+import { TaskRunCommand } from './TaskRun'
+import { TaskListCommand } from './TaskList'
+import { TaskRunOptions } from './TaskRunOptions'
+import { TaskListOptions } from './TaskListOptions'
+import { TaskCommandOptions } from './TaskCommandOptions'
+import { TaskShebangOptions } from './TaskShebangOptions'
+import { ShebangCommand } from './TaskShebang'
 
-export class TaskCommand implements CommandModule<{}, TaskOptions> {
-  aliases = ['task', 'tasks']
-  command = '$0'
+export class TaskCommand implements CommandModule<{}, TaskCommandOptions> {
+  command = '$0 <command>'
 
-  builder: CommandBuilder<{}, TaskOptions> = {
-    config: {
-      alias: 'c',
-      choices: TASK_LOADER_FILES,
-      default: 'package.json',
-      type: 'string',
-    },
-    cwd: {
-      default: process.cwd(),
-      type: 'string',
-    },
+  builder: CommandBuilder<{}, TaskCommandOptions> = (args: Argv<{}>) => {
+    return args
+      .positional('command', {
+        choices: ['list', 'run'],
+        default: 'run',
+        type: 'string',
+      })
+      .option('cwd', {
+        default: process.cwd(),
+        type: 'string',
+      })
+      .option('no-ignore-empty-lines', {
+        default: true,
+        type: 'boolean',
+      })
+      .command<TaskListOptions>(TaskListCommand)
+      .command<TaskRunOptions>(TaskRunCommand)
+      .command<TaskShebangOptions>(ShebangCommand)
   }
 
-  handler = async (args: TaskOptions) => {
-    const filename = fs.join(args.cwd, args.config)
-    const task = await taskLoader(filename)
-    console.log(task)
+  handler = (args: TaskCommandOptions) => {
+    return
   }
 }
 

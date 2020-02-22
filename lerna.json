@@ -1,8 +1,5 @@
 {
   "command": {
-    "run": {
-      "stream": true
-    },
     "publish": {
       "allowBranch": [
         "develop",
@@ -22,6 +19,9 @@
       "loglevel": "verbose",
       "message": "[skip ci] chore(release): publish",
       "yes": true
+    },
+    "run": {
+      "stream": true
     },
     "version": {
       "allowBranch": [
@@ -47,7 +47,8 @@
   "loglevel": "error",
   "npmClient": "npm",
   "npmClientArgs": [
-    "--no-progress"
+    "--no-progress",
+    "--silent"
   ],
   "packages": [
     "binaries/*"

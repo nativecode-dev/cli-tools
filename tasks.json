@@ -1,63 +1,59 @@
 {
-  "tasks": {
-    "build": [
-      "[clean]",
-      "#[source:format]",
-      "[source:lint]",
-      "[build:compile]"
-    ],
-    "build:ci": [
-      "lerna bootstrap",
-      "[build:compile]"
-    ],
-    "build:compile": [
-      "lerna run build"
-    ],
-    "clean": [
-      "[clean:artifacts]"
-    ],
-    "clean:artifacts": [
-      "rimraf binaries/*/bin",
-      "rimraf **/*.tsbuildinfo"
-    ],
-    "configure:ci": [
-      "npm ci",
-      "[build:ci]",
-      "[test:ci]"
-    ],
-    "configure:git": [
-      ".citools/setup-git ${BUILD_REPO_BRANCH} ${BUILD_REPO_GIT} ${BUILD_REPO_EMAIL}"
-    ],
-    "configure:ssh": [
-      ".citools/setup-ssh ${BUILD_REPO_DOMAIN} ${BUILD_REPO_SSHKEY_PATH} ${BUILD_REPO_DOMAIN_SSH}"
-    ],
-    "release": [
-      "[configure:ci]",
-      ".citools/lerna-publish release"
-    ],
-    "release:canary": [
-      "[configure:ci]",
-      ".citools/lerna-publish canary"
-    ],
-    "release:prerelease": [
-      "[configure:ci]",
-      ".citools/lerna-publish prerelease"
-    ],
-    "source:format": [
-      "prettier --loglevel silent --write \"binaries/*/specs/**/*.ts\"",
-      "prettier --loglevel silent --write \"binaries/*/src/**/*.ts\""
-    ],
-    "source:lint": [
-      "npx -p json-sort-cli jsonsort *.json",
-      "npx -p json-sort-cli jsonsort binaries/*/*.json",
-      "tslint --project tsconfig.json --config tslint.json"
-    ],
-    "test": [
-      "[build]",
-      "nyc mocha"
-    ],
-    "test:ci": [
-      "cross-env DEBUG= nyc mocha"
-    ]
-  }
+  "build": [
+    "[clean]",
+    "#[source:format]",
+    "[source:lint]",
+    "[build:compile]"
+  ],
+  "build:ci": [
+    "lerna bootstrap",
+    "[build:compile]"
+  ],
+  "build:compile": [
+    "lerna run build"
+  ],
+  "clean": [
+    "[clean:artifacts]"
+  ],
+  "clean:artifacts": [
+    "rimraf binaries/*/bin",
+    "rimraf **/*.tsbuildinfo"
+  ],
+  "configure:ci": [
+    "npm ci",
+    "[build:ci]",
+    "[test:ci]"
+  ],
+  "configure:git": [
+    ".citools/setup-git ${BUILD_REPO_BRANCH} ${BUILD_REPO_GIT} ${BUILD_REPO_EMAIL}"
+  ],
+  "configure:ssh": [
+    ".citools/setup-ssh ${BUILD_REPO_DOMAIN} ${BUILD_REPO_SSHKEY_PATH} ${BUILD_REPO_DOMAIN_SSH}"
+  ],
+  "release": [
+    "[configure:ci]",
+    ".citools/lerna-publish release"
+  ],
+  "release:canary": [
+    "[configure:ci]",
+    ".citools/lerna-publish canary"
+  ],
+  "release:prerelease": [
+    "[configure:ci]",
+    ".citools/lerna-publish prerelease"
+  ],
+  "source:format": [
+    "prettier --loglevel silent --write \"binaries/*/specs/**/*.ts\"",
+    "prettier --loglevel silent --write \"binaries/*/src/**/*.ts\""
+  ],
+  "source:lint": [
+    "tslint --project tsconfig.json --config tslint.json"
+  ],
+  "test": [
+    "[build]",
+    "nyc mocha"
+  ],
+  "test:ci": [
+    "cross-env DEBUG= nyc mocha"
+  ]
 }

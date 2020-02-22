@@ -1,5 +1,5 @@
 import { TaskDefinitions } from './TaskDefinitions'
 
-export interface TaskConfig {
+export interface TaskV1 {
   tasks: TaskDefinitions
 }

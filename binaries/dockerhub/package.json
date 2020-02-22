@@ -1,20 +1,41 @@
 {
-  "author": "opensource@nativecode.com",
-  "description": "Simple Tags Comparator",
-  "homepage": "https://github.com/nativecode-dev/cli-tools",
-  "license": "MIT",
-  "main": "bin/index.js",
   "name": "@nofrills/dockerhub",
-  "private": false,
-  "types": "bin/index.d.ts",
   "version": "0.7.0",
-  "bin": {
-    "dh": "bin/index.js",
-    "dockerhub": "bin/index.js"
+  "description": "Simple Tags Comparator",
+  "license": "MIT",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nativecode-dev/cli-tools.git"
   },
   "bugs": {
     "url": "https://github.com/nativecode-dev/cli-tools/issues"
   },
+  "homepage": "https://github.com/nativecode-dev/cli-tools",
+  "author": "opensource@nativecode.com",
+  "bin": {
+    "dh": "bin/index.js",
+    "dockerhub": "bin/index.js"
+  },
+  "main": "bin/index.js",
+  "files": [
+    "bin"
+  ],
+  "directories": {
+    "lib": "bin",
+    "test": "specs"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "ts-node ../tasks/src build",
+    "upgrade": "npx npm-check -y"
+  },
+  "engine": {
+    "node": ">=8.10.49"
+  },
+  "types": "bin/index.d.ts",
   "dependencies": {
     "@nativecode/rest-client": "~2.4.1",
     "@nofrills/fs": "^11.0.0",
@@ -23,27 +44,6 @@
     "fast-deep-equal": "~3.1.1",
     "node-fetch": "~2.6.0",
     "yargs": "~15.1.0"
-  },
-  "directories": {
-    "lib": "bin",
-    "test": "specs"
-  },
-  "engine": {
-    "node": ">=8.10.49"
-  },
-  "files": [
-    "bin"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/nativecode-dev/cli-tools.git"
-  },
-  "scripts": {
-    "build": "ts-node ../tasks/src/cli-tasks build",
-    "upgrade": "npx npm-check -y"
   },
   "devDependencies": {
     "@types/adm-zip": "~0.4.32",
