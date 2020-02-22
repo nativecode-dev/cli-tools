@@ -5,7 +5,7 @@
   "license": "MIT",
   "main": "bin/index.js",
   "name": "@beard/chest",
-  "private": false,
+  "private": true,
   "types": "bin/index.d.ts",
   "version": "0.0.0",
   "bin": {
