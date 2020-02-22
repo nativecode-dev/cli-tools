@@ -1,7 +1,7 @@
 import { Tag } from './Tag'
 import { TagMatcher } from './TagMatcher'
 
-export function TagMatch(tags: Tag[], matcher: TagMatcher) {
+export function tagMatch(tags: Tag[], matcher: TagMatcher) {
   return tags.reduce<Tag[]>((results, tag) => {
     const matches = matcher(tag)
 

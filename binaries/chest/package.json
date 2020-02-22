@@ -4,7 +4,7 @@
   "homepage": "https://github.com/nativecode-dev/cli-tools",
   "license": "MIT",
   "main": "bin/index.js",
-  "name": "@nativecode/chest",
+  "name": "@beard/chest",
   "private": false,
   "types": "bin/index.d.ts",
   "version": "0.0.0",

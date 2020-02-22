@@ -46,6 +46,7 @@
     "upgrade": "npx npm-check -y"
   },
   "devDependencies": {
+    "@types/adm-zip": "^0.4.32",
     "@types/deepmerge": "^2.2.0",
     "@types/node-fetch": "^2.5.4",
     "@types/yargs": "^15.0.3",

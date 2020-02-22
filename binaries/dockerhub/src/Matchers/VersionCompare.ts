@@ -2,10 +2,10 @@ import { compare, CompareOperator, validate } from 'compare-versions'
 
 import { Tag } from '../Tag'
 import { TagMatcher } from '../TagMatcher'
-import { TagVersionParse } from '../TagVersionParse'
+import { tagVersionParse } from '../TagVersionParse'
 
 export function VersionCompare(currentVersion: string, operator: CompareOperator): TagMatcher {
-  const current = TagVersionParse(currentVersion)
+  const current = tagVersionParse(currentVersion)
 
   return (tag: Tag) => {
     if (current && validate(current.original)) {

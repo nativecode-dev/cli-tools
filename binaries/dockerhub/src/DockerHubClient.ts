@@ -3,11 +3,11 @@ import { compare, validate } from 'compare-versions'
 import { CreateLogger, CreateOptions } from '@nofrills/lincoln-debug'
 
 import { Tag } from './Tag'
-import { TagMap } from './TagMap'
-import { TagSort } from './TagSort'
-import { TagMatch } from './TagMatch'
+import { tagMap } from './TagMap'
+import { tagSort } from './TagSort'
+import { tagMatch } from './TagMatch'
 import { TagMatcher } from './TagMatcher'
-import { TagResolveAll } from './TagResolveAll'
+import { tagResolveAll } from './TagResolveAll'
 
 import { Tags } from './Resources/Tags'
 import { Namespaces } from './Resources/Namespaces'
@@ -57,9 +57,9 @@ export class DockerHubClient {
 
     return Promise.resolve(
       matchers
-        .reduce<Tag[]>((tags, matcher) => TagMatch(tags, matcher), TagResolveAll(TagMap(source.results)))
+        .reduce<Tag[]>((tags, matcher) => tagMatch(tags, matcher), tagResolveAll(tagMap(source.results)))
         .filter(tag => tag.version)
-        .sort(TagSort(reverse)),
+        .sort(tagSort(reverse)),
     )
   }
 

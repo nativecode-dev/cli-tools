@@ -4,9 +4,9 @@ import { compare, validate } from 'compare-versions'
 
 import { Tag } from './Tag'
 import { RepositoryImage } from './Models/RepositoryImage'
-import { TagSort } from './TagSort'
+import { tagSort } from './TagSort'
 
-export function TagResolve(tag: Tag, tags: Tag[]): Tag {
+export function tagResolve(tag: Tag, tags: Tag[]): Tag {
   const same = (source: RepositoryImage[], target: RepositoryImage[]) =>
     deepequal(source.map(img => img.digest).sort(), target.map(img => img.digest).sort())
 
@@ -14,7 +14,7 @@ export function TagResolve(tag: Tag, tags: Tag[]): Tag {
     .filter(source => source !== tag)
     .filter(source => same(source.repotag.images, tag.repotag.images))
 
-  tag.references = tag.references.concat(references).sort(TagSort())
+  tag.references = tag.references.concat(references).sort(tagSort())
 
   const found = references.reduce<Tag | null>((result, source) => {
     const src = validate(source.repotag.name) ? source : null

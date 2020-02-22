@@ -2,7 +2,7 @@ import 'mocha'
 
 import expect from './expect'
 
-import { TagVersionParse } from '../src/TagVersionParse'
+import { tagVersionParse } from '../src/TagVersionParse'
 
 const VALID_VERSIONS = [
   '2.0.13',
@@ -22,10 +22,10 @@ const VALID_VERSIONS = [
 
 const INVALID_VERSIONS = ['latest', 'amd64-latest']
 
-describe('when using TagVersionParse', () => {
+describe('when using tagVersionParse', () => {
   it('should test valid versions', () =>
-    VALID_VERSIONS.forEach(version => expect(TagVersionParse(version)).to.not.be.empty))
+    VALID_VERSIONS.forEach(version => expect(tagVersionParse(version)).to.not.be.empty))
 
   it('should test invalid versions', () =>
-    INVALID_VERSIONS.forEach(version => expect(TagVersionParse(version)).to.be.null))
+    INVALID_VERSIONS.forEach(version => expect(tagVersionParse(version)).to.be.null))
 })

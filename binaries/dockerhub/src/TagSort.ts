@@ -2,7 +2,7 @@ import { compare, validate } from 'compare-versions'
 
 import { Tag } from './Tag'
 
-export function TagSort(reverse: boolean = false): (source: Tag, target: Tag) => number {
+export function tagSort(reverse: boolean = false): (source: Tag, target: Tag) => number {
   const operator = () => (reverse ? '<' : '>')
 
   return (source: Tag, target: Tag): number => {

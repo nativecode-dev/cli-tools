@@ -1,6 +1,6 @@
-import { RepositoryTag } from './Models'
-import { TagVersionParse } from './TagVersionParse'
+import { tagVersionParse } from './TagVersionParse'
+import { RepositoryTag } from './Models/RepositoryTag'
 
-export function TagMap(tags: RepositoryTag[]) {
-  return tags.map(tag => ({ references: [], repotag: tag, version: TagVersionParse(tag.name) }))
+export function tagMap(tags: RepositoryTag[]) {
+  return tags.map(tag => ({ references: [], repotag: tag, version: tagVersionParse(tag.name) }))
 }

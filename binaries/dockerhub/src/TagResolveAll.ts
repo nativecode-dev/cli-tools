@@ -1,6 +1,6 @@
 import { Tag } from './Tag'
-import { TagResolve } from './TagResolve'
+import { tagResolve } from './TagResolve'
 
-export function TagResolveAll(tags: Tag[]): Tag[] {
-  return tags.map(tag => TagResolve(tag, tags))
+export function tagResolveAll(tags: Tag[]): Tag[] {
+  return tags.map(tag => tagResolve(tag, tags))
 }
