@@ -20,6 +20,7 @@
     "@nofrills/fs": "^11.0.0",
     "compare-versions": "^3.6.0",
     "deepmerge": "^4.2.2",
+    "fast-deep-equal": "^3.1.1",
     "node-fetch": "^2.6.0",
     "yargs": "^15.1.0"
   },
@@ -45,6 +46,7 @@
     "upgrade": "npx npm-check -y"
   },
   "devDependencies": {
+    "@types/adm-zip": "^0.4.32",
     "@types/deepmerge": "^2.2.0",
     "@types/node-fetch": "^2.5.4",
     "@types/yargs": "^15.0.3",

@@ -48,14 +48,11 @@ export class SshParser {
             return false
         }
       })
-      .reduce(
-        (previous, token) => {
-          if (token.type === 'host' || token.type === 'match') {
-            return [...previous, token as KeywordToken]
-          }
-          return previous
-        },
-        [] as KeywordToken[],
-      )
+      .reduce((previous, token) => {
+        if (token.type === 'host' || token.type === 'match') {
+          return [...previous, token as KeywordToken]
+        }
+        return previous
+      }, [] as KeywordToken[])
   }
 }

@@ -2,6 +2,8 @@
   "tasks": {
     "build": [
       "[clean]",
+      "#[source:format]",
+      "[source:lint]",
       "[build:compile]"
     ],
     "build:ci": [
@@ -42,10 +44,12 @@
       ".citools/lerna-publish prerelease"
     ],
     "source:format": [
-      "prettier --loglevel silent --write \"*/*/specs/**/*.ts\"",
-      "prettier --loglevel silent --write \"*/*/src/**/*.ts\""
+      "prettier --loglevel silent --write \"binaries/*/specs/**/*.ts\"",
+      "prettier --loglevel silent --write \"binaries/*/src/**/*.ts\""
     ],
     "source:lint": [
+      "npx -p json-sort-cli jsonsort *.json",
+      "npx -p json-sort-cli jsonsort binaries/*/*.json",
       "tslint --project tsconfig.json --config tslint.json"
     ],
     "test": [

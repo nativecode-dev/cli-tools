@@ -1,10 +1,13 @@
 import { URL } from 'url'
-import { compare } from 'compare-versions'
+import { compare, validate } from 'compare-versions'
 import { CreateLogger, CreateOptions } from '@nofrills/lincoln-debug'
 
 import { Tag } from './Tag'
-import { TagMatch } from './TagMatch'
-import { TagVersionParse } from './TagVersionParse'
+import { tagMap } from './TagMap'
+import { tagSort } from './TagSort'
+import { tagMatch } from './TagMatch'
+import { TagMatcher } from './TagMatcher'
+import { tagResolveAll } from './TagResolveAll'
 
 import { Tags } from './Resources/Tags'
 import { Namespaces } from './Resources/Namespaces'
@@ -15,7 +18,7 @@ const options = CreateOptions('dockerhub')
 const logger = CreateLogger(options)
 
 export class DockerHubClient {
-  private readonly matchers: Set<TagMatch> = new Set<TagMatch>()
+  private readonly matchers: Set<TagMatcher> = new Set<TagMatcher>()
 
   auth: Authentication
   namespaces: Namespaces
@@ -41,43 +44,40 @@ export class DockerHubClient {
     }
   }
 
-  match(matcher: TagMatch): DockerHubClient {
+  match(matcher: TagMatcher): DockerHubClient {
     this.matchers.add(matcher)
     return this
   }
 
-  async find(username: string, repository: string): Promise<Tag[]> {
+  async find(repository: string, reverse: boolean = false): Promise<Tag[]> {
     const matchers = Array.from(this.matchers.values())
-    const source = await this.tags.list(username, repository)
+    const source = await this.tags.list(repository)
 
     this.matchers.clear()
 
     return Promise.resolve(
-      matchers.reduce<Tag[]>(
-        (tags, matcher) => this.tag_match(matcher, tags),
-        source.results.map(tag => ({ repository: tag, version: TagVersionParse(tag.name) })),
-      ),
+      matchers
+        .reduce<Tag[]>((tags, matcher) => tagMatch(tags, matcher), tagResolveAll(tagMap(source.results)))
+        .filter(tag => tag.version)
+        .sort(tagSort(reverse)),
     )
   }
 
-  async latest(username: string, repository: string): Promise<Tag | null> {
-    const found = await this.find(username, repository)
+  async latest(repository: string): Promise<Tag | null> {
+    const tags = await this.find(repository)
 
-    return found.reduce<Tag | null>(
-      (tag, current) => (tag && compare(current.repository.name, tag.repository.name, '<') ? tag : current),
-      null,
-    )
-  }
-
-  private tag_match(matcher: TagMatch, tags: Tag[]): Tag[] {
-    return tags.reduce<Tag[]>((results, tag) => {
-      const matches = matcher(tag)
-
-      if (matches) {
-        results.push(tag)
+    const latest = (source: Tag, target: Tag | null) => {
+      if (source.repotag.name === 'latest') {
+        return true
       }
 
-      return results
-    }, [])
+      return target
+        ? validate(source.repotag.name) &&
+            validate(target.repotag.name) &&
+            compare(source.repotag.name, target.repotag.name, '>')
+        : true
+    }
+
+    return tags.reduce<Tag | null>((result, tag) => (latest(tag, result) ? tag : result), null)
   }
 }
