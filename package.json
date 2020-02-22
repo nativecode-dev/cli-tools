@@ -1,6 +1,5 @@
 {
-  "author": "opensource@nativecode.com",
-  "description": "Various CLI tools",
+o "description": "Various CLI tools",
   "homepage": "https://github.com/nativecode-dev/cli-tools#readme",
   "license": "MIT",
   "main": "index.js",
@@ -20,7 +19,7 @@
     "@types/chai": "^4.2.9",
     "@types/chai-as-promised": "^7.1.2",
     "@types/mocha": "^7.0.1",
-    "@types/node": "^13.7.1",
+    "@types/node": "^13.7.4",
     "@types/yargs": "^15.0.3",
     "@types/yargs-interactive": "^2.1.0",
     "chai": "^4.2.0",
@@ -41,7 +40,7 @@
     "tslint": "^6.0.0",
     "tslint-config-standard": "^9.0.0",
     "tslint-no-unused-expression-chai": "^0.1.4",
-    "typescript": "^3.7.5"
+    "typescript": "^3.8.2"
   },
   "keywords": [],
   "nyc": {
@@ -88,7 +87,6 @@
     "upgrade": "npx npm-check -y && lerna run upgrade"
   },
   "dependencies": {
-    "@nofrills/fs": "^11.0.0",
     "@nofrills/lincoln-debug": "^11.0.0",
     "yargs": "^15.1.0"
   }

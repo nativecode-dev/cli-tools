@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "@types/execa": "^2.0.0",
-    "@types/node": "^13.7.1",
+    "@types/node": "^13.7.4",
     "@types/yargs": "^15.0.3",
     "@types/yargs-interactive": "^2.1.0",
     "ts-node": "^8.6.2"
