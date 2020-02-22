@@ -1,5 +1,5 @@
 {
-o "description": "Various CLI tools",
+  "description": "Various CLI tools",
   "homepage": "https://github.com/nativecode-dev/cli-tools#readme",
   "license": "MIT",
   "main": "index.js",
