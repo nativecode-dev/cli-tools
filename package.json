@@ -43,26 +43,6 @@
     "typescript": "^3.8.2"
   },
   "keywords": [],
-  "nyc": {
-    "all": true,
-    "exclude": [
-      "node_modules",
-      "**/specs/**/*.spec.ts",
-      "**/index.ts"
-    ],
-    "extension": [
-      ".ts"
-    ],
-    "include": [
-      "**/src/**/*.ts"
-    ],
-    "instrument": true,
-    "report-dir": ".cache/coverage",
-    "reporter": "text",
-    "skip-full": true,
-    "sourceMap": true,
-    "temp-dir": ".cache/nyc"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nativecode-dev/cli-tools.git"

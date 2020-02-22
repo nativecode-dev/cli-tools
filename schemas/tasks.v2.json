@@ -1,0 +1,60 @@
+{
+  "$schema": "./tasks.v2.schema.json",
+  "task_format": [
+    "npm install",
+    "npm run build",
+    "[x]npm test -- echo \"completed\"",
+    "#npm run dockerhub -- tags alpine",
+    "npm install && lerna bootstrap"
+  ],
+  "task_format_full": {
+    "commands": [
+      {
+        "name": "npm",
+        "arguments": [
+          "install"
+        ]
+      },
+      {
+        "name": "npm",
+        "arguments": [
+          "run",
+          "build"
+        ]
+      },
+      {
+        "name": "npm",
+        "arguments": [
+          "test",
+          "--",
+          "\"completed\""
+        ],
+        "exitOnFail": true,
+        "runnable": false
+      },
+      {
+        "name": "npm",
+        "arguments": [
+          "run",
+          "dockerhub",
+          "--",
+          "\"completed\""
+        ]
+      },
+      {
+        "name": "npm",
+        "arguments": [
+          "install"
+        ],
+        "exitOnFail": true
+      },
+      {
+        "name": "npm",
+        "arguments": [
+          "bootstrap"
+        ],
+        "exitOnFail": true
+      }
+    ]
+  }
+}

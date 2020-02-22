@@ -1,0 +1,52 @@
+{
+  "definitions": {
+    "format_full": {
+      "$id": "#format_full",
+      "type": "object",
+      "properties": {
+        "commands": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "arguments": {
+                "type": "array",
+                "items": {
+                  "pattern": "^(.*)$",
+                  "type": "string"
+                }
+              },
+              "exitOnFail": {
+                "type": "boolean"
+              },
+              "name": {
+                "type": "string"
+              },
+              "runnable": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    },
+    "format_short": {
+      "$id": "#format_short",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "$schema": "http://json-schema.org/schema",
+  "$id": "http://nativecode.com/tasks.json",
+  "title": "tasks",
+  "oneOf": [
+    {
+      "$ref": "#/definitions/format_full"
+    },
+    {
+      "$ref": "#/definitions/format_short"
+    }
+  ]
+}

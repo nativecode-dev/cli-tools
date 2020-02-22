@@ -37,24 +37,9 @@
   },
   "types": "./bin/index.d.ts",
   "dependencies": {
-    "@nofrills/console": "^11.0.0",
-    "@nofrills/fs": "^11.0.0",
-    "@nofrills/lincoln-debug": "^11.0.0",
-    "@nofrills/patterns": "^10.0.1",
-    "@nofrills/scrubs": "^11.0.0",
-    "@nofrills/types": "^10.0.2",
-    "chalk": "^3.0.0",
-    "deepmerge": "^4.2.2",
-    "execa": "^4.0.0",
-    "get-stream": "^5.1.0",
-    "yargs": "^15.1.0",
-    "yargs-interactive": "^3.0.0"
+    "yargs": "^15.1.0"
   },
   "devDependencies": {
-    "@types/execa": "^2.0.0",
-    "@types/node": "^13.7.4",
-    "@types/yargs": "^15.0.3",
-    "@types/yargs-interactive": "^2.1.0",
-    "ts-node": "^8.6.2"
+    "@types/yargs": "^15.0.3"
   }
 }
