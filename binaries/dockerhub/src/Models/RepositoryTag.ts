@@ -1,7 +1,9 @@
+import { RepositoryImage } from './RepositoryImage'
+
 export interface RepositoryTag {
   name: string
   full_size: number
-  images: string[]
+  images: RepositoryImage[]
   id: number
   repository: number
   creator: number

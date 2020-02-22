@@ -1,8 +1,8 @@
 import { Tag } from '../Tag'
-import { TagMatch } from '../TagMatch'
+import { TagMatcher } from '../TagMatcher'
 
-export function OnlyReleases(): TagMatch {
+export function OnlyReleases(): TagMatcher {
   return (tag: Tag) => {
-    return tag.version !== null && tag.version.prerelease === undefined
+    return tag.references.length === 0 || (tag.version !== null && tag.version.prerelease === undefined)
   }
 }

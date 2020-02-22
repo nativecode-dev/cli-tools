@@ -7,7 +7,7 @@
   "name": "@nofrills/dockerhub",
   "private": false,
   "types": "bin/index.d.ts",
-  "version": "0.6.0",
+  "version": "0.7.0-next.0",
   "bin": {
     "dh": "bin/index.js",
     "dockerhub": "bin/index.js"
@@ -17,8 +17,10 @@
   },
   "dependencies": {
     "@nativecode/rest-client": "^2.4.1",
+    "@nofrills/fs": "^11.0.0",
     "compare-versions": "^3.6.0",
     "deepmerge": "^4.2.2",
+    "fast-deep-equal": "^3.1.1",
     "node-fetch": "^2.6.0",
     "yargs": "^15.1.0"
   },
@@ -44,6 +46,7 @@
     "upgrade": "npx npm-check -y"
   },
   "devDependencies": {
+    "@types/adm-zip": "^0.4.32",
     "@types/deepmerge": "^2.2.0",
     "@types/node-fetch": "^2.5.4",
     "@types/yargs": "^15.0.3",

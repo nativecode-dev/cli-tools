@@ -1,3 +1,18 @@
+export * from './DockerHubClient'
+export * from './Tag'
+export * from './TagMap'
+export * from './TagMatch'
+export * from './TagMatcher'
+export * from './TagResolve'
+export * from './TagResolveAll'
+export * from './TagSort'
+export * from './TagVersion'
+export * from './TagVersionParse'
+
+export * from './Matchers'
+export * from './Models'
+export * from './Resources'
+
 import yargs from 'yargs'
 
 import { DockerHubFormat } from './DockerHubFormat'

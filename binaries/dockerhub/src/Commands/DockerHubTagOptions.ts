@@ -8,7 +8,7 @@ export interface DockerHubTagOptions extends DockerHubOptions {
   repository: string
   semverOnly: boolean
   startsWith: string[]
-  username: string
+  reverse: boolean
 
   limit?: string
   tag?: string

@@ -20,7 +20,7 @@ export class DockerHubRepo implements CommandModule<{}, DockerHubRepoOptions> {
 
     const client = new DockerHubClient(config.auth_token)
     const repos = await client.repositories.list(args.username || config.username)
-    repos.results.forEach(repo => console.log(repo.name))
+    repos.results.sort((a, b) => (a.name > b.name ? 1 : -1)).map(repo => console.log(repo.name))
   }
 }
 

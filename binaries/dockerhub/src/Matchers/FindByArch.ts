@@ -1,7 +1,7 @@
 import { Tag } from '../Tag'
-import { TagMatch } from '../TagMatch'
+import { TagMatcher } from '../TagMatcher'
 
-export function FindByArch(arch: string): TagMatch {
+export function FindByArch(arch: string): TagMatcher {
   return (tag: Tag) => {
     if (tag.version && tag.version.arch === arch.toLowerCase()) {
       return false

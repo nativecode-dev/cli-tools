@@ -1,0 +1,49 @@
+{
+  "author": "opensource@nativecode.com",
+  "description": "Chest",
+  "homepage": "https://github.com/nativecode-dev/cli-tools",
+  "license": "MIT",
+  "main": "bin/index.js",
+  "name": "@beard/chest",
+  "private": true,
+  "types": "bin/index.d.ts",
+  "version": "0.0.1-next.0",
+  "bin": {
+    "chest": "bin/index.js"
+  },
+  "bugs": {
+    "url": "https://github.com/nativecode-dev/cli-tools/issues"
+  },
+  "dependencies": {
+    "@nofrills/fs": "^11.0.0",
+    "glob": "^7.1.6",
+    "ini": "^1.3.5",
+    "yargs": "^15.1.0"
+  },
+  "directories": {
+    "lib": "bin",
+    "test": "specs"
+  },
+  "engine": {
+    "node": ">=8.10.49"
+  },
+  "files": [
+    "bin"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nativecode-dev/cli-tools.git"
+  },
+  "scripts": {
+    "build": "ts-node ../tasks/src/cli-tasks build",
+    "upgrade": "npm-check -y"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.1",
+    "@types/ini": "^1.3.30",
+    "@types/yargs": "^15.0.3"
+  }
+}
