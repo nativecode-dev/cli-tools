@@ -53,6 +53,7 @@
     "commit": "git add -A . && git cz",
     "exec:dh": "ts-node binaries/dockerhub/src/index.ts",
     "exec:chest": "ts-node binaries/chest/src/index.ts",
+    "exec:task": "ts-node binaries/tasks/src/index.ts",
     "lerna": "lerna",
     "task": "cli-tasks",
     "test": "nyc mocha",
