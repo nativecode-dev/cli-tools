@@ -56,7 +56,7 @@ describe('when using DockerHubClient', () => {
 
     it('should filter tags that start with "v"', async () => {
       const results = await client.match(StartsWith('v')).find('linuxserver/radarr')
-      expect(results.every(result => result.repository.name.startsWith('v'))).to.be.true
+      expect(results.every(result => result.repotag.name.startsWith('v'))).to.be.true
     })
   })
 })

@@ -18,7 +18,7 @@ const VALID_VERSIONS = [
   'armv7-v4.1.5.9342-ls3',
 ]
 
-const INVALID_VERSIONS = ['latest', 'amd64-latest', '20190228']
+const INVALID_VERSIONS = ['latest', 'amd64-latest']
 
 describe('when using TagVersionParse', () => {
   it('should test valid versions', () =>
