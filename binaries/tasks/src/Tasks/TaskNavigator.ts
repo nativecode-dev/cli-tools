@@ -10,14 +10,6 @@ interface Step {
 export class TaskNavigator {
   constructor(protected readonly task: TaskV2) {}
 
-  getStepEntries(name: string) {
-    return this.steps(this.task)
-      .filter(step => step.name === name)
-      .map(step => step.entries.filter(entry => entry.type !== TaskEntryType.parallel))
-      .reduce((entries, entry) => entries.concat(entry), [])
-      .filter(entry => entry.type !== TaskEntryType.skip)
-  }
-
   getParallelEntries(name: string) {
     return this.steps(this.task)
       .filter(step => step.name === name)
@@ -26,10 +18,18 @@ export class TaskNavigator {
       .filter(entry => entry.type !== TaskEntryType.skip)
   }
 
-  getTopLevelStepNames(): string[] {
+  getRunnableEntries(): string[] {
     return this.steps(this.task)
       .filter(step => step.name.includes(':') === false)
       .map(step => step.name)
+  }
+
+  getStepEntries(name: string) {
+    return this.steps(this.task)
+      .filter(step => step.name === name)
+      .map(step => step.entries.filter(entry => entry.type !== TaskEntryType.parallel))
+      .reduce((entries, entry) => entries.concat(entry), [])
+      .filter(entry => entry.type !== TaskEntryType.skip)
   }
 
   private steps(task: TaskV2): Step[] {
