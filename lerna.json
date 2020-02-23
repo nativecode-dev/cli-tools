@@ -21,7 +21,7 @@
     },
     "run": {
       "stream": true
-    },
+    }
   },
   "loglevel": "error",
   "npmClient": "npm",
