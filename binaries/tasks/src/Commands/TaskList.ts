@@ -11,7 +11,7 @@ export class TaskList implements CommandModule<{}, TaskListOptions> {
 
   builder: CommandBuilder<{}, TaskListOptions> = {
     origin: {
-      alias: 'c',
+      alias: 'o',
       default: false,
       type: 'boolean',
     },
