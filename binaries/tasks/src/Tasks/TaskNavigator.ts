@@ -13,7 +13,7 @@ export class TaskNavigator {
   getStepEntries(name: string) {
     return this.steps(this.task)
       .filter(step => step.name === name)
-      .map(step => step.entries.filter(entry => entry.type === TaskEntryType.parallel))
+      .map(step => step.entries.filter(entry => entry.type !== TaskEntryType.parallel))
       .reduce((entries, entry) => entries.concat(entry), [])
       .filter(entry => entry.type !== TaskEntryType.skip)
   }

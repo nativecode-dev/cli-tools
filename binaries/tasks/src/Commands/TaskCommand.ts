@@ -2,11 +2,12 @@ import { CommandBuilder, CommandModule, Argv } from 'yargs'
 
 import { TaskRunCommand } from './TaskRun'
 import { TaskListCommand } from './TaskList'
+import { ShebangCommand } from './TaskShebang'
+
 import { TaskRunOptions } from './TaskRunOptions'
 import { TaskListOptions } from './TaskListOptions'
 import { TaskCommandOptions } from './TaskCommandOptions'
 import { TaskShebangOptions } from './TaskShebangOptions'
-import { ShebangCommand } from './TaskShebang'
 
 export class TaskCommand implements CommandModule<{}, TaskCommandOptions> {
   command = '$0 <command>'
@@ -25,6 +26,12 @@ export class TaskCommand implements CommandModule<{}, TaskCommandOptions> {
       .option('no-ignore-empty-lines', {
         default: true,
         type: 'boolean',
+      })
+      .option('log-levels', {
+        alias: 'l',
+        array: true,
+        default: ['info'],
+        type: 'string',
       })
       .command<TaskListOptions>(TaskListCommand)
       .command<TaskRunOptions>(TaskRunCommand)

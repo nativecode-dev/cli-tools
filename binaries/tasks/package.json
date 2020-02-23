@@ -38,6 +38,9 @@
   },
   "types": "./bin/index.d.ts",
   "dependencies": {
+    "@nnode/common": "0.0.1-canary.22",
+    "@nnode/lincoln": "0.0.1-canary.22",
+    "@nnode/lincoln-debug": "0.0.1-canary.22",
     "@nofrills/fs": "^11.0.0",
     "cli-progress": "^3.6.0",
     "execa": "^4.0.0",

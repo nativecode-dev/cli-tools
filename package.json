@@ -20,8 +20,8 @@
     }
   },
   "scripts": {
-    "build": "lerna run build",
-    "build:ci": "lerna run build",
+    "build": "ts-node binaries/tasks/src build",
+    "build:ci": "ts-node binaries/tasks/src build:ci",
     "commit": "git add -A . && git cz",
     "configure:git": ".citools/setup-git ${BUILD_REPO_BRANCH} ${BUILD_REPO_GIT} ${BUILD_REPO_EMAIL}",
     "configure:ssh": ".citools/setup-ssh ${BUILD_REPO_DOMAIN} ${BUILD_REPO_SSHKEY_PATH} ${BUILD_REPO_DOMAIN_SSH}",
@@ -30,13 +30,12 @@
     "exec:task": "ts-node binaries/tasks/src/index.ts",
     "lerna": "lerna",
     "prepare": "lerna bootstrap",
-    "pretest": "lerna run build",
     "release": ".citools/lerna-publish release",
     "release:canary": ".citools/lerna-publish canary",
     "release:pre": ".citools/lerna-publish prerelease",
     "task": "cli-tasks",
-    "test": "nyc mocha",
-    "test:ci": "nyc mocha",
+    "test": "ts-node binaries/tasks/src test",
+    "test:ci": "ts-node binaries/tasks/src test:ci",
     "upgrade": "npx npm-check -y && lerna run upgrade"
   },
   "dependencies": {

@@ -1,11 +1,14 @@
 import { fs } from '@nofrills/fs'
 
+import { Logger } from '../Logging'
 import { TaskV1 } from '../Models/TaskV1'
 import { TaskV2 } from '../Models/TaskV2'
 import { TaskBuilder } from './TaskBuilder'
 import { TaskNavigator } from './TaskNavigator'
 
 export const TASK_LOADER_FILES = ['.tasks.json', 'tasks.json']
+
+const log = Logger.extend('loader')
 
 function convertFromV1(task: TaskV1): TaskV2 {
   return { options: {}, steps: task.tasks }
@@ -23,6 +26,8 @@ async function fromPackage(cwd: string): Promise<TaskV2 | null> {
   if (await fs.exists(filename)) {
     const task = await fs.json<TaskV1>(filename)
 
+    log.trace('from-package', filename, task)
+
     if (task.tasks && isTaskArray(task.tasks)) {
       return convertFromV1(task)
     }
@@ -37,6 +42,8 @@ async function fromTaskConfig(cwd: string): Promise<TaskV2 | null> {
 
     if (await fs.exists(taskfile)) {
       const config = await fs.json<any>(taskfile)
+
+      log.trace('from-config', taskfile, config)
 
       if (isTaskArray(config)) {
         return convertFromV1({ tasks: config })
@@ -69,6 +76,7 @@ export async function taskConfigLoader(cwd: string): Promise<TaskNavigator | nul
 
   if (taskFromConfig !== null) {
     const config = TaskBuilder.from(taskFromConfig)
+    log.trace('build-config', config)
     return new TaskNavigator(config)
   }
 
@@ -76,6 +84,7 @@ export async function taskConfigLoader(cwd: string): Promise<TaskNavigator | nul
 
   if (tasksFromPackage !== null) {
     const config = TaskBuilder.from(tasksFromPackage)
+    log.trace('build-package', config)
     return new TaskNavigator(config)
   }
 

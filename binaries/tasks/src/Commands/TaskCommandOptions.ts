@@ -7,4 +7,5 @@ export interface TaskCommandOptions extends Arguments {
   config: string
   cwd: string
   runner?: TaskRunnerOptions
+  logLevels: string[]
 }

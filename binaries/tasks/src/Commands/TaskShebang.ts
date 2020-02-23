@@ -1,10 +1,10 @@
 import { CommandModule, CommandBuilder } from 'yargs'
 
+import { Shebang } from '../Tasks/Shebang'
 import { TaskShebangOptions } from './TaskShebangOptions'
-import { Shebang } from '../Shebang'
 
 export class TaskShebang implements CommandModule<{}, TaskShebangOptions> {
-  aliases = ['shebang', '!']
+  aliases = ['bang', 'shebang', '!']
   command = 'shebang'
 
   builder: CommandBuilder<{}, TaskShebangOptions> = {}

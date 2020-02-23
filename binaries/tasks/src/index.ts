@@ -1,7 +1,7 @@
 import yargs from 'yargs'
 
-import { TaskCommandOptions } from './Commands/TaskCommandOptions'
 import { DefaultCommand } from './Commands/TaskCommand'
+import { TaskCommandOptions } from './Commands/TaskCommandOptions'
 
 yargs
   .scriptName('tasks')
