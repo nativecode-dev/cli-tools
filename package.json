@@ -33,7 +33,6 @@
     "release": ".citools/lerna-publish release",
     "release:canary": ".citools/lerna-publish canary",
     "release:pre": ".citools/lerna-publish prerelease",
-    "task": "cli-tasks",
     "test": "ts-node binaries/tasks/src test",
     "test:ci": "ts-node binaries/tasks/src test:ci",
     "upgrade": "npx npm-check -y && lerna run upgrade"
@@ -43,7 +42,6 @@
     "yargs": "~15.1.0"
   },
   "devDependencies": {
-    "@nofrills/tasks": "^10.0.3",
     "@types/chai": "~4.2.9",
     "@types/chai-as-promised": "~7.1.2",
     "@types/mocha": "~7.0.1",
