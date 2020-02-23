@@ -7,6 +7,6 @@ yargs
   .scriptName('tasks')
   .command<TaskCommandOptions>(DefaultCommand)
   .recommendCommands()
-  .showHelpOnFail(process.env.TASKS_SHOW_HELP_ON_FAIL === 'true' || false)
+  .showHelpOnFail(process.env.TASKS_SHOW_HELP_ON_FAIL === 'false' || true)
   .version()
   .parse()
