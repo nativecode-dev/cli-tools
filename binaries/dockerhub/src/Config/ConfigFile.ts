@@ -1,4 +1,5 @@
 import { fs } from '@nofrills/fs'
+import { Merge } from '@nnode/common'
 
 import { Config } from './Config'
 
@@ -20,7 +21,7 @@ export class ConfigFile {
   static async save(filename: string, config: Config): Promise<Config> {
     if (await fs.exists(filename)) {
       const current = await fs.json<Config>(filename)
-      return { ...DefaultConfig, ...config, ...current }
+      return Merge<Config>(DefaultConfig, config, current)
     }
 
     await fs.save(filename, config)

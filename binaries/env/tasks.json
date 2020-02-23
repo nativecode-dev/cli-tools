@@ -12,7 +12,7 @@
       "rimraf *.tsbuildinfo"
     ],
     "shebang": [
-      "ts-node ../tasks/src/cli-shebang"
+      "ts-node ../tasks/src shebang"
     ]
   }
 }

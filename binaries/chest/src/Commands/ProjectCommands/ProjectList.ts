@@ -25,8 +25,7 @@ export class ProjectList implements CommandModule<{}, ProjectListOptions> {
     args.filtered_projects = group.projects.filter(project => {
       const filteredByName = args.project_name === project.name
       const filteredByType = args.type === project.type
-      const hasProjectName = args.project_name === undefined
-      return hasProjectName || filteredByName || filteredByType ? true : false
+      return filteredByName || filteredByType ? true : false
     })
 
     return output(args.filtered_projects, args.format)

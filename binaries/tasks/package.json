@@ -14,8 +14,9 @@
   "homepage": "https://github.com/nativecode-dev/cli-tools",
   "author": "opensource@nativecode.com",
   "bin": {
-    "cli-shebang": "./bin/cli-shebang.js",
-    "cli-tasks": "./bin/cli-tasks.js"
+    "cli-task": "./bin/index.js",
+    "cli-tasks": "./bin/index.js",
+    "tasks": "./bin/index.js"
   },
   "main": "./src/index.ts",
   "files": [
@@ -29,7 +30,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "ts-node src/cli-tasks build",
+    "build": "ts-node src build",
     "upgrade": "npx npm-check -y"
   },
   "engine": {
@@ -37,24 +38,18 @@
   },
   "types": "./bin/index.d.ts",
   "dependencies": {
-    "@nofrills/console": "^11.0.0",
+    "@nnode/common": "0.0.1-canary.22",
+    "@nnode/lincoln": "0.0.1-canary.22",
+    "@nnode/lincoln-debug": "0.0.1-canary.22",
     "@nofrills/fs": "^11.0.0",
-    "@nofrills/lincoln-debug": "^11.0.0",
-    "@nofrills/patterns": "^10.0.1",
-    "@nofrills/scrubs": "^11.0.0",
-    "@nofrills/types": "^10.0.2",
-    "chalk": "^3.0.0",
-    "deepmerge": "^4.2.2",
+    "cli-progress": "^3.6.0",
     "execa": "^4.0.0",
-    "get-stream": "^5.1.0",
-    "yargs": "^15.1.0",
-    "yargs-interactive": "^3.0.0"
+    "promise-parallel-throttle": "^3.3.0",
+    "rxjs": "^6.5.4",
+    "yargs": "~15.1.0"
   },
   "devDependencies": {
-    "@types/execa": "^2.0.0",
-    "@types/node": "^13.7.4",
-    "@types/yargs": "^15.0.3",
-    "@types/yargs-interactive": "^2.1.0",
-    "ts-node": "^8.6.2"
+    "@types/cli-progress": "^3.4.2",
+    "@types/yargs": "~15.0.3"
   }
 }

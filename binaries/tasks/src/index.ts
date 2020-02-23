@@ -1,13 +1,12 @@
-export * from './errors/index'
+import yargs from 'yargs'
 
-export * from './tasks/Shebang'
-export * from './models/Task'
-export * from './tasks/TaskBuilder'
-export * from './models/TaskConfig'
-export * from './models/TaskDefinitions'
-export * from './models/TaskEntry'
-export * from './models/TaskEntryType'
-export * from './models/TaskJob'
-export * from './models/TaskJobResult'
-export * from './runners/TaskRunner'
-export * from './runners/TaskRunnerAdapter'
+import { DefaultCommand } from './Commands/TaskCommand'
+import { TaskCommandOptions } from './Commands/TaskCommandOptions'
+
+yargs
+  .scriptName('tasks')
+  .command<TaskCommandOptions>(DefaultCommand)
+  .recommendCommands()
+  .showHelpOnFail(process.env.TASKS_SHOW_HELP_ON_FAIL === 'false' || true)
+  .version()
+  .parse()

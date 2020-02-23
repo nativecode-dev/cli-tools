@@ -1,52 +1,52 @@
 {
-  "author": "opensource@nativecode.com",
-  "description": "Simple environment tasks.",
-  "homepage": "https://github.com/nativecode-dev/cli-tools",
-  "license": "MIT",
-  "main": "./bin/index.js",
   "name": "@nofrills/cli-env",
-  "private": false,
-  "types": "./bin/index.d.ts",
   "version": "1.0.3",
-  "bin": {
-    "cli-env": "./bin/cli-env.js"
-  },
-  "bugs": {
-    "url": "https://github.com/nativecode-dev/cli-tools/issues"
-  },
-  "dependencies": {
-    "@nofrills/console": "^11.0.0",
-    "@nofrills/fs": "^11.0.0",
-    "@nofrills/lincoln-debug": "^11.0.0",
-    "yargs": "^15.1.0",
-    "yargs-interactive": "^3.0.0"
-  },
-  "devDependencies": {
-    "@types/node": "^13.7.4",
-    "@types/pegjs": "^0.10.1",
-    "@types/yargs": "^15.0.3",
-    "@types/yargs-interactive": "^2.1.0",
-    "ts-node": "^8.6.2"
-  },
-  "directories": {
-    "lib": "bin",
-    "test": "specs"
-  },
-  "engine": {
-    "node": ">=8.10.49"
-  },
-  "files": [
-    "bin"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
+  "description": "Simple environment tasks.",
+  "license": "MIT",
+  "private": false,
   "repository": {
     "type": "git",
     "url": "https://github.com/nativecode-dev/cli-tools.git"
   },
+  "bugs": {
+    "url": "https://github.com/nativecode-dev/cli-tools/issues"
+  },
+  "homepage": "https://github.com/nativecode-dev/cli-tools",
+  "author": "opensource@nativecode.com",
+  "bin": {
+    "cli-env": "./bin/cli-env.js"
+  },
+  "main": "./bin/index.js",
+  "files": [
+    "bin"
+  ],
+  "directories": {
+    "lib": "bin",
+    "test": "specs"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
-    "build": "ts-node ../tasks/src/cli-tasks build",
+    "build": "ts-node ../tasks/src build",
     "upgrade": "npx npm-check -y"
+  },
+  "engine": {
+    "node": ">=8.10.49"
+  },
+  "types": "./bin/index.d.ts",
+  "dependencies": {
+    "@nofrills/console": "^11.0.0",
+    "@nofrills/fs": "^11.0.0",
+    "@nofrills/lincoln-debug": "^11.0.0",
+    "yargs": "~15.1.0",
+    "yargs-interactive": "~3.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "~13.7.4",
+    "@types/pegjs": "~0.10.1",
+    "@types/yargs": "~15.0.3",
+    "@types/yargs-interactive": "~2.1.0",
+    "ts-node": "~8.6.2"
   }
 }

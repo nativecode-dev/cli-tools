@@ -4,6 +4,11 @@ dist
 lib
 *.tsbuildinfo
 
+*.d.ts
+*.d.ts.map
+*.js
+*.js.map
+
 # Logs
 logs
 *.log

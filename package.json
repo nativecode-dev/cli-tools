@@ -1,93 +1,73 @@
 {
-  "description": "Various CLI tools",
-  "homepage": "https://github.com/nativecode-dev/cli-tools#readme",
-  "license": "MIT",
-  "main": "index.js",
   "name": "cli-tools",
-  "private": true,
   "version": "0.0.0",
+  "description": "Various CLI tools",
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nativecode-dev/cli-tools.git"
+  },
   "bugs": {
     "url": "https://github.com/nativecode-dev/cli-tools/issues"
   },
+  "homepage": "https://github.com/nativecode-dev/cli-tools#readme",
+  "keywords": [],
+  "main": "index.js",
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-  "devDependencies": {
-    "@nofrills/tasks": "^10.0.3",
-    "@types/chai": "^4.2.9",
-    "@types/chai-as-promised": "^7.1.2",
-    "@types/mocha": "^7.0.1",
-    "@types/node": "^13.7.4",
-    "@types/yargs": "^15.0.3",
-    "@types/yargs-interactive": "^2.1.0",
-    "chai": "^4.2.0",
-    "chai-as-promised": "^7.1.1",
-    "commitizen": "^4.0.3",
-    "coveralls": "^3.0.9",
-    "cross-env": "^7.0.0",
-    "cz-conventional-changelog": "^3.1.0",
-    "git-ssh-key": "^1.1.0",
-    "lerna": "^3.20.2",
-    "lerna-update-wizard": "^0.17.7",
-    "mocha": "^7.0.1",
-    "nyc": "^15.0.0",
-    "prettier": "^1.19.1",
-    "rimraf": "^3.0.2",
-    "source-map-support": "^0.5.16",
-    "ts-node": "^8.6.2",
-    "tslint": "^6.0.0",
-    "tslint-config-standard": "^9.0.0",
-    "tslint-no-unused-expression-chai": "^0.1.4",
-    "typescript": "^3.8.2"
-  },
-  "keywords": [],
-  "nyc": {
-    "all": true,
-    "exclude": [
-      "node_modules",
-      "**/specs/**/*.spec.ts",
-      "**/index.ts"
-    ],
-    "extension": [
-      ".ts"
-    ],
-    "include": [
-      "**/src/**/*.ts"
-    ],
-    "instrument": true,
-    "report-dir": ".cache/coverage",
-    "reporter": "text",
-    "skip-full": true,
-    "sourceMap": true,
-    "temp-dir": ".cache/nyc"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nativecode-dev/cli-tools.git"
-  },
   "scripts": {
-    "build": "lerna run build",
-    "build:ci": "lerna run build",
+    "build": "ts-node binaries/tasks/src build",
+    "build:ci": "ts-node binaries/tasks/src build:ci",
     "commit": "git add -A . && git cz",
-    "exec:dh": "ts-node binaries/dockerhub/src/index.ts",
-    "exec:chest": "ts-node binaries/chest/src/index.ts",
-    "lerna": "lerna",
-    "task": "cli-tasks",
-    "test": "nyc mocha",
-    "pretest": "lerna run build",
-    "test:ci": "nyc mocha",
     "configure:git": ".citools/setup-git ${BUILD_REPO_BRANCH} ${BUILD_REPO_GIT} ${BUILD_REPO_EMAIL}",
     "configure:ssh": ".citools/setup-ssh ${BUILD_REPO_DOMAIN} ${BUILD_REPO_SSHKEY_PATH} ${BUILD_REPO_DOMAIN_SSH}",
+    "exec:chest": "ts-node binaries/chest/src/index.ts",
+    "exec:dh": "ts-node binaries/dockerhub/src/index.ts",
+    "exec:task": "ts-node binaries/tasks/src/index.ts",
+    "lerna": "lerna",
     "prepare": "lerna bootstrap",
     "release": ".citools/lerna-publish release",
     "release:canary": ".citools/lerna-publish canary",
     "release:pre": ".citools/lerna-publish prerelease",
+    "task": "cli-tasks",
+    "test": "ts-node binaries/tasks/src test",
+    "test:ci": "ts-node binaries/tasks/src test:ci",
     "upgrade": "npx npm-check -y && lerna run upgrade"
   },
   "dependencies": {
     "@nofrills/lincoln-debug": "^11.0.0",
-    "yargs": "^15.1.0"
+    "yargs": "~15.1.0"
+  },
+  "devDependencies": {
+    "@nofrills/tasks": "^10.0.3",
+    "@types/chai": "~4.2.9",
+    "@types/chai-as-promised": "~7.1.2",
+    "@types/mocha": "~7.0.1",
+    "@types/node": "~13.7.4",
+    "@types/yargs": "~15.0.3",
+    "@types/yargs-interactive": "~2.1.0",
+    "chai": "~4.2.0",
+    "chai-as-promised": "~7.1.1",
+    "commitizen": "~4.0.3",
+    "coveralls": "~3.0.9",
+    "cross-env": "~7.0.0",
+    "cz-conventional-changelog": "~3.1.0",
+    "git-ssh-key": "~1.1.0",
+    "lerna": "~3.20.2",
+    "lerna-update-wizard": "~0.17.7",
+    "mocha": "~7.0.1",
+    "nyc": "~15.0.0",
+    "prettier": "~1.19.1",
+    "rimraf": "~3.0.2",
+    "source-map-support": "~0.5.16",
+    "ts-node": "~8.6.2",
+    "tslint": "~6.0.0",
+    "tslint-config-standard": "~9.0.0",
+    "tslint-no-unused-expression-chai": "~0.1.4",
+    "typescript": "~3.8.2"
   }
 }
