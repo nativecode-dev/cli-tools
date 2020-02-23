@@ -16,20 +16,39 @@ export class TaskExecutor extends Subject<TaskRunnerResult> {
   private readonly log = Logger.extend('task-executor')
 
   async execute(entry: TaskEntry, runner: TaskRunnerOptions): Promise<TaskRunnerResult> {
-    const options: execa.Options<string> = { detached: entry.type === TaskEntryType.detached }
+    const options: execa.Options<string> = {
+      detached: entry.type === TaskEntryType.detached,
+      shell: entry.type === TaskEntryType.shell
+    }
 
     this.log.info('execute', [entry.name, ...entry.args].join(' '))
 
-    if (runner.streaming) {
-      const stream = this.stream(entry, options)
-      const results = await stream
-      this.complete()
-      return this.createResult(entry, results)
-    }
+    try {
+      if (runner.streaming) {
+        const stream = this.stream(entry, options)
+        const results = await stream
+        this.complete()
+        return this.createResult(entry, results)
+      }
 
-    const result = await this.sync(entry, options)
-    this.complete()
-    return result
+      const result = await this.sync(entry, options)
+      this.complete()
+      return result
+    } catch (error) {
+      this.error(error)
+
+      if (this.shouldBail(entry)) {
+        process.exit(1)
+      }
+
+      return {
+        entry,
+        command: [entry.name, ...entry.args].join(' '),
+        exitCode: process.exitCode || 1,
+        stderr: [],
+        stdout: [],
+      }
+    }
   }
 
   private broadcast(result: TaskRunnerResult): TaskRunnerResult {
@@ -57,51 +76,42 @@ export class TaskExecutor extends Subject<TaskRunnerResult> {
   }
 
   private stream(entry: TaskEntry, options: execa.Options): execa.ExecaChildProcess {
-    try {
-      const child = execa(entry.name, entry.args, {
-        ...options,
-        ...{ stderr: process.stderr, stdin: process.stdin, stdout: process.stdout },
-      })
+    const child = execa(entry.name, entry.args, {
+      ...options,
+      ...{ stderr: process.stderr, stdin: process.stdin, stdout: process.stdout },
+    })
 
-      if (child.stderr) {
-        child.stderr.pipe(process.stderr)
-      }
-
-      if (child.stdout) {
-        child.stdout.pipe(process.stdout)
-      }
-
-      return child
-    } catch (error) {
-      this.error(error)
-      process.exit(error.errno)
+    if (child.stderr) {
+      child.stderr.pipe(process.stderr)
     }
+
+    if (child.stdout) {
+      child.stdout.pipe(process.stdout)
+    }
+
+    return child
   }
 
   private async sync(entry: TaskEntry, options: execa.Options): Promise<TaskRunnerResult> {
     const command = [entry.name].concat(entry.args).join(' ')
 
-    try {
-      const results = await execa.command(
-        command,
-        Merge<execa.Options>(options, {
-          stderr: process.stderr,
-          stdin: process.stdin,
-          stdout: process.stdout,
-        }),
-      )
+    const results = await execa.command(
+      command,
+      Merge<execa.Options>(options, {
+        stderr: process.stderr,
+        stdin: process.stdin,
+        stdout: process.stdout,
+      }),
+    )
 
-      if (results.exitCode !== 0) {
-        throw new Error(`executor failed when running: ${command}`)
-      }
-
-      return this.createResult(entry, results)
-    } catch (error) {
-      if ([TaskEntryType.bail, TaskEntryType.exec].includes(entry.type) === false) {
-        this.error(error)
-      }
-
-      process.exit(error.errno)
+    if (results.exitCode !== 0 && this.shouldBail(entry)) {
+      throw new Error(`executor failed when running: ${command}`)
     }
+
+    return this.createResult(entry, results)
+  }
+
+  private shouldBail(entry: TaskEntry): boolean {
+    return [TaskEntryType.bail, TaskEntryType.exec, TaskEntryType.parallel, TaskEntryType.spawn].includes(entry.type)
   }
 }

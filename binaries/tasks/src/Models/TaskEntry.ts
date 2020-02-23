@@ -6,6 +6,7 @@ export interface TaskEntry {
   gid?: number
   name: string
   origin?: string
+  shell?: string | boolean
   type: TaskEntryType
   uid?: number
 }
