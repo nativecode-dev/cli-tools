@@ -29,7 +29,7 @@
   },
   "scripts": {
     "build": "ts-node ../tasks/src build",
-    "upgrade": "npm-check -y"
+    "upgrade": "npx npm-check -y"
   },
   "engine": {
     "node": ">=8.10.49"
