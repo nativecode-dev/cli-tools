@@ -7,7 +7,7 @@ import { RepositoryInfo } from '../src/Models/RepositoryInfo'
 import { StartsWith } from '../src/Matchers/StartsWith'
 
 const DOCKERHUB_USERNAME = process.env.DOCKERHUB_USERNAME || 'username'
-const DOCKERHUB_PASSWORD = process.env.DOCKERHUB_PASSWORD || 'password'
+const DOCKERHUB_PASSWORD = process.env.DOCKERHUB_PASSWORD || process.env.DOCKERHUB_TOKEN || 'password'
 
 function repository(repositories: RepositoryInfo[]): RepositoryInfo {
   return repositories.reduce<RepositoryInfo>(
