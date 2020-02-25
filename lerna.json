@@ -9,11 +9,22 @@
       "conventionalCommits": true,
       "ignoreChanges": [
         "*.md",
+        ".ci-env",
+        ".editorconfig",
+        ".gitattributes",
+        ".gitignore",
+        ".gitlabg-ci-yml",
+        ".gitmodules",
+        ".mocharc.json",
         ".npmignore",
+        ".prettierrc",
+        "lerna.json",
         "LICENSE",
         "package-lock.json",
         "tasks.json",
-        "tsconfig.json"
+        "tsconfig.json",
+        "tsconfig.settings.json",
+        "tslint.json"
       ],
       "loglevel": "verbose",
       "message": "[skip ci] chore(release): publish",
