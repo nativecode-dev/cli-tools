@@ -61,8 +61,8 @@ export class TaskBuilder {
   }
 
   protected createEntry(command: string): TaskEntry {
-    const parts = command.split(' ')
-    const type = this.type(parts[0])
+    const [ cmd, type ] = this.type(command)
+    const parts = cmd.split(' ')
 
     return {
       args: parts.slice(1),
@@ -72,25 +72,31 @@ export class TaskBuilder {
     }
   }
 
-  protected type(command: string): TaskEntryType {
+  protected type(command: string): [string, TaskEntryType] {
     const prefix = command[0]
+    const cmd = command.slice(1)
 
     switch (prefix) {
-      case TaskEntryType.nobail:
-        return TaskEntryType.nobail
-
       case TaskEntryType.env:
-        return TaskEntryType.env
+        return [cmd, TaskEntryType.env]
 
-      case TaskEntryType.spawn:
-        return TaskEntryType.spawn
+      case TaskEntryType.nobail:
+        return [cmd, TaskEntryType.nobail]
+
+      case TaskEntryType.parallel:
+        return [cmd, TaskEntryType.parallel]
 
       case TaskEntryType.skip:
-        return TaskEntryType.skip
+        return [cmd, TaskEntryType.skip]
 
-      default:
-        return TaskEntryType.exec
+      case TaskEntryType.spawn:
+        return [cmd, TaskEntryType.spawn]
+
+      case TaskEntryType.exec:
+        return [cmd, TaskEntryType.exec]
     }
+
+    return [command, TaskEntryType.exec]
   }
 
   protected transform(config: TaskV2): TaskV2 {

@@ -1,5 +1,5 @@
-import { CommandModule, CommandBuilder } from "yargs";
-import { TaskSortOptions } from "./TaskSortOptions";
+import { CommandModule, CommandBuilder } from 'yargs'
+import { TaskSortOptions } from './TaskSortOptions'
 
 export class TaskSort implements CommandModule<{}, TaskSortOptions> {
   aliases = ['sort', 's']

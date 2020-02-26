@@ -1,7 +1,7 @@
 {
   "build": [
     "[clean]",
-    "#[source:format]",
+    "[source:format]",
     "[source:lint]",
     "[build:compile]"
   ],
@@ -43,8 +43,8 @@
     ".citools/lerna-publish prerelease"
   ],
   "source:format": [
-    "prettier --loglevel silent --write \"binaries/*/specs/**/*.ts\"",
-    "prettier --loglevel silent --write \"binaries/*/src/**/*.ts\""
+    "!prettier --write \"binaries/*/specs/**/*.ts\"",
+    "!prettier --write \"binaries/*/src/**/*.ts\""
   ],
   "source:lint": [
     "tslint --project tsconfig.json --config tslint.json"
