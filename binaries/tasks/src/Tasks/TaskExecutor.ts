@@ -97,7 +97,7 @@ export class TaskExecutor extends Subject<TaskRunnerResult> {
 
       return this.createResult(entry, results)
     } catch (error) {
-      if ([TaskEntryType.bail, TaskEntryType.exec].includes(entry.type) === false) {
+      if ([TaskEntryType.exec, TaskEntryType.spawn].includes(entry.type) === false) {
         this.error(error)
       }
 

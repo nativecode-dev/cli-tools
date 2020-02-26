@@ -1,8 +1,8 @@
 export enum TaskEntryType {
-  bail = '!',
   detached = '&',
   env = '$',
   exec = ':',
+  nobail = '!',
   parallel = '|',
   shell = '@',
   skip = '#',

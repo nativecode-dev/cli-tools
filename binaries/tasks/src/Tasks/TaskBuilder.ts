@@ -76,8 +76,8 @@ export class TaskBuilder {
     const prefix = command[0]
 
     switch (prefix) {
-      case TaskEntryType.bail:
-        return TaskEntryType.bail
+      case TaskEntryType.nobail:
+        return TaskEntryType.nobail
 
       case TaskEntryType.env:
         return TaskEntryType.env
