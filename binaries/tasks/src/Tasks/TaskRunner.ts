@@ -22,20 +22,26 @@ export class TaskRunner {
   private readonly log = Logger.extend('task-runner')
 
   static from(
+    cwd: string,
     task: TaskNavigator,
     name: string,
     options: Partial<TaskRunnerOptions> = {},
   ): Promise<TaskRunnerResult[]> {
-    return new TaskRunner().run(task, name, options)
+    return new TaskRunner().run(cwd, task, name, options)
   }
 
-  async run(task: TaskNavigator, name: string, options: Partial<TaskRunnerOptions> = {}): Promise<TaskRunnerResult[]> {
+  async run(
+    cwd: string,
+    task: TaskNavigator,
+    name: string,
+    options: Partial<TaskRunnerOptions> = {},
+  ): Promise<TaskRunnerResult[]> {
     const merged: TaskRunnerOptions = Merge<TaskRunnerOptions>(DefaultTaskRunnerOptions, options)
 
     this.log.trace('run', merged)
 
-    const entries = task.getStepEntries(name).map(entry => () => this.exec(entry, merged))
-    const parallels = task.getParallelEntries(name).map(entry => () => this.exec(entry, merged))
+    const entries = task.getStepEntries(name).map(entry => () => this.exec(cwd, entry, merged))
+    const parallels = task.getParallelEntries(name).map(entry => () => this.exec(cwd, entry, merged))
 
     this.log.trace('run-serial', entries.length, 'run-parallel', parallels.length)
 
@@ -48,16 +54,15 @@ export class TaskRunner {
     return serialResults.concat(parallelResults)
   }
 
-  private async exec(entry: TaskEntry, options: TaskRunnerOptions): Promise<TaskRunnerResult> {
+  private async exec(cwd: string, entry: TaskEntry, options: TaskRunnerOptions): Promise<TaskRunnerResult> {
     const executor = new TaskExecutor()
 
     const sub: Subscription = executor.subscribe(
       result => console.log(...result.stdout),
-      error => console.error(error),
+      error => console.error(error.message),
+      () => sub.unsubscribe(),
     )
 
-    const result = await executor.execute(entry, options)
-    sub.unsubscribe()
-    return result
+    return executor.execute(cwd, entry, options)
   }
 }

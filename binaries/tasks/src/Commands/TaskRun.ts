@@ -1,10 +1,9 @@
 import { CommandModule, CommandBuilder } from 'yargs'
 
-import { taskConfigLoader } from '../Tasks/TaskConfigLoader'
-
-import { TaskRunOptions } from './TaskRunOptions'
-import { TaskConfigNotFound } from '../Errors/TaskConfigNotFound'
 import { TaskRunner } from '../Tasks/TaskRunner'
+import { TaskRunOptions } from './TaskRunOptions'
+import { taskConfigLoader } from '../Tasks/TaskConfigLoader'
+import { TaskConfigNotFound } from '../Errors/TaskConfigNotFound'
 
 export class TaskRun implements CommandModule<{}, TaskRunOptions> {
   aliases = ['run', 'r', '']
@@ -38,9 +37,9 @@ export class TaskRun implements CommandModule<{}, TaskRunOptions> {
     }
 
     if (args.name) {
-      const results = await TaskRunner.from(task, args.name)
+      const results = await TaskRunner.from(args.cwd, task, args.name)
       const failed = results.filter(result => result.exitCode !== 0)
-      failed.map(result => console.error(result))
+      failed.map(result => console.error(result.exitCode))
       return
     }
 

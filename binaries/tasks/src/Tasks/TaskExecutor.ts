@@ -3,23 +3,22 @@ import execa from 'execa'
 import { Subject } from 'rxjs'
 import { Merge } from '@nnode/common'
 
-import { TaskRunnerOptions } from './TaskRunnerOptions'
-
+import { Logger } from '../Logging'
 import { TaskEntry } from '../Models/TaskEntry'
 import { TaskRunnerResult } from './TaskRunnerResult'
 import { TaskEntryType } from '../Models/TaskEntryType'
-
+import { TaskRunnerOptions } from './TaskRunnerOptions'
 import { TaskResultError } from '../Errors/TaskResultError'
-import { Logger } from '../Logging'
 
 export class TaskExecutor extends Subject<TaskRunnerResult> {
   private readonly log = Logger.extend('task-executor')
 
-  async execute(entry: TaskEntry, runner: TaskRunnerOptions): Promise<TaskRunnerResult> {
+  async execute(cwd: string, entry: TaskEntry, runner: TaskRunnerOptions): Promise<TaskRunnerResult> {
     try {
-      const options: execa.Options<string> = { detached: entry.type === TaskEntryType.detached }
+      const options: execa.Options<string> = { cwd, detached: entry.type === TaskEntryType.detached }
+      const command = [entry.name, ...entry.args].join(' ')
 
-      this.log.info('execute', [entry.name, ...entry.args].join(' '))
+      this.log.info('execute', command, entry)
 
       if (runner.streaming) {
         const stream = this.stream(entry, options)
@@ -34,6 +33,22 @@ export class TaskExecutor extends Subject<TaskRunnerResult> {
     } catch (error) {
       return this.bail(error, entry)
     }
+  }
+
+  private bail(error: execa.ExecaError, entry: TaskEntry): TaskRunnerResult {
+    this.error(error)
+
+    if (entry.type === TaskEntryType.nobail) {
+      return {
+        command: entry.command,
+        entry,
+        exitCode: 0,
+        stderr: error.stderr ? error.stderr.split('\n') : [],
+        stdout: error.stdout ? error.stdout.split('\n') : [],
+      }
+    }
+
+    process.exit(error.exitCode)
   }
 
   private broadcast(result: TaskRunnerResult): TaskRunnerResult {
@@ -94,21 +109,5 @@ export class TaskExecutor extends Subject<TaskRunnerResult> {
     }
 
     return this.createResult(entry, results)
-  }
-
-  private bail(error: execa.ExecaError, entry: TaskEntry): TaskRunnerResult {
-    if (entry.type === TaskEntryType.nobail) {
-      return {
-        command: entry.command,
-        entry,
-        exitCode: 0,
-        stderr: error.stderr ? error.stderr.split('\n') : [],
-        stdout: error.stdout ? error.stdout.split('\n') : [],
-      }
-    }
-
-    this.error(error)
-
-    process.exit(error.exitCode)
   }
 }

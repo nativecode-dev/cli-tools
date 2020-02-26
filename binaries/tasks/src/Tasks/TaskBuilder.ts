@@ -61,7 +61,7 @@ export class TaskBuilder {
   }
 
   protected createEntry(command: string): TaskEntry {
-    const [ cmd, type ] = this.type(command)
+    const [cmd, type] = this.type(command)
     const parts = cmd.split(' ')
 
     return {
