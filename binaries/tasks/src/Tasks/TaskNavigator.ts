@@ -1,7 +1,7 @@
 import { TaskV2 } from '../Models/TaskV2'
 import { TaskEntry } from '../Models/TaskEntry'
 import { TaskEntryType } from '../Models/TaskEntryType'
-import { taskValidateConfig } from './TaskValidate'
+import { taskValidate } from './TaskValidate'
 
 interface Step {
   name: string
@@ -34,7 +34,7 @@ export class TaskNavigator {
   }
 
   validate(): Promise<boolean> {
-    return taskValidateConfig(this.task)
+    return taskValidate(this.task)
   }
 
   private steps(task: TaskV2): Step[] {

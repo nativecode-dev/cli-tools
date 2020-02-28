@@ -5,7 +5,7 @@ import { TaskV1 } from '../Models/TaskV1'
 import { TaskV2 } from '../Models/TaskV2'
 import { TaskBuilder } from './TaskBuilder'
 import { TaskNavigator } from './TaskNavigator'
-import { taskValidateConfig } from './TaskValidate'
+import { taskValidate } from './TaskValidate'
 
 export const TASK_LOADER_FILES = ['.tasks.json', 'tasks.json']
 
@@ -79,7 +79,7 @@ export async function taskConfigLoader(cwd: string, validate: boolean = true): P
     const config = TaskBuilder.from(taskFromConfig)
     log.trace('build-config', config)
 
-    if (validate && (await taskValidateConfig(config)) === false) {
+    if (validate && (await taskValidate(config)) === false) {
       throw new Error('invalid configuration')
     }
 
@@ -92,7 +92,7 @@ export async function taskConfigLoader(cwd: string, validate: boolean = true): P
     const config = TaskBuilder.from(tasksFromPackage)
     log.trace('build-package', config)
 
-    if (validate && (await taskValidateConfig(config)) === false) {
+    if (validate && (await taskValidate(config)) === false) {
       throw new Error('invalid configuration')
     }
 

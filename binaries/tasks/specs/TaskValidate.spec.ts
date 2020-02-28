@@ -2,7 +2,7 @@ import 'mocha'
 
 import expect from './expect'
 
-import { taskValidate, taskValidateConfig } from '../src/Tasks/TaskValidate'
+import { taskValidate } from '../src/Tasks/TaskValidate'
 
 // describe('when using taskValidate', () => {
 //   it('should invalidate config', async () => {
@@ -18,12 +18,12 @@ import { taskValidate, taskValidateConfig } from '../src/Tasks/TaskValidate'
 
 describe('when using taskValidateConfig', () => {
   it('should invalidate config', async () => {
-    const valid = await taskValidateConfig({ tasks: '' })
+    const valid = await taskValidate({ tasks: '' })
     expect(valid).to.be.false
   })
 
   it('should validate config', async () => {
-    const valid = await taskValidateConfig({ tasks: [] })
+    const valid = await taskValidate({ tasks: [] })
     expect(valid).to.be.true
   })
 })
