@@ -1,5 +1,5 @@
 {
-  "$schema": "./binaries/tasks/schemas/task.schema.json",
+  "$schema": "./binaries/tasks/src/Schemas/task-schema.json",
   "build": [
     "[clean]",
     "[source:format]",
