@@ -78,7 +78,11 @@
       "type": "object"
     },
     "tasks": {
-      "$ref": "#/definitions/commands"
+      "patternProperties": {
+        "^([a-zA-Z0-9]+)$": {
+          "$ref": "#/definitions/commands"
+        }
+      }
     }
   },
   "type": "object"
