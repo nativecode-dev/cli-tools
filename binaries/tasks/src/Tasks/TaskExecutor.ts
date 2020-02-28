@@ -15,7 +15,12 @@ export class TaskExecutor extends Subject<TaskRunnerResult> {
 
   async execute(cwd: string, entry: TaskEntry, runner: TaskRunnerOptions): Promise<TaskRunnerResult> {
     try {
-      const options: execa.Options<string> = { cwd, detached: entry.type === TaskEntryType.detached }
+      const options: execa.Options<string> = {
+        cwd,
+        detached: entry.type === TaskEntryType.detached,
+        shell: entry.type === TaskEntryType.shell ? '/bin/bash' : false,
+      }
+
       const command = [entry.name, ...entry.args].join(' ')
 
       this.log.info('execute', command, entry)

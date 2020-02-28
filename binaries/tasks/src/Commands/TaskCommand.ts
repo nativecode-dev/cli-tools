@@ -24,6 +24,7 @@ export class TaskCommand implements CommandModule<{}, TaskCommandOptions> {
         type: 'string',
       })
       .option('no-ignore-empty-lines', {
+        boolean: true,
         default: true,
         type: 'boolean',
       })
@@ -32,6 +33,12 @@ export class TaskCommand implements CommandModule<{}, TaskCommandOptions> {
         array: true,
         default: ['info'],
         type: 'string',
+      })
+      .option('no-validate', {
+        alias: 'v',
+        boolean: true,
+        default: false,
+        type: 'boolean',
       })
       .command<TaskListOptions>(TaskListCommand)
       .command<TaskRunOptions>(TaskRunCommand)

@@ -81,8 +81,5 @@
       "$ref": "#/definitions/commands"
     }
   },
-  "required": [
-    "steps"
-  ],
   "type": "object"
 }

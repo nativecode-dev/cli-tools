@@ -8,4 +8,5 @@ export interface TaskCommandOptions extends Arguments {
   cwd: string
   runner?: TaskRunnerOptions
   logLevels: string[]
+  noValidate: boolean
 }

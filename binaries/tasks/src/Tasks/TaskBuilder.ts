@@ -63,13 +63,7 @@ export class TaskBuilder {
   protected createEntry(command: string): TaskEntry {
     const [cmd, type] = this.type(command)
     const parts = cmd.split(' ')
-
-    return {
-      args: parts.slice(1),
-      command: type === TaskEntryType.exec ? parts[0] : parts[0].substring(1),
-      name: parts[0],
-      type,
-    }
+    return { args: parts.slice(1), command: parts[0], name: parts[0], type }
   }
 
   protected type(command: string): [string, TaskEntryType] {
@@ -80,20 +74,23 @@ export class TaskBuilder {
       case TaskEntryType.env:
         return [cmd, TaskEntryType.env]
 
+      case TaskEntryType.exec:
+        return [cmd, TaskEntryType.exec]
+
       case TaskEntryType.nobail:
         return [cmd, TaskEntryType.nobail]
 
       case TaskEntryType.parallel:
         return [cmd, TaskEntryType.parallel]
 
+      case TaskEntryType.shell:
+        return [cmd, TaskEntryType.shell]
+
       case TaskEntryType.skip:
         return [cmd, TaskEntryType.skip]
 
       case TaskEntryType.spawn:
         return [cmd, TaskEntryType.spawn]
-
-      case TaskEntryType.exec:
-        return [cmd, TaskEntryType.exec]
     }
 
     return [command, TaskEntryType.exec]

@@ -44,6 +44,7 @@
     "@nofrills/fs": "^11.0.0",
     "cli-progress": "^3.6.0",
     "execa": "^4.0.0",
+    "jsonschema": "^1.2.5",
     "promise-parallel-throttle": "^3.3.0",
     "rxjs": "^6.5.4",
     "yargs": "~15.1.0"

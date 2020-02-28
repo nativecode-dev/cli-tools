@@ -1,6 +1,7 @@
 {
   "tasks": {
     "build": [
+      "[generate]",
       "[build:compile]",
       "[shebang]"
     ],
@@ -10,6 +11,9 @@
     "clean": [
       "rimraf bin",
       "rimraf *.tsbuildinfo"
+    ],
+    "generate": [
+      "@npx -p json-schema-to-typescript json2ts src/Schemas/task-schema.json > src/Models/TaskSchema.generated.ts"
     ],
     "shebang": [
       "ts-node ../tasks/src shebang"
