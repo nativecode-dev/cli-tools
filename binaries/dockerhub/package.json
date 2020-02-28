@@ -38,7 +38,7 @@
   "types": "bin/index.d.ts",
   "dependencies": {
     "@nativecode/rest-client": "~2.4.1",
-    "@nnode/common": "0.0.1-canary.22",
+    "@nnode/common": "^0.1.0",
     "@nofrills/fs": "^11.0.0",
     "compare-versions": "~3.6.0",
     "deepmerge": "~4.2.2",
@@ -49,8 +49,8 @@
   "devDependencies": {
     "@types/adm-zip": "~0.4.32",
     "@types/deepmerge": "~2.2.0",
-    "@types/node-fetch": "~2.5.4",
-    "@types/yargs": "~15.0.3",
+    "@types/node-fetch": "^2.5.5",
+    "@types/yargs": "^15.0.4",
     "ts-node": "~8.6.0"
   }
 }
