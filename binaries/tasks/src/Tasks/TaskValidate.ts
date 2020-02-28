@@ -1,6 +1,8 @@
 import { fs } from '@nofrills/fs'
 import { validate } from 'jsonschema'
 
+const schema = require('../Schemas/task-schema.json')
+
 const SCHEMA_PATH = fs.join(__dirname, '../', 'Schemas', 'task-schema.json')
 
 export async function taskValidate(filename: string): Promise<boolean> {
@@ -17,7 +19,6 @@ export async function taskValidateConfig(json: any): Promise<boolean> {
     throw new Error(`could not find schema: ${SCHEMA_PATH}`)
   }
 
-  const schema = await fs.json<any>(SCHEMA_PATH)
   const result = validate(json, schema)
   return result.valid
 }
