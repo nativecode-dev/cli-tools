@@ -1,0 +1,88 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "definitions": {
+    "commands": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "entry": {
+      "properties": {
+        "args": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "command": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/entryType"
+        },
+        "origin": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "args",
+        "command",
+        "name"
+      ]
+    },
+    "entryType": {
+      "enum": [
+        "&",
+        "$",
+        ":",
+        "!",
+        "|",
+        "@",
+        "#",
+        ">"
+      ],
+      "default": ":"
+    },
+    "step": {
+      "additionalProperties": false,
+      "properties": {
+        "entries": {
+          "items": {
+            "$ref": "#/definitions/entry"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "entries"
+      ],
+      "type": "object",
+      "uniqueItems": true
+    }
+  },
+  "properties": {
+    "options": {
+      "properties": {},
+      "type": "object"
+    },
+    "steps": {
+      "patternProperties": {
+        "^([a-zA-Z0-9]+)$": {
+          "$ref": "#/definitions/step"
+        }
+      },
+      "type": "object"
+    },
+    "tasks": {
+      "$ref": "#/definitions/commands"
+    }
+  },
+  "required": [
+    "steps"
+  ],
+  "type": "object"
+}

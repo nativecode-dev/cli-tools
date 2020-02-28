@@ -1,4 +1,5 @@
 {
+  "$schema": "./binaries/tasks/schemas/tasks.schema.json",
   "build": [
     "[clean]",
     "[source:format]",
@@ -43,7 +44,7 @@
     ".citools/lerna-publish prerelease"
   ],
   "source:format": [
-    "prettier --write \"binaries/*/@(specs|src)/**/*.ts\""
+    "prettier --write \"binaries/**/*.ts\""
   ],
   "source:lint": [
     "tslint --project tsconfig.json --config tslint.json"
