@@ -1,6 +1,6 @@
 {
   "name": "@nofrills/tasks",
-  "version": "11.0.0-next.6",
+  "version": "11.0.0-next.7",
   "description": "Simple NPM package task builder.",
   "license": "MIT",
   "private": false,
