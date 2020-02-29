@@ -4,13 +4,13 @@ import { Subscription } from 'rxjs'
 import { Merge } from '@nnode/common'
 import { all } from 'promise-parallel-throttle'
 
-import { TaskEntry } from '../Models/TaskEntry'
-import { TaskRunnerResult } from './TaskRunnerResult'
-
+import { Logger } from '../Logging'
 import { TaskExecutor } from './TaskExecutor'
 import { TaskNavigator } from './TaskNavigator'
+import { TaskRunnerResult } from './TaskRunnerResult'
 import { TaskRunnerOptions } from './TaskRunnerOptions'
-import { Logger } from '../Logging'
+
+import { TaskEntry } from '../Models/TaskEntry'
 
 const DefaultTaskRunnerOptions: TaskRunnerOptions = {
   concurrency: os.cpus().length,
