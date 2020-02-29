@@ -1,5 +1,7 @@
 import { CommandBuilder, CommandModule, Argv } from 'yargs'
 
+import '../Sort'
+
 import { TaskRunCommand } from './TaskRun'
 import { TaskListCommand } from './TaskList'
 import { ShebangCommand } from './TaskShebang'
@@ -8,6 +10,8 @@ import { TaskRunOptions } from './TaskRunOptions'
 import { TaskListOptions } from './TaskListOptions'
 import { TaskCommandOptions } from './TaskCommandOptions'
 import { TaskShebangOptions } from './TaskShebangOptions'
+import { TaskSortOptions } from './TaskSortOptions'
+import { TaskSortCommand } from './TaskSort'
 
 export class TaskCommand implements CommandModule<{}, TaskCommandOptions> {
   command = '$0 <command>'
@@ -15,7 +19,7 @@ export class TaskCommand implements CommandModule<{}, TaskCommandOptions> {
   builder: CommandBuilder<{}, TaskCommandOptions> = (args: Argv<{}>) => {
     return args
       .positional('command', {
-        choices: ['list', 'run'],
+        choices: ['index', 'list', 'run', 'shebang', 'sort'],
         default: 'run',
         type: 'string',
       })
@@ -43,6 +47,7 @@ export class TaskCommand implements CommandModule<{}, TaskCommandOptions> {
       .command<TaskListOptions>(TaskListCommand)
       .command<TaskRunOptions>(TaskRunCommand)
       .command<TaskShebangOptions>(ShebangCommand)
+      .command<TaskSortOptions>(TaskSortCommand)
   }
 
   handler = (args: TaskCommandOptions) => {

@@ -5,8 +5,8 @@
   ],
   "linterOptions": {
     "exclude": [
-      "node_modules",
-      "**/specs"
+      "**/specs",
+      "node_modules"
     ]
   },
   "rules": {
