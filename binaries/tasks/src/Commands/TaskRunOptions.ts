@@ -1,7 +1,7 @@
 import { TaskCommandOptions } from './TaskCommandOptions'
 
 export interface TaskRunOptions extends TaskCommandOptions {
-  echo: boolean
+  dryRun: boolean
   env: string[]
   name: string
 }

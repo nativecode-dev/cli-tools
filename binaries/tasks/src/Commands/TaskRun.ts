@@ -25,7 +25,7 @@ export class TaskRun implements CommandModule<{}, TaskRunOptions> {
   command = '$0 <name>'
 
   builder: CommandBuilder<{}, TaskRunOptions> = {
-    echo: {
+    'dry-run': {
       alias: 'd',
       default: false,
       type: 'boolean',
@@ -54,7 +54,7 @@ export class TaskRun implements CommandModule<{}, TaskRunOptions> {
     const entries = task.getStepEntries(args.name)
     const env = resolveEnvVariables(args.env)
 
-    if (args.echo) {
+    if (args.dryRun) {
       return entries.map(entry => console.log('execute', [entry.name, ...entry.args].join(' ')))
     }
 
