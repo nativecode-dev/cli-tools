@@ -1,24 +1,30 @@
 import { fs } from '@nofrills/fs'
 
 import { Sorters } from '../FileSort'
+import { Logger } from '../../Logging'
 import { FileSorter } from '../FileSorter'
 import { objectSort } from '../ObjectSort'
-import { Logger } from '../../Logging'
 import { SortOptions } from '../SortOptions'
+import { SortResults } from '../SortResults'
 
 const PATTERN = /\.json$/g
 const logger = Logger.extend('json-sorter')
 
 export const JsonSorter: FileSorter = {
-  sort: async (filename: string, options: SortOptions) => {
+  sort: async (filename: string, options: SortOptions): Promise<SortResults> => {
     try {
       const json = await fs.json(filename)
       const sorted = objectSort(json)
       const buffer = Buffer.from(JSON.stringify(sorted, null, 2))
-      await fs.writeFile(filename, buffer)
+
+      if (options.dryRun === false) {
+        await fs.writeFile(filename, buffer)
+      }
+
+      return { filename }
     } catch (error) {
       logger.error(error)
-      return error
+      return { error, filename }
     }
   },
 

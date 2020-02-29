@@ -8,17 +8,36 @@ export class TaskSort implements CommandModule<{}, TaskSortOptions> {
   aliases = ['sort', 's']
   command = 'sort <glob> [format]'
 
-  builder: CommandBuilder<{}, TaskSortOptions> = {}
+  builder: CommandBuilder<{}, TaskSortOptions> = {
+    'dry-run': {
+      alias: 'd',
+      default: false,
+      type: 'boolean',
+    },
+    ignored: {
+      alias: 'i',
+      array: true,
+      default: ['node_modules', 'package.json', 'package-lock.json'],
+      type: 'string',
+    },
+  }
 
   handler = async (args: TaskSortOptions) => {
     const files = await fs.glob(`${args.cwd}/${args.glob}`)
-    const errors = await Sorters.sort(files)
+
+    const results = await Sorters.sort(files, {
+      dryRun: args.dryRun,
+      ignored: args.ignored,
+    })
+
+    const errors = results.filter(result => result.error)
+    const modified = results.filter(result => result.error === undefined)
 
     if (errors.length > 0) {
-      console.log(...errors)
+      return console.error(...errors)
     }
 
-    console.log(...files)
+    return modified.map(x => console.log(args.dryRun ? '[dry-run]' : '', x.filename))
   }
 }
 

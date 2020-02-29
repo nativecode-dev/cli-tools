@@ -1,1 +1,4 @@
-export interface SortOptions {}
+export interface SortOptions {
+  dryRun: boolean
+  ignored: string[]
+}

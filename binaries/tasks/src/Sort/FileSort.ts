@@ -1,10 +1,13 @@
+import { Merge } from '@nnode/common'
 import { all, Task } from 'promise-parallel-throttle'
 
 import { FileSorter } from './FileSorter'
 import { SortOptions } from './SortOptions'
-import { Merge } from '@nnode/common'
+import { SortResults } from './SortResults'
 
 const SORTERS = new Set<FileSorter>()
+
+const DefaultSortOptions: Partial<SortOptions> = {}
 
 interface FileNameSorter {
   filename: string
@@ -27,20 +30,29 @@ export module Sorters {
     }
   }
 
-  export function sorters(filenames: string[]): FileNameSorter[] {
-    return filenames.reduce<FileNameSorter[]>((results, filename) => [...results, sorter(filename)], [])
+  export function sorters(filenames: string[], options: SortOptions): FileNameSorter[] {
+    return filenames.reduce<FileNameSorter[]>((results, filename) => {
+      const ignored = options.ignored.map(expression => new RegExp(expression, 'i')).some(regex => regex.test(filename))
+
+      if (ignored) {
+        return results
+      }
+
+      return [...results, sorter(filename)]
+    }, [])
   }
 
   export async function sort(filenames: string[], options: Partial<SortOptions> = {}) {
-    const opts = Merge<SortOptions>(options)
+    const opts = Merge<SortOptions>(DefaultSortOptions, options)
+    const sortables = sorters(filenames, opts)
 
-    const tasks = sorters(filenames).reduce<Task<Error | undefined>[]>((results, sorter) => {
-      return [...results, ...sorter.sorters.map(x => () => x.sort(sorter.filename, opts))]
+    const tasks = sortables.reduce<Task<SortResults>[]>((results, sortable) => {
+      return [...results, ...sortable.sorters.map(x => () => x.sort(sortable.filename, opts))]
     }, [])
 
     const results = await all(tasks)
 
-    return results.reduce<Error[]>((errors, current) => {
+    return results.reduce<SortResults[]>((errors, current) => {
       if (current) {
         return [...errors, current]
       }
