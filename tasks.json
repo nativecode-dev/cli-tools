@@ -45,7 +45,7 @@
       ".citools/lerna-publish prerelease"
     ],
     "source:format": [
-      "@prettier --write \"binaries/**/*.ts\""
+      "@prettier --loglevel silent --write \"binaries/*/{src,specs}/**/*.ts\""
     ],
     "source:lint": [
       "tslint --project tsconfig.json --config tslint.json"
