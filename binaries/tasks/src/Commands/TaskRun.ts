@@ -1,3 +1,4 @@
+import { DictionaryOf } from '@nnode/common'
 import { CommandModule, CommandBuilder } from 'yargs'
 
 import { TaskRunner } from '../Tasks/TaskRunner'
@@ -5,15 +6,35 @@ import { TaskRunOptions } from './TaskRunOptions'
 import { taskConfigLoader } from '../Tasks/TaskConfigLoader'
 import { TaskConfigNotFound } from '../Errors/TaskConfigNotFound'
 
+function resolveEnvVariables(env: string[]): DictionaryOf<string> {
+  return env
+    .map(envstr => {
+      const parts = envstr.split('=')
+      const name = parts[0]
+      const value = parts[1]
+      return [name, value]
+    })
+    .reduce<DictionaryOf<string>>((result, [name, value]) => {
+      result[name] = value
+      return result
+    }, {})
+}
+
 export class TaskRun implements CommandModule<{}, TaskRunOptions> {
   aliases = ['run', 'r', '']
   command = '$0 <name>'
 
   builder: CommandBuilder<{}, TaskRunOptions> = {
     echo: {
-      alias: 'e',
+      alias: 'd',
       default: false,
       type: 'boolean',
+    },
+    env: {
+      alias: 'e',
+      array: true,
+      default: [],
+      type: 'string',
     },
     ignored: {
       alias: 'i',
@@ -31,13 +52,14 @@ export class TaskRun implements CommandModule<{}, TaskRunOptions> {
     }
 
     const entries = task.getStepEntries(args.name)
+    const env = resolveEnvVariables(args.env)
 
     if (args.echo) {
       return entries.map(entry => console.log('execute', [entry.name, ...entry.args].join(' ')))
     }
 
     if (args.name) {
-      const results = await TaskRunner.from(args.cwd, task, args.name)
+      const results = await TaskRunner.from(task, args.name, { env, cwd: args.cwd })
       const failed = results.filter(result => result.exitCode !== 0)
       failed.map(result => console.error(result.exitCode))
       return

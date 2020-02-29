@@ -18,6 +18,7 @@ export class TaskExecutor extends Subject<TaskRunnerResult> {
       const options: execa.Options<string> = {
         cwd,
         detached: entry.type === TaskEntryType.detached,
+        env: runner.env,
         shell: entry.type === TaskEntryType.shell ? '/bin/bash' : false,
       }
 

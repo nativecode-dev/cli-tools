@@ -1,5 +1,8 @@
+import { DictionaryOf } from '@nnode/common'
+
 export interface TaskRunnerOptions {
   concurrency: number
-  ignoreEmptyLines: boolean
+  cwd: string
+  env: DictionaryOf<string>
   streaming: boolean
 }
