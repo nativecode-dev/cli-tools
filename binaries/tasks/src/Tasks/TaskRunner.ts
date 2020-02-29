@@ -32,12 +32,10 @@ export class TaskRunner {
 
   async run(task: TaskNavigator, name: string, options: Partial<TaskRunnerOptions> = {}): Promise<TaskRunnerResult[]> {
     const merged: TaskRunnerOptions = Merge<TaskRunnerOptions>(DefaultTaskRunnerOptions, options)
-
     this.log.trace('run', merged)
 
     const parallels = task.getParallelEntries(name).map(entry => () => this.exec(entry, merged))
     const steps = task.getStepEntries(name).map(entry => () => this.exec(entry, merged))
-
     this.log.trace('run-serial', steps.length, 'run-parallel', parallels.length)
 
     const serial = all(steps, { maxInProgress: 1 })
