@@ -14,7 +14,7 @@ export const JsonSorter: FileSorter = {
   sort: async (filename: string, options: SortOptions): Promise<SortResults> => {
     try {
       const json = await fs.json(filename)
-      const sorted = objectSort(json)
+      const sorted = objectSort(json, options)
       const buffer = Buffer.from(JSON.stringify(sorted, null, 2))
 
       if (options.dryRun === false) {

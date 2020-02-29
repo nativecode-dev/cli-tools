@@ -4,4 +4,5 @@ import { TaskCommandOptions } from './TaskCommandOptions'
 export interface TaskSortOptions extends TaskCommandOptions, SortOptions {
   format: string
   glob: string
+  sortArrayProperties: boolean
 }

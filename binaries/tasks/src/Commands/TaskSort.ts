@@ -20,15 +20,16 @@ export class TaskSort implements CommandModule<{}, TaskSortOptions> {
       default: ['node_modules', 'package.json', 'package-lock.json'],
       type: 'string',
     },
+    'sort-array-properties': {
+      boolean: true,
+      default: false,
+      type: 'boolean',
+    },
   }
 
   handler = async (args: TaskSortOptions) => {
     const files = await fs.glob(`${args.cwd}/${args.glob}`)
-
-    const results = await Sorters.sort(files, {
-      dryRun: args.dryRun,
-      ignored: args.ignored,
-    })
+    const results = await Sorters.sort(files, args)
 
     const errors = results.filter(result => result.error)
     const modified = results.filter(result => result.error === undefined)
