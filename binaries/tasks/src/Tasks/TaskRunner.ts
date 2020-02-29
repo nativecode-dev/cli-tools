@@ -22,20 +22,23 @@ const DefaultTaskRunnerOptions: TaskRunnerOptions = {
 export class TaskRunner {
   private readonly log = Logger.extend('task-runner')
 
+  constructor(protected readonly task: TaskNavigator) {}
+
   static from(
     task: TaskNavigator,
     name: string,
     options: Partial<TaskRunnerOptions> = {},
   ): Promise<TaskRunnerResult[]> {
-    return new TaskRunner().run(task, name, options)
+    const runner = new TaskRunner(task)
+    return runner.run(name, options)
   }
 
-  async run(task: TaskNavigator, name: string, options: Partial<TaskRunnerOptions> = {}): Promise<TaskRunnerResult[]> {
+  async run(name: string, options: Partial<TaskRunnerOptions> = {}): Promise<TaskRunnerResult[]> {
     const merged: TaskRunnerOptions = Merge<TaskRunnerOptions>(DefaultTaskRunnerOptions, options)
     this.log.trace('run', merged)
 
-    const parallels = task.getParallelEntries(name).map(entry => () => this.exec(entry, merged))
-    const steps = task.getStepEntries(name).map(entry => () => this.exec(entry, merged))
+    const parallels = this.task.getParallelEntries(name).map(entry => () => this.exec(entry, merged))
+    const steps = this.task.getStepEntries(name).map(entry => () => this.exec(entry, merged))
     this.log.trace('run-serial', steps.length, 'run-parallel', parallels.length)
 
     const serial = all(steps, { maxInProgress: 1 })
@@ -56,6 +59,6 @@ export class TaskRunner {
       () => sub.unsubscribe(),
     )
 
-    return executor.execute(options.cwd, entry, options)
+    return executor.execute(entry, options)
   }
 }

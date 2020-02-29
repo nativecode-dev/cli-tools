@@ -13,27 +13,26 @@ import { TaskResultError } from '../Errors/TaskResultError'
 export class TaskExecutor extends Subject<TaskRunnerResult> {
   private readonly log = Logger.extend('task-executor')
 
-  async execute(cwd: string, entry: TaskEntry, runner: TaskRunnerOptions): Promise<TaskRunnerResult> {
+  async execute(entry: TaskEntry, options: TaskRunnerOptions): Promise<TaskRunnerResult> {
     try {
-      const options: execa.Options<string> = {
-        cwd,
+      const execaOpts: execa.Options<string> = {
+        cwd: options.cwd,
         detached: entry.type === TaskEntryType.detached,
-        env: runner.env,
+        env: options.env,
         shell: entry.type === TaskEntryType.shell ? '/bin/bash' : false,
       }
 
       const command = [entry.name, ...entry.args].join(' ')
-
       this.log.info('execute', command, entry)
 
-      if (runner.streaming) {
-        const stream = this.stream(entry, options)
+      if (options.streaming) {
+        const stream = this.stream(entry, execaOpts)
         const results = await stream
         this.complete()
         return this.createResult(entry, results)
       }
 
-      const result = await this.sync(entry, options)
+      const result = await this.sync(entry, execaOpts)
       this.complete()
       return result
     } catch (error) {
