@@ -14,7 +14,7 @@ interface FileNameSorter {
   sorters: FileSorter[]
 }
 
-export module Sorters {
+export namespace Sorters {
   export function register(sorter: FileSorter) {
     SORTERS.add(sorter)
   }

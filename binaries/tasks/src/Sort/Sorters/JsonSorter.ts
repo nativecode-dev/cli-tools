@@ -21,10 +21,10 @@ export const JsonSorter: FileSorter = {
         await fs.writeFile(filename, buffer)
       }
 
-      return { filename }
+      return { filename, object: sorted }
     } catch (error) {
       logger.error(error)
-      return { error, filename }
+      return { error, filename, object: null }
     }
   },
 

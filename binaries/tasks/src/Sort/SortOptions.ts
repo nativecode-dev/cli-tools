@@ -3,3 +3,5 @@ export interface SortOptions {
   ignored: string[]
   sortArray: boolean
 }
+
+export const DefaultSortOptions: Partial<SortOptions> = {}
