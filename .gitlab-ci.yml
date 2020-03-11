@@ -1,45 +1,54 @@
 image: node:latest
 
 stages:
-- publish
+  - merge
+  - publish
 
 before_script:
-- git submodule update --init --recursive
-- source .ci-env
-- npm ci
-- npm run configure:ssh
-- echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+  - git submodule update --init --recursive
+  - source .ci-env
+  - npm ci
+  - npm run configure:ssh
+  - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
 
 cache:
   paths:
-  - node_modules
+    - node_modules
+
+merge:
+  stage: merge
+  only:
+    - merge_request
+  script:
+    - npm run build:ci
+    - npm run test:ci
 
 continuous:
   stage: publish
   only:
-  - /feature\/.*/
-  - /hotfix\/.*/
+    - /feature\/.*/
+    - /hotfix\/.*/
   script:
-  - npm run build:ci
-  - npm run test:ci
-  - npm run release:canary
+    - npm run build:ci
+    - npm run test:ci
+    - npm run release:canary
 
 prerelease:
   stage: publish
   only:
-  - develop
+    - develop
   script:
-  - npm run configure:git
-  - npm run build:ci
-  - npm run test:ci
-  - npm run release:pre
+    - npm run configure:git
+    - npm run build:ci
+    - npm run test:ci
+    - npm run release:pre
 
 release:
   stage: publish
   only:
-  - master
+    - master
   script:
-  - npm run configure:git
-  - npm run build:ci
-  - npm run test:ci
-  - npm run release
+    - npm run configure:git
+    - npm run build:ci
+    - npm run test:ci
+    - npm run release
