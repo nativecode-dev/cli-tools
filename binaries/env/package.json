@@ -39,7 +39,7 @@
     "@nofrills/console": "^11.0.0",
     "@nofrills/fs": "^11.0.0",
     "@nofrills/lincoln-debug": "^11.0.0",
-    "yargs": "~15.1.0",
+    "yargs": "^15.3.0",
     "yargs-interactive": "~3.0.0"
   },
   "devDependencies": {

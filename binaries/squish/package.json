@@ -36,7 +36,7 @@
   },
   "types": "./bin/index.d.ts",
   "dependencies": {
-    "yargs": "~15.1.0"
+    "yargs": "^15.3.0"
   },
   "devDependencies": {
     "@types/yargs": "^15.0.4"

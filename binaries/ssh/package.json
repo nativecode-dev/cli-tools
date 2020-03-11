@@ -41,7 +41,7 @@
     "@nofrills/lincoln-debug": "^11.0.0",
     "pegjs": "~0.10.0",
     "ts-pegjs": "~0.2.6",
-    "yargs": "~15.1.0"
+    "yargs": "^15.3.0"
   },
   "devDependencies": {
     "@types/node": "^13.7.7",
