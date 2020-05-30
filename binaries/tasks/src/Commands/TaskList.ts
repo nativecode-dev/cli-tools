@@ -30,7 +30,7 @@ export class TaskList implements CommandModule<{}, TaskListOptions> {
       return console.log(jsonstr)
     }
 
-    return tasks.getRunnableEntries().map(step => console.log(step))
+    return tasks.getRunnableEntries().map((step) => console.log(step))
   }
 }
 

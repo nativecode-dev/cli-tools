@@ -37,8 +37,8 @@ export class TaskRunner {
     const merged: TaskRunnerOptions = Merge<TaskRunnerOptions>(DefaultTaskRunnerOptions, options)
     this.log.trace('run', merged)
 
-    const parallels = this.task.getParallelEntries(name).map(entry => () => this.exec(entry, merged))
-    const steps = this.task.getStepEntries(name).map(entry => () => this.exec(entry, merged))
+    const parallels = this.task.getParallelEntries(name).map((entry) => () => this.exec(entry, merged))
+    const steps = this.task.getStepEntries(name).map((entry) => () => this.exec(entry, merged))
     this.log.trace('run-serial', steps.length, 'run-parallel', parallels.length)
 
     const serial = all(steps, { maxInProgress: 1 })
@@ -54,8 +54,8 @@ export class TaskRunner {
     const executor = new TaskExecutor()
 
     const sub: Subscription = executor.subscribe(
-      result => console.log(...result.stdout),
-      error => console.error(error.message),
+      (result) => console.log(...result.stdout),
+      (error) => console.error(error.message),
       () => sub.unsubscribe(),
     )
 

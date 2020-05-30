@@ -17,7 +17,7 @@ function convertFromV1(task: TaskV1): TaskV2 {
 
 function isTaskArray(value: any): boolean {
   const containsTasks = typeof value === 'object'
-  const containsTaskCommands = Object.keys(value).some(key => Array.isArray(value[key]))
+  const containsTaskCommands = Object.keys(value).some((key) => Array.isArray(value[key]))
   return containsTasks && containsTaskCommands
 }
 

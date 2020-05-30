@@ -22,7 +22,7 @@ export class ProjectList implements CommandModule<{}, ProjectListOptions> {
     const cwd = args.cwd || process.cwd()
     const group = await getProjectGroup(cwd)
 
-    args.filtered_projects = group.projects.filter(project => {
+    args.filtered_projects = group.projects.filter((project) => {
       const filteredByName = args.project_name === project.name
       const filteredByType = args.type === project.type
       return filteredByName || filteredByType ? true : false

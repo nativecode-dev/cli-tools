@@ -1,4 +1,4 @@
-import { Merge } from '@nnode/common'
+import { Merge, DeepPartial } from '@nnode/common'
 
 import { arraySort } from './ArraySort'
 import { SortOptions, DefaultSortOptions } from './SortOptions'
@@ -7,24 +7,34 @@ export function objectSort<T extends any>(instance: T, options: Partial<SortOpti
   const opts = Merge<SortOptions>(DefaultSortOptions, options)
 
   if (typeof instance !== 'object' || instance === null) {
-    return instance
+    return {} as T
   }
 
   if (Array.isArray(instance)) {
-    return instance
+    const instances: T[] = instance
+    return instances.reduce<T>(
+      (result, current) => Merge<T>(result as DeepPartial<T>, objectSort(current) as DeepPartial<T>),
+      {} as T,
+    )
   }
 
-  return Object.keys(instance)
-    .sort()
-    .reduce<T>((result, current) => {
-      const value = (result[current] = instance[current])
+  if (typeof instance === 'object' && instance !== null) {
+    const instanceObject: any = instance
 
-      if (Array.isArray(value) && opts.sortArray) {
-        result[current] = arraySort(value, opts)
-      } else if (typeof value === 'object' && value !== null) {
-        result[current] = objectSort(value, opts)
-      }
+    return Object.keys(instanceObject)
+      .sort()
+      .reduce<T>((result: any, current) => {
+        const value: any = (result[current] = instanceObject[current])
 
-      return result
-    }, {} as T)
+        if (Array.isArray(value) && opts.sortArray) {
+          result[current] = arraySort(value, opts)
+        } else if (typeof value === 'object' && value !== null) {
+          result[current] = objectSort(value, opts)
+        }
+
+        return result
+      }, {} as T)
+  }
+
+  throw new Error('what the hell')
 }

@@ -38,7 +38,7 @@ export class SshParser {
     const config: Token[] = parser.parse(input) as Token[]
 
     return config
-      .filter(token => {
+      .filter((token) => {
         switch (token.type) {
           case 'host':
           case 'identifier':

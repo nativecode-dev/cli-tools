@@ -26,13 +26,15 @@ export namespace Sorters {
   export function sorter(filename: string): FileNameSorter {
     return {
       filename,
-      sorters: Array.from(SORTERS.values()).filter(sorter => sorter.sortable(filename)),
+      sorters: Array.from(SORTERS.values()).filter((sorter) => sorter.sortable(filename)),
     }
   }
 
   export function sorters(filenames: string[], options: SortOptions): FileNameSorter[] {
     return filenames.reduce<FileNameSorter[]>((results, filename) => {
-      const ignored = options.ignored.map(expression => new RegExp(expression, 'i')).some(regex => regex.test(filename))
+      const ignored = options.ignored
+        .map((expression) => new RegExp(expression, 'i'))
+        .some((regex) => regex.test(filename))
 
       if (ignored) {
         return results
@@ -47,7 +49,7 @@ export namespace Sorters {
     const sortables = sorters(filenames, opts)
 
     const tasks = sortables.reduce<Task<SortResults>[]>((results, sortable) => {
-      return [...results, ...sortable.sorters.map(x => () => x.sort(sortable.filename, opts))]
+      return [...results, ...sortable.sorters.map((x) => () => x.sort(sortable.filename, opts))]
     }, [])
 
     const results = await all(tasks)

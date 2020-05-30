@@ -24,8 +24,8 @@ const INVALID_VERSIONS = ['latest', 'amd64-latest']
 
 describe('when using tagVersionParse', () => {
   it('should test valid versions', () =>
-    VALID_VERSIONS.forEach(version => expect(tagVersionParse(version)).to.not.be.empty))
+    VALID_VERSIONS.forEach((version) => expect(tagVersionParse(version)).to.not.be.empty))
 
   it('should test invalid versions', () =>
-    INVALID_VERSIONS.forEach(version => expect(tagVersionParse(version)).to.be.null))
+    INVALID_VERSIONS.forEach((version) => expect(tagVersionParse(version)).to.be.null))
 })

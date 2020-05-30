@@ -31,14 +31,14 @@ export class TaskSort implements CommandModule<{}, TaskSortOptions> {
     const files = await fs.glob(`${args.cwd}/${args.glob}`)
     const results = await Sorters.sort(files, args)
 
-    const errors = results.filter(result => result.error)
-    const modified = results.filter(result => result.error === undefined)
+    const errors = results.filter((result) => result.error)
+    const modified = results.filter((result) => result.error === undefined)
 
     if (errors.length > 0) {
       return console.error(...errors)
     }
 
-    return modified.map(x => console.log(args.dryRun ? '[dry-run]' : '', x.filename))
+    return modified.map((x) => console.log(args.dryRun ? '[dry-run]' : '', x.filename))
   }
 }
 

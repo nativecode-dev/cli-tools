@@ -30,7 +30,7 @@ export class TaskBuilder {
 
   protected fromArray(config: TaskV2, definitions: TaskDefinition[]): TaskEntry[] {
     return definitions
-      .map(task => {
+      .map((task) => {
         if (typeof task === 'string') {
           return this.fromString(config, task)
         }
@@ -51,7 +51,7 @@ export class TaskBuilder {
         task: this.expand(config, config.steps[name]),
       }
 
-      return this.fromArray(context.config, context.task).map(entry => {
+      return this.fromArray(context.config, context.task).map((entry) => {
         entry.origin = name
         return entry
       })
@@ -98,9 +98,9 @@ export class TaskBuilder {
 
   protected transform(config: TaskV2): TaskV2 {
     const result = Object.keys(config.steps)
-      .map(key => ({ config, name: key, task: config.steps[key] }))
-      .filter(context => (context.task ? true : false))
-      .map(context => {
+      .map((key) => ({ config, name: key, task: config.steps[key] }))
+      .filter((context) => (context.task ? true : false))
+      .map((context) => {
         context.task = { entries: this.expand(config, context.task) }
         return context
       })
