@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@11.0.0-next.16...@nofrills/tasks@11.0.0) (2020-05-30)
+
+
+### Bug Fixes
+
+* typing ([e54fc53](https://github.com/nativecode-dev/cli-tools/commit/e54fc53fa5f0ea49c6a9bcee8b8f709c79e1fb8d))
+
+
+### Features
+
+* upgrade packages ([d24a6b9](https://github.com/nativecode-dev/cli-tools/commit/d24a6b9384de18b26abb8bbaa974a3fb12c1345e))
+
+
+
+
+
 ## [10.0.3](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/tasks@10.0.2...@nofrills/tasks@10.0.3) (2020-01-10)
 
 **Note:** Version bump only for package @nofrills/tasks

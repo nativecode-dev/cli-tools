@@ -1,6 +1,6 @@
 {
   "name": "@nofrills/dockerhub",
-  "version": "0.8.0-next.4",
+  "version": "0.8.0",
   "description": "Simple Tags Comparator",
   "license": "MIT",
   "private": false,
