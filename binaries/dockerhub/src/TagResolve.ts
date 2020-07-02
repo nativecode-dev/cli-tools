@@ -8,11 +8,11 @@ import { tagSort } from './TagSort'
 
 export function tagResolve(tag: Tag, tags: Tag[]): Tag {
   const same = (source: RepositoryImage[], target: RepositoryImage[]) =>
-    deepequal(source.map(img => img.digest).sort(), target.map(img => img.digest).sort())
+    deepequal(source.map((img) => img.digest).sort(), target.map((img) => img.digest).sort())
 
   const references = tags
-    .filter(source => source !== tag)
-    .filter(source => same(source.repotag.images, tag.repotag.images))
+    .filter((source) => source !== tag)
+    .filter((source) => same(source.repotag.images, tag.repotag.images))
 
   tag.references = tag.references.concat(references).sort(tagSort())
 

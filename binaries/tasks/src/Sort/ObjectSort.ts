@@ -14,10 +14,12 @@ export function objectSort<T extends any>(instance: T, options: Partial<SortOpti
     return instance
   }
 
-  return Object.keys(instance)
+  const hashobj = instance as any
+
+  return Object.keys(hashobj)
     .sort()
-    .reduce<T>((result, current) => {
-      const value = (result[current] = instance[current])
+    .reduce<T>((result: any, current: any) => {
+      const value = (result[current] = hashobj[current])
 
       if (Array.isArray(value) && opts.sortArray) {
         result[current] = arraySort(value, opts)

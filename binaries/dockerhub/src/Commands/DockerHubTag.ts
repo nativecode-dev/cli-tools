@@ -89,11 +89,11 @@ export class DockerHubTag implements CommandModule<{}, DockerHubTagOptions> {
     }
 
     if (args.endsWith) {
-      args.endsWith.map(value => client.match(EndsWith(value)))
+      args.endsWith.map((value) => client.match(EndsWith(value)))
     }
 
     if (args.startsWith) {
-      args.startsWith.map(value => client.match(StartsWith(value)))
+      args.startsWith.map((value) => client.match(StartsWith(value)))
     }
 
     if (args.tag) {
@@ -121,13 +121,13 @@ export class DockerHubTag implements CommandModule<{}, DockerHubTagOptions> {
 
     const tags = await client.find(args.repository, args.reverse)
 
-    return tags.map(tag => {
+    return tags.map((tag) => {
       if (tag.version === null) {
         return console.log(tag.repotag.name)
       }
 
       if (tag.version.original !== tag.repotag.name) {
-        return console.log(`${tag.repotag.name} (${tag.references.map(ref => ref.repotag.name).join(', ')})`)
+        return console.log(`${tag.repotag.name} (${tag.references.map((ref) => ref.repotag.name).join(', ')})`)
       }
 
       return console.log(tag.version.original)

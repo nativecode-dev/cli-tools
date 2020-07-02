@@ -11,7 +11,7 @@ export enum NativeTypes {
 }
 
 export function is_type_oneof(instance: any, types: NativeTypes[]): boolean {
-  return types.some(type => is_type(instance, type))
+  return types.some((type) => is_type(instance, type))
 }
 
 export function is_type(instance: any, type: NativeTypes): boolean {

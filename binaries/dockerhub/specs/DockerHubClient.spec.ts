@@ -43,7 +43,7 @@ describe('when using DockerHubClient', () => {
       const namespaces = await client.namespaces.list()
       const user = username(namespaces)
       const repositories = await client.repositories.list(user)
-      expect(repositories.results.map(repo => repo.name)).to.include('mntnfs')
+      expect(repositories.results.map((repo) => repo.name)).to.include('mntnfs')
     })
 
     it('should list tags', async () => {
@@ -51,12 +51,12 @@ describe('when using DockerHubClient', () => {
       const user = username(namespaces)
       const repositories = await client.repositories.list(user)
       const tags = await client.tags.list(`${user}/${repository(repositories.results).name}`)
-      expect(tags.results.map(tag => tag.name)).to.include('1.105')
+      expect(tags.results.map((tag) => tag.name)).to.include('1.105')
     })
 
     it('should filter tags that start with "v"', async () => {
       const results = await client.match(StartsWith('v')).find('linuxserver/radarr')
-      expect(results.every(result => result.repotag.name.startsWith('v'))).to.be.true
+      expect(results.every((result) => result.repotag.name.startsWith('v'))).to.be.true
     })
   })
 })

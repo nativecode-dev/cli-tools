@@ -28,7 +28,7 @@ export class DockerHubClient {
   constructor(token?: string, version: number = 2) {
     const endpoint = new URL(`https://hub.docker.com/v${version}`)
 
-    this.auth = new Authentication(endpoint, logger, token => {
+    this.auth = new Authentication(endpoint, logger, (token) => {
       const authtoken = `JWT ${token}`
       this.namespaces.setAuthorization(authtoken)
       this.repositories.setAuthorization(authtoken)
@@ -58,7 +58,7 @@ export class DockerHubClient {
     return Promise.resolve(
       matchers
         .reduce<Tag[]>((tags, matcher) => tagMatch(tags, matcher), tagResolveAll(tagMap(source.results)))
-        .filter(tag => tag.version)
+        .filter((tag) => tag.version)
         .sort(tagSort(reverse)),
     )
   }

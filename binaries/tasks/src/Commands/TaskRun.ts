@@ -8,7 +8,7 @@ import { TaskConfigNotFound } from '../Errors/TaskConfigNotFound'
 
 function resolveEnvVariables(env: string[]): DictionaryOf<string> {
   return env
-    .map(envstr => {
+    .map((envstr) => {
       const parts = envstr.split('=')
       const name = parts[0]
       const value = parts[1]
@@ -55,13 +55,13 @@ export class TaskRun implements CommandModule<{}, TaskRunOptions> {
     const env = resolveEnvVariables(args.env)
 
     if (args.dryRun) {
-      return entries.map(entry => console.log('execute', [entry.name, ...entry.args].join(' ')))
+      return entries.map((entry) => console.log('execute', [entry.name, ...entry.args].join(' ')))
     }
 
     if (args.name) {
       const results = await TaskRunner.from(task, args.name, { env, cwd: args.cwd })
-      const failed = results.filter(result => result.exitCode !== 0)
-      failed.map(result => console.error(result.exitCode))
+      const failed = results.filter((result) => result.exitCode !== 0)
+      failed.map((result) => console.error(result.exitCode))
       return
     }
 

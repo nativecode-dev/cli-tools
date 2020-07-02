@@ -17,7 +17,7 @@ export class Shebang {
       const bin: any = npm.bin
 
       await Promise.all(
-        Object.keys(bin).map(async key => {
+        Object.keys(bin).map(async (key) => {
           try {
             return await Shebang.shebangify(key, fs.join(process.cwd(), bin[key]))
           } catch (error) {

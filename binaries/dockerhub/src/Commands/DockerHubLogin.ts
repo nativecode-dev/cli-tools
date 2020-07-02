@@ -32,7 +32,7 @@ export class DockerHubLogin implements CommandModule<{}, DockerHubLoginOptions> 
     const reader = readline.createInterface({ input: process.stdin, output: process.stdout, terminal: true })
 
     return new Promise(async (resolve, reject) =>
-      reader.question('Password:', password => {
+      reader.question('Password:', (password) => {
         try {
           reader.close()
           resolve(password)
