@@ -45,7 +45,7 @@
     "@types/chai": "^4.2.11",
     "@types/chai-as-promised": "~7.1.2",
     "@types/mocha": "^7.0.2",
-    "@types/node": "^14.0.6",
+    "@types/node": "^14.0.14",
     "@types/yargs": "^15.0.5",
     "@types/yargs-interactive": "~2.1.0",
     "chai": "~4.2.0",
@@ -55,10 +55,10 @@
     "cross-env": "^7.0.2",
     "cz-conventional-changelog": "^3.2.0",
     "git-ssh-key": "~1.1.0",
-    "lerna": "^3.22.0",
+    "lerna": "^3.22.1",
     "lerna-update-wizard": "^0.17.8",
-    "mocha": "^7.2.0",
-    "nyc": "^15.0.1",
+    "mocha": "^8.0.1",
+    "nyc": "^15.1.0",
     "prettier": "^2.0.5",
     "rimraf": "~3.0.2",
     "source-map-support": "^0.5.19",
@@ -66,6 +66,6 @@
     "tslint": "^6.1.2",
     "tslint-config-standard": "~9.0.0",
     "tslint-no-unused-expression-chai": "~0.1.4",
-    "typescript": "^3.9.3"
+    "typescript": "^3.9.6"
   }
 }
