@@ -1,6 +1,6 @@
 {
   "name": "@nofrills/dockerhub",
-  "version": "0.8.0-next.5",
+  "version": "0.8.0",
   "description": "Simple Tags Comparator",
   "license": "MIT",
   "private": false,
@@ -38,9 +38,8 @@
   "types": "bin/index.d.ts",
   "dependencies": {
     "@nativecode/rest-client": "^3.0.0",
-    "@nnode/common": "^0.7.0",
-    "@nofrills/fs": "^12.0.0",
-    "@nofrills/lincoln-debug": "^11.0.1",
+    "@nnode/common": "^0.5.7",
+    "@nofrills/fs": "^11.0.0",
     "compare-versions": "~3.6.0",
     "deepmerge": "~4.2.2",
     "fast-deep-equal": "^3.1.3",

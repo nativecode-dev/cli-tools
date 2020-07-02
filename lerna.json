@@ -9,7 +9,7 @@
       "conventionalCommits": true,
       "ignoreChanges": [
         "*.md",
-        ".ci-env",
+        ".ci-env.sh",
         ".editorconfig",
         ".gitattributes",
         ".gitignore",

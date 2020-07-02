@@ -1,6 +1,6 @@
 {
   "name": "@beard/chest",
-  "version": "0.1.0-next.4",
+  "version": "0.1.0",
   "description": "Chest",
   "license": "MIT",
   "private": true,
@@ -39,11 +39,11 @@
     "@nofrills/fs": "^12.0.0",
     "glob": "~7.1.6",
     "ini": "~1.3.5",
-    "yargs": "^15.3.0"
+    "yargs": "^15.3.1"
   },
   "devDependencies": {
     "@types/glob": "^7.1.2",
     "@types/ini": "~1.3.30",
-    "@types/yargs": "^15.0.4"
+    "@types/yargs": "^15.0.5"
   }
 }
