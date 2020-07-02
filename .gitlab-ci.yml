@@ -22,6 +22,8 @@ merge:
   script:
     - npm run build:ci
     - npm run test:ci
+  variables:
+    NODE_ENV: "test"
 
 continuous:
   stage: publish
@@ -32,6 +34,8 @@ continuous:
     - npm run build:ci
     - npm run test:ci
     - npm run release:canary
+  variables:
+    NODE_ENV: "test"
 
 prerelease:
   stage: publish
@@ -42,6 +46,8 @@ prerelease:
     - npm run build:ci
     - npm run test:ci
     - npm run release:pre
+  variables:
+    NODE_ENV: "development"
 
 release:
   stage: publish
@@ -52,3 +58,5 @@ release:
     - npm run build:ci
     - npm run test:ci
     - npm run release
+  variables:
+    NODE_ENV: "production"
