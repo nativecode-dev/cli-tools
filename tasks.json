@@ -8,18 +8,18 @@
       "[build:compile]"
     ],
     "build:ci": [
-      "lerna bootstrap",
+      "@lerna bootstrap",
       "[build:compile]"
     ],
     "build:compile": [
-      "lerna run build"
+      "@lerna run build"
     ],
     "clean": [
       "[clean:artifacts]"
     ],
     "clean:artifacts": [
-      "rimraf binaries/*/bin",
-      "rimraf **/*.tsbuildinfo"
+      "@rimraf binaries/*/bin",
+      "@rimraf **/*.tsbuildinfo"
     ],
     "configure:ci": [
       "npm ci",
@@ -27,35 +27,35 @@
       "[test:ci]"
     ],
     "configure:git": [
-      ".citools/setup-git ${BUILD_REPO_BRANCH} ${BUILD_REPO_GIT} ${BUILD_REPO_EMAIL}"
+      "@.citools/setup-git ${BUILD_REPO_BRANCH} ${BUILD_REPO_GIT} ${BUILD_REPO_EMAIL}"
     ],
     "configure:ssh": [
-      ".citools/setup-ssh ${BUILD_REPO_DOMAIN} ${BUILD_REPO_SSHKEY_PATH} ${BUILD_REPO_DOMAIN_SSH}"
+      "@.citools/setup-ssh ${BUILD_REPO_DOMAIN} ${BUILD_REPO_SSHKEY_PATH} ${BUILD_REPO_DOMAIN_SSH}"
     ],
     "release": [
       "[configure:ci]",
-      ".citools/lerna-publish release"
+      "@.citools/lerna-publish release"
     ],
     "release:canary": [
       "[configure:ci]",
-      ".citools/lerna-publish canary"
+      "@.citools/lerna-publish canary"
     ],
     "release:prerelease": [
       "[configure:ci]",
-      ".citools/lerna-publish prerelease"
+      "@.citools/lerna-publish prerelease"
     ],
     "source:format": [
       "@prettier --loglevel silent --write \"binaries/*/{src,specs}/**/*.ts\""
     ],
     "source:lint": [
-      "tslint --project tsconfig.json --config tslint.json"
+      "@tslint --project tsconfig.json --config tslint.json"
     ],
     "test": [
       "[build]",
-      "nyc mocha"
+      "@nyc mocha"
     ],
     "test:ci": [
-      "cross-env DEBUG= nyc mocha"
+      "@cross-env DEBUG= nyc mocha"
     ]
   }
 }

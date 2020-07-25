@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/nativecode-dev/cli-tools/compare/@beard/chest@0.2.0-next.0...@beard/chest@0.2.0) (2020-07-25)
+
+
+### Features
+
+* dependency upgrades ([b15c315](https://github.com/nativecode-dev/cli-tools/commit/b15c31509aa4acb20418a68e2511cafc424ec114))
+
+
+
+
+
 # [0.1.0](https://github.com/nativecode-dev/cli-tools/compare/@beard/chest@0.1.0-next.3...@beard/chest@0.1.0) (2020-05-30)
 
 

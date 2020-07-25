@@ -17,6 +17,8 @@ cache:
 
 merge:
   stage: merge
+  except:
+    - tags
   only:
     - merge_request
   script:
@@ -27,6 +29,8 @@ merge:
 
 continuous:
   stage: publish
+  except:
+    - tags
   only:
     - /feature\/.*/
     - /hotfix\/.*/
@@ -39,6 +43,8 @@ continuous:
 
 prerelease:
   stage: publish
+  except:
+    - tags
   only:
     - develop
   script:
@@ -51,6 +57,8 @@ prerelease:
 
 release:
   stage: publish
+  except:
+    - tags
   only:
     - master
   script:
@@ -58,5 +66,3 @@ release:
     - npm run build:ci
     - npm run test:ci
     - npm run release
-  variables:
-    NODE_ENV: "production"

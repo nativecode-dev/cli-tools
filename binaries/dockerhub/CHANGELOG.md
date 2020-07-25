@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/dockerhub@0.9.0-next.0...@nofrills/dockerhub@0.9.0) (2020-07-25)
+
+
+### Features
+
+* dependency upgrades ([b15c315](https://github.com/nativecode-dev/cli-tools/commit/b15c31509aa4acb20418a68e2511cafc424ec114))
+
+
+
+
+
 # [0.8.0](https://github.com/nativecode-dev/cli-tools/compare/@nofrills/dockerhub@0.8.0-next.4...@nofrills/dockerhub@0.8.0) (2020-05-30)
 
 
