@@ -7,8 +7,7 @@ stages:
 before_script:
   - git submodule update --init --recursive
   - source .ci-env.sh
-  - npm install -g lerna
-  - npm ci
+  - npm install
   - npm run configure:ssh
   - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
 
