@@ -21,7 +21,7 @@ function resolveEnvVariables(env: string[]): DictionaryOf<string> {
 }
 
 export class TaskRun implements CommandModule<{}, TaskRunOptions> {
-  aliases = ['run', 'r', '']
+  aliases = ['run', 'r']
   command = '$0 <name>'
 
   builder: CommandBuilder<{}, TaskRunOptions> = {
