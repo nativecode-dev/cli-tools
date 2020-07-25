@@ -7,7 +7,7 @@ stages:
 before_script:
   - git submodule update --init --recursive
   - source .ci-env.sh
-  - npm install
+  - npm ci
   - npm run configure:ssh
   - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
 
@@ -66,5 +66,3 @@ release:
     - npm run build:ci
     - npm run test:ci
     - npm run release
-  variables:
-    NODE_ENV: "production"
